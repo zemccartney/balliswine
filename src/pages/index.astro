@@ -1,16 +1,35 @@
 ---
+import { getCollection } from "astro:content";
 
+import Logo from "../components/Logo.astro";
+import Shell from "../layouts/shell.astro";
+
+const days = await getCollection("days");
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Shell>
+  <div class="bg-yellow-100 min-h-full">
+    <div class="lg:container mx-auto flex flex-col p-16 gap-20">
+      <header class="self-center md:self-start bg-amber-400 p-16 space-y-14">
+        <h1
+          class="font-title tracking-[.25em] relative top-4 -left-12 text-center uppercase text-4xl -rotate-45 font-bold"
+        >
+          Ball is<br />Wine
+        </h1>
+        <Logo />
+      </header>
+      <main class="self-center flex flex-col items-center gap-8">
+        {
+          days.map((entry) => (
+            <a
+              href={`/${entry.slug}`}
+              class="font-sans text-rose-900  hover:underline text-4xl font-semibold"
+            >
+              {entry.data.date}
+            </a>
+          ))
+        }
+      </main>
+    </div>
+  </div>
+</Shell>

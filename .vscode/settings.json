@@ -1,0 +1,32 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "astro-build.astro-vscode",
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "astro", // Enable .astro
+    "typescript", // Enable .ts
+    "typescriptreact" // Enable .tsx
+  ],
+  "editor.quickSuggestions": {
+    // For Tailwind extension
+    "strings": "on"
+  },
+  // since astro's plugin doesn't understand how to format the following file types (appears to apply to only astro by default)
+  // Feels like I'm doing something stupid, but haven't the time to sort out what's going on here
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
