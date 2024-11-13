@@ -1,0 +1,68 @@
+---
+import { Image } from "astro:assets";
+import Boris from "../images/boris.jpg";
+import Logo, { Sizes } from "../components/Logo.astro";
+import Shell from "../layouts/shell.astro";
+import { typographyStyles } from "./[...slug].astro";
+---
+
+<Shell>
+  <div class="bg-yellow-100 min-h-full">
+    <div
+      class="md:container mx-auto flex flex-col items-center p-16 gap-12 md:gap-20"
+    >
+      <a href="/" class="text-rose-900 hover:text-rose-300 mb-4 md:mb-8">
+        <Logo size={Sizes.SMALL} />
+      </a>
+      <h1 class="text-center text-rose-900 flex flex-col gap-6">
+        <span class="font-sans text-2xl md:text-4xl">What is</span>
+        <span class="font-title text-4xl md:text-8xl">Ball is Wine?</span>
+      </h1>
+      <div>
+        <Image
+          src={Boris}
+          alt="Boris Diaw, glass of wine raised, enjoying himself immensely"
+          width="480"
+          class="mx-auto"
+        />
+        <p
+          class:list={[
+            "mt-2",
+            "max-w-[480px]", // synced to image size
+            "font-sans text-rose-900 text-base italic",
+          ]}
+        >
+          Sourced from the <a
+            class="underline hover:text-rose-300"
+            href="https://www.instagram.com/p/tf7v55DI3A"
+            target="_blank">NBA's premier oenophile himself</a
+          > (with apologies to Pop, of course. <a
+            class="underline hover:text-rose-300"
+            href="https://www.nbcsports.com/nba/news/boris-diaw-throws-wine-in-gregg-popovichs-face-metaphorically"
+            target="_blank">No worries, Pop!)</a
+          >.
+        </p>
+      </div>
+      <div class:list={[...typographyStyles, "text-rose-900"]}>
+        <p>
+          Nisi sunt amet nisi adipisicing esse ullamco in ad mollit esse ex.
+          Irure irure amet minim ipsum fugiat exercitation consequat. Nulla id
+          laboris officia ex sunt consequat eiusmod.
+        </p>
+
+        <p>
+          Eiusmod ipsum reprehenderit consectetur eu quis veniam pariatur
+          officia. Sunt elit consectetur nulla amet ullamco aute duis. Officia
+          nostrud tempor magna qui quis fugiat et reprehenderit.
+        </p>
+
+        <p>
+          Ea id ullamco est incididunt aliqua veniam quis cillum ea incididunt
+          velit occaecat sint. Amet proident voluptate dolor ullamco aliqua
+          sint. Eu in magna in eu aliquip velit fugiat in et incididunt quis
+          eiusmod culpa sit.
+        </p>
+      </div>
+    </div>
+  </div>
+</Shell>

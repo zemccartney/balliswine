@@ -51,10 +51,12 @@ export default function DetailsPanel({
           shrink={isDeterminate}
         />
       </div>
-      <section className="mt-24">
-        {selectedTab === TABS.BALL && ballContent}
-        {selectedTab === TABS.WINE && wineContent}
-      </section>
+      {selectedTab && (
+        <section className="mt-24">
+          {selectedTab === TABS.BALL && ballContent}
+          {selectedTab === TABS.WINE && wineContent}
+        </section>
+      )}
     </div>
   );
 }
@@ -82,7 +84,7 @@ function Button({
         shrink
           ? "p-2 md:p-12 text-3xl md:text-6xl"
           : "p-4 md:p-16 text-4xl md:text-8xl",
-        { "text-rose-300": isSelected },
+        { "[&&]:text-rose-300": isSelected },
       ])}
       type="button"
       onClick={onClick}

@@ -8,17 +8,20 @@ import Shell from "../layouts/shell.astro";
 // Sync styles between intro content and Panel content
 // Generic styles e.g. spacing and layout can live here
 // Leave specifics to the context e.g. color, minimize overriding / dealing with Tailwind source order funk
+// useful reference / inspiration: https://github.com/tailwindlabs/tailwindcss-typography/blob/815dfc4879ee54bf5e7d3cf5960f2acf6b85e303/src/styles.js
 export const typographyStyles = [
   "font-sans text-xl",
-  "max-w-[35em] [&_*]:my-[.75em] [&>_*:first-child]:mt-0 [&>_*:last-child]:mb-0",
+  // spacing rules; 35em looked like a reasonable line width
+  "max-w-[35em] mx-auto [&_*]:my-[.75em] [&>_*:first-child]:mt-0 [&>_*:last-child]:mb-0",
+  // element-specific overrides
   "[&_h2]:text-3xl [&_h2]:mt-[2em] [&_h2]:mb-[.75em] [&_h2]:font-bold [&_h2]:text-center [&_h2]:underline [&_h2]:italic",
-  "mx-auto",
-  // hr styles; more use of important, along with duplicating class selector in last variant class, all for overriding general spacing
-  // [&&>hr_+_*]:!mt-0 is saying: if an element follows an hr, cancel its margin, let the hr set the spacing above and below it,
-  // so said margins are even
-  // TODO figure out a less shitty way to do this
-  "[&_hr]:!my-12 [&_hr]:border-yellow-100 [&_hr]:border-1 [&_hr]:-mx-12 [&&>hr_+_*]:!mt-0",
-  "mx-auto",
+  "[&_hr]:h-0.5 [&_hr]:my-12 [&_hr]:bg-current [&_hr]:-mx-12 [&_hr_+_*]:mt-0",
+  "[&_ul]:list-disc [&_ul]:list-inside [&_li]:my-[0.5em] [&_ul]:ps-[2em]",
+  // Learned from https://www.smashingmagazine.com/2023/01/level-up-css-skills-has-selector/
+  // A bit fragile, but saying that if a list is the only child in a "section" (as demarcated by h2s (currently header element of choice in posts))
+  // cut the inline-start padding so it aligns with content in other "sections"
+  // Based on display of "Who's Playing" list in first post (2024-10-22)
+  "[&_ul:is(h2_+_*):not(*_+_h2)]:ps-0",
 ];
 
 export async function getStaticPaths() {
@@ -53,13 +56,7 @@ const [{ Content: WineContent }, { Content: BallContent }] = await Promise.all(
             <time datetime="2024-10-22">{entry.data.date}</time>
           </h1>
           <section class="-mx-16 py-8 px-16 bg-yellow-100">
-            <div
-              class:list={[
-                // useful reference / inspiration: https://github.com/tailwindlabs/tailwindcss-typography/blob/815dfc4879ee54bf5e7d3cf5960f2acf6b85e303/src/styles.js
-                ...typographyStyles,
-                "text-rose-900",
-              ]}
-            >
+            <div class:list={[...typographyStyles, "text-rose-900"]}>
               <Content />
             </div>
           </section>
