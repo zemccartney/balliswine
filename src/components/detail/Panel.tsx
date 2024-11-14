@@ -52,7 +52,7 @@ export default function DetailsPanel({
         />
       </div>
       {selectedTab && (
-        <section className="mt-24">
+        <section className="bg-yellow-50 -mx-16 -mb-24 my-8 p-8">
           {selectedTab === TABS.BALL && ballContent}
           {selectedTab === TABS.WINE && wineContent}
         </section>

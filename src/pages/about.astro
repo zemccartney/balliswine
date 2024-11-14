@@ -7,7 +7,7 @@ import { typographyStyles } from "./[...slug].astro";
 ---
 
 <Shell>
-  <div class="bg-yellow-100 min-h-full">
+  <div class="bg-yellow-50 min-h-full">
     <div
       class="md:container mx-auto flex flex-col items-center p-16 gap-12 md:gap-20"
     >
@@ -29,7 +29,7 @@ import { typographyStyles } from "./[...slug].astro";
           class:list={[
             "mt-2",
             "max-w-[480px]", // synced to image size
-            "font-sans text-rose-900 text-base italic",
+            "font-sans text-rose-950 text-base italic",
           ]}
         >
           Sourced from the <a
@@ -43,7 +43,12 @@ import { typographyStyles } from "./[...slug].astro";
           >.
         </p>
       </div>
-      <div class:list={[...typographyStyles, "text-rose-900 max-w-[30em]"]}>
+      <div
+        class:list={[
+          ...typographyStyles,
+          "text-rose-950 max-w-[30em] -mx-10 md:mx-0",
+        ]}
+      >
         <p>
           This is a creative writing project. Once a month, I'll get a bottle of
           wine and watch a slate of basketball games and write about them, the

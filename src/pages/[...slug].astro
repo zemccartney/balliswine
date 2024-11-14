@@ -13,7 +13,7 @@ export const typographyStyles = [
   "font-sans text-xl leading-10 antialiased",
   // spacing rules; 35em looked like a reasonable line width
   // TODO wine-stats thing sucks; fix, make less fragile, coupled to markup convention
-  "max-w-[35em] mx-auto [&_*:not(.wine-stats_>_*)]:my-[1.25em] [&>_*:first-child]:mt-0 [&>_*:last-child]:mb-0",
+  "max-w-[35em] mx-auto [&_*:not(.wine-stats_>_*):not(li)]:my-[1.25em] [&>_*:first-child]:mt-0 [&>_*:last-child]:mb-0",
   // element-specific overrides
   "[&_h2]:text-3xl [&_h2]:mt-[2em] [&_h2]:mb-[.75em] [&_h2]:font-bold [&_h2]:text-center [&_h2]:underline [&_h2]:italic",
   "[&_hr]:h-0.5 [&_hr]:my-12 [&_hr]:bg-current [&_hr]:-mx-12 [&_hr_+_*]:mt-0",
@@ -42,6 +42,8 @@ const [{ Content: WineContent }, { Content: BallContent }] = await Promise.all(
     (ent) => ent.render()
   )
 );
+
+const pregame = new Date(entry.data.date).getTime() - new Date().getTime();
 ---
 
 <Shell>
@@ -57,20 +59,26 @@ const [{ Content: WineContent }, { Content: BallContent }] = await Promise.all(
           >
             <time datetime="2024-10-22">{entry.data.date}</time>
           </h1>
-          <section class="-mx-16 py-8 px-16 bg-yellow-100">
-            <div class:list={[...typographyStyles, "text-rose-900"]}>
+          <section class="-mx-16 p-8 bg-yellow-50">
+            <div class:list={[...typographyStyles, "text-rose-950"]}>
               <Content />
             </div>
           </section>
           <DetailsPanel client:load>
             <Fragment slot="ballContent">
-              <div class:list={[...typographyStyles, "text-yellow-100"]}>
+              <div class:list={[...typographyStyles, "text-rose-950"]}>
                 <BallContent />
+                <p class="text-center [&:not(:only-child)]:hidden">
+                  Thoughts and feels coming after the games!
+                </p>
               </div>
             </Fragment>
             <Fragment slot="wineContent">
-              <div class:list={[...typographyStyles, "text-yellow-100"]}>
+              <div class:list={[...typographyStyles, "text-rose-950"]}>
                 <WineContent />
+                <p class="text-center [&:not(:only-child)]:hidden">
+                  Thoughts and feels coming after the games!
+                </p>
               </div>
             </Fragment>
           </DetailsPanel>
