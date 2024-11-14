@@ -10,13 +10,15 @@ import Shell from "../layouts/shell.astro";
 // Leave specifics to the context e.g. color, minimize overriding / dealing with Tailwind source order funk
 // useful reference / inspiration: https://github.com/tailwindlabs/tailwindcss-typography/blob/815dfc4879ee54bf5e7d3cf5960f2acf6b85e303/src/styles.js
 export const typographyStyles = [
-  "font-sans text-xl",
+  "font-sans text-xl leading-10 antialiased",
   // spacing rules; 35em looked like a reasonable line width
-  "max-w-[35em] mx-auto [&_*]:my-[.75em] [&>_*:first-child]:mt-0 [&>_*:last-child]:mb-0",
+  // TODO wine-stats thing sucks; fix, make less fragile, coupled to markup convention
+  "max-w-[35em] mx-auto [&_*:not(.wine-stats_>_*)]:my-[1.25em] [&>_*:first-child]:mt-0 [&>_*:last-child]:mb-0",
   // element-specific overrides
   "[&_h2]:text-3xl [&_h2]:mt-[2em] [&_h2]:mb-[.75em] [&_h2]:font-bold [&_h2]:text-center [&_h2]:underline [&_h2]:italic",
   "[&_hr]:h-0.5 [&_hr]:my-12 [&_hr]:bg-current [&_hr]:-mx-12 [&_hr_+_*]:mt-0",
   "[&_ul]:list-disc [&_ul]:list-inside [&_li]:my-[0.5em] [&_ul]:ps-[2em]",
+  "[&_a]:underline [&_a:hover]:text-rose-300", // TODO Lift these up to global / themeatic values, somehow
   // Learned from https://www.smashingmagazine.com/2023/01/level-up-css-skills-has-selector/
   // A bit fragile, but saying that if a list is the only child in a "section" (as demarcated by h2s (currently header element of choice in posts))
   // cut the inline-start padding so it aligns with content in other "sections"
@@ -66,10 +68,7 @@ const [{ Content: WineContent }, { Content: BallContent }] = await Promise.all(
                 <BallContent />
               </div>
             </Fragment>
-            <Fragment
-              slot="wineContent"
-              class:list={[...typographyStyles, "text-yellow-100"]}
-            >
+            <Fragment slot="wineContent">
               <div class:list={[...typographyStyles, "text-yellow-100"]}>
                 <WineContent />
               </div>
