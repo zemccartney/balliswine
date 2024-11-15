@@ -24,8 +24,8 @@ export default function DetailsPanel({
     <div {...rest} className="mt-8">
       <div
         className={clsx([
-          "flex flex-row justify-center md:transition-[gap] duration-500 ease-out",
-          isDeterminate ? "gap-4 md:gap-8" : "gap-4 md:gap-4",
+          "flex flex-row justify-center transition-[gap] duration-500 ease-out",
+          isDeterminate ? "gap-4 sm:gap-8" : "gap-4 sm:gap-4",
         ])}
       >
         <Button
@@ -82,7 +82,7 @@ function Button({
       className={clsx([
         "space-y-4 font-emoji leading-[initial] text-yellow-100 transition-[font-size,padding] duration-500 ease-out hover:text-rose-300", // leading-initial to override line height built in to text
         shrink
-          ? "p-2 md:p-12 text-3xl md:text-6xl"
+          ? "p-4 md:p-12 text-4xl md:text-6xl"
           : "p-4 md:p-16 text-4xl md:text-8xl",
         { "[&&]:text-rose-300": isSelected },
       ])}
