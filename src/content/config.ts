@@ -11,6 +11,9 @@ const daysCollection = defineCollection({
 
 const thoughtsCollection = defineCollection({
   type: "content",
+  schema: z.object({
+    wine: z.string().optional(),
+  }),
 });
 
 export const collections = {

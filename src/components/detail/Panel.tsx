@@ -25,7 +25,7 @@ export default function DetailsPanel({
       <div
         className={clsx([
           "flex flex-row justify-center transition-[gap] duration-500 ease-out",
-          isDeterminate ? "gap-8" : "gap-4",
+          isDeterminate ? "gap-4 md:gap-8" : "gap-2 md:gap-4",
         ])}
       >
         <Button

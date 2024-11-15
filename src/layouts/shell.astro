@@ -5,19 +5,25 @@ import "@fontsource-variable/noto-emoji";
 import "@fontsource/pacifico";
 
 interface Props {
+  description?: string;
   title?: string;
 }
 
-const { title } = Astro.props;
+const { description, title } = Astro.props;
 ---
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
 
     <title>{`${title ? `${title} -` : ""} Ball Is Wine`}</title>
+    <meta
+      name="description"
+      content={description ||
+        "A monthly blog about drinking wine to basketball"}
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body>
     <slot />
