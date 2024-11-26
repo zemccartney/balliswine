@@ -82,8 +82,8 @@ function Button({
       className={clsx([
         "space-y-4 font-emoji leading-[initial] text-yellow-100 transition-[font-size,padding] duration-500 ease-out hover:text-rose-300", // leading-initial to override line height built in to text
         shrink
-          ? "p-4 md:p-12 text-4xl md:text-6xl"
-          : "p-4 md:p-16 text-4xl md:text-8xl",
+          ? "p-4 md:p-12 text-4xl lg:text-6xl"
+          : "p-4 md:p-16 text-4xl lg:text-8xl",
         { "[&&]:text-rose-300": isSelected },
       ])}
       type="button"

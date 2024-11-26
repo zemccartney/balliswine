@@ -46,9 +46,8 @@ const [{ Content: BallContent }, { Content: WineContent }] = await Promise.all(
   [ballPost, winePost].map((ent) => ent.render())
 );
 
-const pregame = new Date(entry.data.date).getTime() - new Date().getTime();
 const { wine } = winePost.data;
-const description = `Post for the games on ${entry.data.date}${wine ? `with a bottle of ${wine}` : ""}`;
+const description = `Post for the games on ${entry.data.date}${wine ? `, with a bottle of ${wine}` : ""}`;
 ---
 
 <Shell title={entry.data.date} description={description}>

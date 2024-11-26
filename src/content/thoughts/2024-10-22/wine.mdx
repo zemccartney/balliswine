@@ -2,29 +2,27 @@
 wine: Domain Balansa, La vinhota 2022
 ---
 
-import { Image } from "astro:assets";
 import Bottle from "./vinhota-2022.png";
+import WineBlock from "../../../components/detail/WineBlock.astro";
 
-<div class="flex flex-col md:flex-row items-center md:justify-evenly mb-6">
-  <Image
-    alt="A bottle of Domain Balansa, La vinhota, 202"
-    src={Bottle}
-    width={378}
-  />
-  <div class="flex flex-col wine-stats">
-    <p>Domain Balansa</p>
-    <p>La vinhota, 2022</p>
-    <p>France</p>
-    <p>
-      <a
-        href="https://www.maineandloire.com/france-languedocroussillon/p/domaine-balansa-la-vinhota-rouge-2020"
-        target="_blank"
-      >
-        Check it out
-      </a>
-    </p>
-  </div>
-</div>
+<WineBlock
+  imgProps={{
+    alt: "A bottle of Domain Balansa, La vinhota, 2022",
+    src: Bottle
+  }}
+>
+  <p>Domain Balansa</p>
+  <p>La vinhota, 2022</p>
+  <p>France</p>
+  <p>
+    <a
+      href="https://www.maineandloire.com/france-languedocroussillon/p/domaine-balansa-la-vinhota-rouge-2020"
+      target="_blank"
+    >
+      Check it out
+    </a>
+  </p>
+</WineBlock>
 
 Purchased from the lovely folks over at <a href="https://www.maineandloire.com" target="_blank">Maine and Loire</a>, here in Portland, ME. 
 Pop in if you're ever in town, just an exceptional spot to get a good bottle. They described it as floral, honey-esque, almost, sweet, 
