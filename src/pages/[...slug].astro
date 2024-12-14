@@ -43,10 +43,11 @@ const [ballPost, winePost] = await getEntries([
 ]);
 
 const [{ Content: BallContent }, { Content: WineContent }] = await Promise.all(
-  [ballPost, winePost].map((ent) => ent.render())
+  [ballPost, winePost].map((ent) => ent.render()),
 );
 
 const { wine } = winePost.data;
+// TODO use formatter to build human-readable data instead of storing as property in content
 const description = `Post for the games on ${entry.data.date}${wine ? `, with a bottle of ${wine}` : ""}`;
 ---
 
@@ -61,7 +62,7 @@ const description = `Post for the games on ${entry.data.date}${wine ? `, with a 
           <h1
             class="text-yellow-100 text-center text-4xl sm:text-6xl md:text-8xl font-mono"
           >
-            <time datetime="2024-10-22">{entry.data.date}</time>
+            <time datetime={entry.slug}>{entry.data.date}</time>
           </h1>
           <section class="-mx-16 p-8 bg-yellow-50">
             <div class:list={[...typographyStyles, "text-rose-950"]}>
