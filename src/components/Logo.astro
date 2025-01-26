@@ -17,13 +17,15 @@ let rightOffset = "right-16";
 if (size === Sizes.SMALL) {
   ballFontSize = "text-base";
   wineFontSize = "text-6xl";
-  rightOffset = "right-8";
+  rightOffset = "right-10";
 }
 ---
 
 {/* TODO Re-evaluate items-end, not sure necessary */}
 <div class:list={["font-emoji flex flex-col items-end", className]} {...rest}>
-  <div class={`bw-logo-ball ${ballFontSize} relative ${rightOffset} -top-2`}>
+  <div
+    class={`bw-logo-ball font-bold ${ballFontSize} relative ${rightOffset} -top-2`}
+  >
     🏀
   </div>
   <div class={`bw-logo-wine ${wineFontSize}`}>🍷</div>
