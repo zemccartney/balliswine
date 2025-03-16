@@ -21,14 +21,14 @@ import { typographyStyles } from "./[...slug].astro";
         <span class="font-sans text-2xl md:text-4xl">What is</span>
         <span class="font-title text-4xl md:text-8xl">Ball is Wine?</span>
       </h1>
-      <div>
+      <figure>
         <Image
           src={Boris}
           alt="Boris Diaw, glass of wine raised, enjoying himself immensely"
           width="480"
           class="mx-auto"
         />
-        <p
+        <figcaption
           class:list={[
             "mt-2",
             "max-w-[480px]", // synced to image size
@@ -44,8 +44,8 @@ import { typographyStyles } from "./[...slug].astro";
             href="https://www.nbcsports.com/nba/news/boris-diaw-throws-wine-in-gregg-popovichs-face-metaphorically"
             target="_blank">No worries, Pop!)</a
           >.
-        </p>
-      </div>
+        </figcaption>
+      </figure>
       <div
         class:list={[
           ...typographyStyles,

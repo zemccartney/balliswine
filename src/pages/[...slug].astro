@@ -13,7 +13,7 @@ export const typographyStyles = [
   "font-sans text-xl leading-8",
   // spacing rules; 35em looked like a reasonable line width
   // TODO wine-stats thing sucks; fix, make less fragile, coupled to markup convention
-  "max-w-[35em] mx-auto [&_*:not(.wine-stats_>_*):not(li)]:my-[1.25em] [&>_*:first-child]:mt-0 [&>_*:last-child]:mb-0",
+  "max-w-[35em] mx-auto [&>_*:not(.wine-stats_>_*):not(li)]:my-[1.25em] [&>_*:first-child]:mt-0 [&>_*:last-child]:mb-0",
   // element-specific overrides
   "[&_h2]:text-3xl [&_h2]:mt-[2em] [&_h2]:mb-[.75em] [&_h2]:font-bold [&_h2]:text-center [&_h2]:underline [&_h2]:italic",
   "[&_hr]:h-0.5 [&_hr]:my-12 [&_hr]:bg-current [&_hr]:-mx-12 [&_hr_+_*]:mt-0",
@@ -43,13 +43,53 @@ const [ballPost, winePost] = await getEntries([
 ]);
 
 const [{ Content: BallContent }, { Content: WineContent }] = await Promise.all(
-  [ballPost, winePost].map((ent) => ent.render()),
+  [ballPost, winePost].map((ent) => ent.render())
 );
 
 const { wine } = winePost.data;
 // TODO use formatter to build human-readable data instead of storing as property in content
 const description = `Post for the games on ${entry.data.date}${wine ? `, with a bottle of ${wine}` : ""}`;
 ---
+
+<style>
+  .TypoBox {
+    cite {
+      font-style: normal;
+    }
+
+    figure.quote {
+      blockquote {
+        @apply text-2xl leading-loose border-l-4 border-yellow-500 ps-8;
+
+        * + * {
+          @apply mt-[.5em];
+        }
+
+        .source-timestamp {
+          @apply text-base ps-6 font-light;
+        }
+      }
+
+      figcaption {
+        @apply mt-6 ps-16 text-lg max-w-[80%] text-balance text-yellow-600;
+
+        a {
+          @apply hover:text-yellow-900;
+        }
+      }
+
+      &:not(:first-child) {
+        /* loose spacing when listing quotations one after another (see 2025-02-17) */
+        @apply mt-20;
+
+        /* Tighten spacing when quotation appears within a paragraph i.e. body text immediately surrounding */
+        &:not(figure + *) {
+          @apply mt-[1.5em] mb-[3em];
+        }
+      }
+    }
+  }
+</style>
 
 <Shell title={entry.data.date} description={description}>
   <div class="bg-rose-950 min-h-full">
@@ -65,13 +105,15 @@ const description = `Post for the games on ${entry.data.date}${wine ? `, with a 
             <time datetime={entry.slug}>{entry.data.date}</time>
           </h1>
           <section class="-mx-16 p-8 bg-yellow-50">
-            <div class:list={[...typographyStyles, "text-rose-950"]}>
+            <div class:list={[...typographyStyles, "text-rose-950", "TypoBox"]}>
               <Content />
             </div>
           </section>
           <DetailsPanel client:load>
             <Fragment slot="ballContent">
-              <div class:list={[...typographyStyles, "text-rose-950"]}>
+              <div
+                class:list={[...typographyStyles, "text-rose-950", "TypoBox"]}
+              >
                 <BallContent />
                 <p class="text-center [&:not(:only-child)]:hidden">
                   Thoughts and feels coming after the games!
@@ -79,7 +121,9 @@ const description = `Post for the games on ${entry.data.date}${wine ? `, with a 
               </div>
             </Fragment>
             <Fragment slot="wineContent">
-              <div class:list={[...typographyStyles, "text-rose-950"]}>
+              <div
+                class:list={[...typographyStyles, "text-rose-950", "TypoBox"]}
+              >
                 <WineContent />
                 <p class="text-center [&:not(:only-child)]:hidden">
                   Thoughts and feels coming after the games!
