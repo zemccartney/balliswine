@@ -3,6 +3,7 @@ import "@fontsource/geist-mono";
 import "@fontsource/geist-sans";
 import "@fontsource-variable/noto-emoji";
 import "@fontsource/pacifico";
+import "lite-youtube-embed/src/lite-yt-embed.css";
 
 interface Props {
   description?: string;
@@ -24,14 +25,9 @@ const { description, title } = Astro.props;
         "A monthly blog about drinking wine to basketball"}
     />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-
-    <link
-      rel="stylesheet"
-      href="../../node_modules/lite-youtube-embed/src/lite-yt-embed.css"
-    />
-    <script
-      defer
-      src="../../node_modules/lite-youtube-embed/src/lite-yt-embed.js"></script>
+    <script>
+      import "lite-youtube-embed";
+    </script>
   </head>
   <body>
     <slot />
