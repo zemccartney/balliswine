@@ -5,6 +5,8 @@ import Logo, { Sizes } from "../components/Logo.astro";
 import DetailsPanel from "../components/detail/Panel";
 import Shell from "../layouts/shell.astro";
 
+// TODO Rewrite the below as a <style> element, ffs
+
 // Sync styles between intro content and Panel content
 // Generic styles e.g. spacing and layout can live here
 // Leave specifics to the context e.g. color, minimize overriding / dealing with Tailwind source order funk
@@ -18,7 +20,7 @@ export const typographyStyles = [
   "[&_h2]:text-3xl [&_h2]:mt-[2em] [&_h2]:mb-[.75em] [&_h2]:font-bold [&_h2]:text-center [&_h2]:underline [&_h2]:italic",
   "[&_hr]:h-0.5 [&_hr]:my-12 [&_hr]:bg-current [&_hr]:-mx-12 [&_hr_+_*]:mt-0",
   "[&_ul]:list-disc [&_ul]:list-inside [&_li]:my-[0.5em] md:[&_ul]:ps-[2em]",
-  "[&_a]:underline [&_a:hover]:text-rose-300", // TODO Lift these up to global / themeatic values, somehow
+  "[&_a]:underline [&_a:hover]:text-rose-600", // TODO Lift these up to global / themeatic values, somehow
   // Learned from https://www.smashingmagazine.com/2023/01/level-up-css-skills-has-selector/
   // A bit fragile, but saying that if a list is the only child in a "section" (as demarcated by h2s (currently header element of choice in posts))
   // cut the inline-start padding so it aligns with content in other "sections"

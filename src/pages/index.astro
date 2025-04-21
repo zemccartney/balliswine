@@ -33,7 +33,7 @@ const days = (await getCollection("days")).sort((a, b) => {
         </div>
         <a
           href="/about"
-          class="mt-6 block font-title text-2xl text-center md:text-start underline underline-offset-2 decoration-wavy hover:text-rose-900"
+          class="mt-6 block font-title text-2xl text-center md:text-start underline underline-offset-2 decoration-wavy hover:text-rose-600"
           >What is this?</a
         >
       </header>
@@ -43,7 +43,7 @@ const days = (await getCollection("days")).sort((a, b) => {
           days.map((entry) => (
             <a
               href={`/${entry.slug}`}
-              class="font-sans text-rose-900 text-center text-4xl md:text-6xl font-semibold hover:underline"
+              class="font-sans text-rose-900 text-center text-4xl md:text-6xl font-semibold hover:underline hover:text-rose-600"
             >
               {entry.data.date}
             </a>
