@@ -22,8 +22,6 @@ In the Kings-Nuggets nightcap, of course involving the inimitable Mark Jones: ca
 
 <hr/>
 
-</a>
-
 Last but not least. I love Cheez-Its. I'm a big Jimmy Butler fan. I may need the jersey the little girl's wearing in this ad on a spiritual level:
 
 <lite-youtube videoid="UCMpOwZOyiY" params="start=15" style="background-image: url('https://i.ytimg.com/vi/UCMpOwZOyiY/hqdefault.jpg');">
