@@ -1,4 +1,4 @@
-Another season just about over. I think I am excited for the playoffs. I think. I find myself looking back to mid-winter. Less missing out then. Less attention strain. These are all good things and tiresome things. 9:30pm eastern starts on a Sunday weigh a whole lot more when you don't want to miss any games. There's nothing like playoff basketball. I wish I could cocoon for the next 2 months — I always forgot how long the 'yoffs last, one of those numbers that never seems real when you say it out loud — and eat and sleep and stretch and watch hoops.
+Another season just about over. I think I am excited for the playoffs. I think. I find myself looking back to mid-winter. Less missing out then. Less attention strain. These are all good things and tiresome things. 9:30pm eastern starts on a Sunday weigh a whole lot more when you don't want to miss any games. There's nothing like playoff basketball. I wish I could cocoon for the next 2 months — I always forget how long the 'yoffs last, one of those numbers that never seems real when you say it out loud — and eat and sleep and stretch and watch hoops.
 
 <hr />
 
