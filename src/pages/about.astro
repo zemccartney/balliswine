@@ -1,38 +1,39 @@
 ---
 import { Image } from "astro:assets";
+
+import Logo, { Sizes } from "../components/logo.astro";
 import Boris from "../images/boris.jpg";
-import Logo, { Sizes } from "../components/Logo.astro";
 import Shell from "../layouts/shell.astro";
 import { typographyStyles } from "./[...slug].astro";
 ---
 
 <Shell
-  title="About the project"
   description="Details on the what and why of Ball is Wine"
+  title="About the project"
 >
-  <div class="bg-yellow-50 min-h-full">
+  <div class="min-h-full bg-yellow-50">
     <div
-      class="md:container mx-auto flex flex-col items-center p-16 gap-12 md:gap-20"
+      class="mx-auto flex flex-col items-center gap-12 p-16 md:container md:gap-20"
     >
-      <a href="/" class="text-rose-900 hover:text-rose-300 mb-4 md:mb-8">
+      <a class="mb-4 text-rose-900 hover:text-rose-300 md:mb-8" href="/">
         <Logo size={Sizes.SMALL} />
       </a>
-      <h1 class="text-center text-rose-900 flex flex-col gap-6">
+      <h1 class="flex flex-col gap-6 text-center text-rose-900">
         <span class="font-sans text-2xl md:text-4xl">What is</span>
         <span class="font-title text-4xl md:text-8xl">Ball is Wine?</span>
       </h1>
       <figure>
         <Image
-          src={Boris}
           alt="Boris Diaw, glass of wine raised, enjoying himself immensely"
-          width="480"
           class="mx-auto"
+          src={Boris}
+          width="480"
         />
         <figcaption
           class:list={[
             "mt-2",
             "max-w-[480px]", // synced to image size
-            "font-sans text-rose-950 text-base italic",
+            "font-sans text-base italic text-rose-950",
           ]}
         >
           Sourced from the <a
@@ -49,7 +50,7 @@ import { typographyStyles } from "./[...slug].astro";
       <div
         class:list={[
           ...typographyStyles,
-          "text-rose-950 max-w-[30em] [&]:-mx-10 md:mx-0",
+          "max-w-[30em] text-rose-950 md:mx-0 [&]:-mx-10",
         ]}
       >
         <p>

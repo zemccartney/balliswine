@@ -1,8 +1,8 @@
 ---
 import { getCollection, getEntries } from "astro:content";
 
-import Logo, { Sizes } from "../components/Logo.astro";
-import DetailsPanel from "../components/detail/Panel";
+import DetailsPanel from "../components/detail/panel";
+import Logo, { Sizes } from "../components/logo.astro";
 import Shell from "../layouts/shell.astro";
 
 // TODO Rewrite the below as a <style> element, ffs
@@ -45,7 +45,7 @@ const [ballPost, winePost] = await getEntries([
 ]);
 
 const [{ Content: BallContent }, { Content: WineContent }] = await Promise.all(
-  [ballPost, winePost].map((ent) => ent.render())
+  [ballPost, winePost].map((ent) => ent.render()),
 );
 
 const { wine } = winePost.data;
@@ -61,19 +61,19 @@ const description = `Post for the games on ${entry.data.date}${wine ? `, with a 
 
     figure.quote {
       blockquote {
-        @apply text-2xl leading-loose border-l-4 border-yellow-500 ps-8;
+        @apply border-l-4 border-yellow-500 ps-8 text-2xl leading-loose;
 
         * + * {
           @apply mt-[.5em];
         }
 
         .source-timestamp {
-          @apply text-base ps-6 font-light;
+          @apply ps-6 text-base font-light;
         }
       }
 
       figcaption {
-        @apply mt-6 ps-16 text-lg max-w-[80%] text-balance text-yellow-600;
+        @apply mt-6 max-w-[80%] text-balance ps-16 text-lg text-yellow-600;
 
         a {
           @apply hover:text-yellow-900;
@@ -86,27 +86,27 @@ const description = `Post for the games on ${entry.data.date}${wine ? `, with a 
 
         /* Tighten spacing when quotation appears within a paragraph i.e. body text immediately surrounding */
         &:not(figure + *) {
-          @apply mt-[1.5em] mb-[3em];
+          @apply mb-[3em] mt-[1.5em];
         }
       }
     }
   }
 </style>
 
-<Shell title={entry.data.date} description={description}>
-  <div class="bg-rose-950 min-h-full">
-    <div class="flex flex-col p-16 gap-12 md:gap-20">
-      <a href="/" class="text-yellow-100 self-center hover:text-rose-300 mb-8">
+<Shell description={description} title={entry.data.date}>
+  <div class="min-h-full bg-rose-950">
+    <div class="flex flex-col gap-12 p-16 md:gap-20">
+      <a class="mb-8 self-center text-yellow-100 hover:text-rose-300" href="/">
         <Logo size={Sizes.SMALL} />
       </a>
       <main>
         <article class="space-y-8">
           <h1
-            class="text-yellow-100 text-center text-4xl sm:text-6xl md:text-8xl font-mono"
+            class="text-center font-mono text-4xl text-yellow-100 sm:text-6xl md:text-8xl"
           >
             <time datetime={entry.slug}>{entry.data.date}</time>
           </h1>
-          <section class="-mx-16 p-8 bg-yellow-50">
+          <section class="-mx-16 bg-yellow-50 p-8">
             <div class:list={[...typographyStyles, "text-rose-950", "TypoBox"]}>
               <Content />
             </div>

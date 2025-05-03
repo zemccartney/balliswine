@@ -8,14 +8,14 @@ const { class: className, imgProps = {}, ...rest } = Astro.props;
 
 <div
   class:list={[
-    "flex flex-col md:flex-row items-center justify-center md:gap-8 mb-6",
+    "mb-6 flex flex-col items-center justify-center md:flex-row md:gap-8",
     className,
   ]}
   {...rest}
 >
   <Image width={378} {...imgProps} />
   <div
-    class="flex flex-col wine-stats w-fit max-w-[75%] md:max-w-[50%] mx-auto"
+    class="wine-stats mx-auto flex w-fit max-w-[75%] flex-col md:max-w-[50%]"
   >
     <slot />
   </div>

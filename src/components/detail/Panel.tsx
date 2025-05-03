@@ -1,11 +1,20 @@
-import { useState } from "react";
 import type { ReactNode } from "react";
+
 import clsx from "clsx";
+import { useState } from "react";
 
 const TABS = {
   BALL: "ball",
   WINE: "wine",
 } as const;
+
+interface ButtonProps {
+  emoji: string;
+  isSelected?: boolean;
+  label: string;
+  onClick: () => void;
+  shrink?: boolean;
+}
 
 export default function DetailsPanel({
   ballContent,
@@ -30,9 +39,9 @@ export default function DetailsPanel({
       >
         <Button
           emoji="🏀"
+          isSelected={selectedTab === TABS.BALL}
           label="Ball"
           onClick={() => setSelectedTab(TABS.BALL)}
-          isSelected={selectedTab === TABS.BALL}
           shrink={isDeterminate}
         />
         <div
@@ -45,28 +54,20 @@ export default function DetailsPanel({
         ></div>
         <Button
           emoji="🍷"
+          isSelected={selectedTab === TABS.WINE}
           label="Wine"
           onClick={() => setSelectedTab(TABS.WINE)}
-          isSelected={selectedTab === TABS.WINE}
           shrink={isDeterminate}
         />
       </div>
       {selectedTab && (
-        <section className="bg-yellow-50 -mx-16 -mb-24 my-8 p-8">
+        <section className="-mx-16 my-8 -mb-24 bg-yellow-50 p-8">
           {selectedTab === TABS.BALL && ballContent}
           {selectedTab === TABS.WINE && wineContent}
         </section>
       )}
     </div>
   );
-}
-
-interface ButtonProps {
-  emoji: string;
-  isSelected?: boolean;
-  label: string;
-  onClick: () => void;
-  shrink?: boolean;
 }
 
 function Button({
@@ -82,12 +83,12 @@ function Button({
       className={clsx([
         "space-y-4 font-emoji leading-[initial] text-yellow-100 transition-[font-size,padding] duration-500 ease-out hover:text-rose-300", // leading-initial to override line height built in to text
         shrink
-          ? "p-4 md:p-12 text-4xl lg:text-6xl"
-          : "p-4 md:p-16 text-4xl lg:text-8xl",
+          ? "p-4 text-4xl md:p-12 lg:text-6xl"
+          : "p-4 text-4xl md:p-16 lg:text-8xl",
         { "[&&]:text-rose-300": isSelected },
       ])}
-      type="button"
       onClick={onClick}
+      type="button"
       {...rest}
     >
       <div>{emoji}</div>

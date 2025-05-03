@@ -1,30 +1,21 @@
 ---
 import { getCollection } from "astro:content";
 
-import Logo from "../components/Logo.astro";
+import Logo from "../components/logo.astro";
 import Shell from "../layouts/shell.astro";
 
 // slugs are iso dates (yyyy-mm-dd), which are lexicographically sortable
-const days = (await getCollection("days")).sort((a, b) => {
-  if (a.slug < b.slug) {
-    return 1;
-  }
-
-  if (a.slug > b.slug) {
-    return -1;
-  }
-
-  return 0;
-});
+const days = await getCollection("days");
+days.sort((a, b) => b.slug.localeCompare(a.slug));
 ---
 
 <Shell>
-  <div class="bg-yellow-50 min-h-full">
-    <div class="lg:container mx-auto flex flex-col p-16 gap-16 md:gap-24">
+  <div class="min-h-full bg-yellow-50">
+    <div class="mx-auto flex flex-col gap-16 p-16 lg:container md:gap-24">
       <header class="self-center md:self-start">
-        <div class="bg-amber-400 p-16 space-y-14">
+        <div class="space-y-14 bg-amber-400 p-16">
           <h1
-            class="font-title tracking-[.25em] relative top-4 -left-12 text-center uppercase text-4xl -rotate-45 font-bold"
+            class="relative -left-12 top-4 -rotate-45 text-center font-title text-4xl font-bold uppercase tracking-[.25em]"
           >
             Ball is<br />Wine
           </h1>
@@ -32,18 +23,17 @@ const days = (await getCollection("days")).sort((a, b) => {
           <Logo />
         </div>
         <a
-          href="/about"
-          class="mt-6 block font-title text-2xl text-center md:text-start underline underline-offset-2 decoration-wavy hover:text-rose-600"
-          >What is this?</a
+          class="mt-6 block text-center font-title text-2xl underline decoration-wavy underline-offset-2 hover:text-rose-600 md:text-start"
+          href="/about">What is this?</a
         >
       </header>
 
-      <main class="self-center flex flex-col items-center gap-12 md:gap-16">
+      <main class="flex flex-col items-center gap-12 self-center md:gap-16">
         {
           days.map((entry) => (
             <a
+              class="text-center font-sans text-4xl font-semibold text-rose-900 hover:text-rose-600 hover:underline md:text-6xl"
               href={`/${entry.slug}`}
-              class="font-sans text-rose-900 text-center text-4xl md:text-6xl font-semibold hover:underline hover:text-rose-600"
             >
               {entry.data.date}
             </a>
