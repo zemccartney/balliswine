@@ -1,11 +1,9 @@
 ---
 import { getCollection, getEntries } from "astro:content";
 
-import DetailsPanel from "../components/detail/panel";
+import Tabs from "../components/detail/tabs.astro";
 import Logo, { Sizes } from "../components/logo.astro";
 import Shell from "../layouts/shell.astro";
-
-// TODO Rewrite the below as a <style> element, ffs
 
 // Sync styles between intro content and Panel content
 // Generic styles e.g. spacing and layout can live here
@@ -49,7 +47,7 @@ const [{ Content: BallContent }, { Content: WineContent }] = await Promise.all(
 );
 
 const { wine } = winePost.data;
-// TODO use formatter to build human-readable data instead of storing as property in content
+// TODO use formatter to build human-readable date instead of storing as property in content
 const description = `Post for the games on ${entry.data.date}${wine ? `, with a bottle of ${wine}` : ""}`;
 ---
 
@@ -111,28 +109,10 @@ const description = `Post for the games on ${entry.data.date}${wine ? `, with a 
               <Content />
             </div>
           </section>
-          <DetailsPanel client:load>
-            <Fragment slot="ballContent">
-              <div
-                class:list={[...typographyStyles, "text-rose-950", "TypoBox"]}
-              >
-                <BallContent />
-                <p class="text-center [&:not(:only-child)]:hidden">
-                  Thoughts and feels coming after the games!
-                </p>
-              </div>
-            </Fragment>
-            <Fragment slot="wineContent">
-              <div
-                class:list={[...typographyStyles, "text-rose-950", "TypoBox"]}
-              >
-                <WineContent />
-                <p class="text-center [&:not(:only-child)]:hidden">
-                  Thoughts and feels coming after the games!
-                </p>
-              </div>
-            </Fragment>
-          </DetailsPanel>
+          <Tabs panelStyles={[...typographyStyles, "text-rose-950", "TypoBox"]}>
+            <BallContent slot="ball" />
+            <WineContent slot="wine" />
+          </Tabs>
         </article>
       </main>
     </div>
