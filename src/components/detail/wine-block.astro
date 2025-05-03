@@ -14,9 +14,7 @@ const { class: className, imgProps = {}, ...rest } = Astro.props;
   {...rest}
 >
   <Image width={378} {...imgProps} />
-  <div
-    class="wine-stats mx-auto flex w-fit max-w-[75%] flex-col md:max-w-[50%]"
-  >
+  <div class="mx-auto flex w-fit max-w-[75%] flex-col md:max-w-[50%]">
     <slot />
   </div>
 </div>

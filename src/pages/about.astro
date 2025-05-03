@@ -4,7 +4,7 @@ import { Image } from "astro:assets";
 import Logo, { Sizes } from "../components/logo.astro";
 import Boris from "../images/boris.jpg";
 import Shell from "../layouts/shell.astro";
-import { typographyStyles } from "./[...slug].astro";
+import Typography from "../layouts/typography.astro";
 ---
 
 <Shell
@@ -47,12 +47,7 @@ import { typographyStyles } from "./[...slug].astro";
           >.
         </figcaption>
       </figure>
-      <div
-        class:list={[
-          ...typographyStyles,
-          "max-w-[30em] text-rose-950 md:mx-0 [&]:-mx-10",
-        ]}
-      >
+      <Typography class="max-w-[30em] text-rose-950 md:mx-0 [&]:-mx-10">
         <p>
           This is a creative writing project. Once a month, I'll get a bottle of
           wine and watch a slate of basketball games and write about them, the
@@ -87,7 +82,7 @@ import { typographyStyles } from "./[...slug].astro";
             my personal site</a
           >. Thanks for stopping by!
         </p>
-      </div>
+      </Typography>
     </div>
   </div>
 </Shell>

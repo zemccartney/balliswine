@@ -1,11 +1,7 @@
 ---
-import type { ClassValue } from "clsx";
-
 import Clsx from "clsx";
 
-interface Props {
-  panelStyles?: ClassValue;
-}
+import Typography from "../../layouts/typography.astro";
 
 const TABS = {
   BALL: "ball",
@@ -16,8 +12,6 @@ const EMOJI = {
   [TABS.BALL]: "🏀",
   [TABS.WINE]: "🍷",
 };
-
-const { panelStyles } = Astro.props;
 ---
 
 <script>
@@ -120,18 +114,18 @@ const { panelStyles } = Astro.props;
   <section class="-mx-16 my-8 -mb-24 bg-yellow-50 p-8" id="panel-list">
     {/* Can't loop, astro errored on dynamic slot name */}
     <div aria-labelledby={`${TABS.BALL}-tab`} hidden role="tabpanel">
-      <div class:list={[panelStyles]}>
+      <Typography class="text-rose-950">
         <slot name="ball">
           <p class="text-center">Thoughts and feels coming after the games!</p>
         </slot>
-      </div>
+      </Typography>
     </div>
     <div aria-labelledby={`${TABS.WINE}-tab`} hidden role="tabpanel">
-      <div class:list={[panelStyles]}>
+      <Typography class="text-rose-950">
         <slot name="wine">
           <p class="text-center">Thoughts and feels coming after the games!</p>
         </slot>
-      </div>
+      </Typography>
     </div>
   </section>
 </div>
