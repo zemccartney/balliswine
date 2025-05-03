@@ -1,0 +1,34 @@
+---
+import CellarShell from "../../layouts/cellar-shell.astro";
+---
+
+<CellarShell description="An archive of wines tried, on and off the blog">
+  <main class="mx-auto p-16 md:container">
+    <h1 class="font-title text-center text-6xl text-zinc-300 md:text-8xl">
+      The Cellar
+    </h1>
+    <p
+      class="mt-6 text-center font-sans text-lg text-zinc-300 italic md:mt-12 md:text-xl"
+    >
+      Look around at wines I've tried and what about them
+    </p>
+
+    <div
+      class="mt-12 flex flex-col items-center justify-center gap-12 md:mt-20 md:flex-row"
+    >
+      <a
+        class="font-title text-5xl tracking-wider text-orange-600 underline hover:text-orange-300"
+        href="/cellar/wines"
+      >
+        By wine
+      </a>
+      <div class="font-emoji text-2xl text-stone-300">&#x1FAA8;</div>
+      <a
+        class="font-title text-5xl tracking-wider text-orange-600 underline hover:text-orange-300"
+        href="cellar/winemakers"
+      >
+        By maker
+      </a>
+    </div>
+  </main>
+</CellarShell>

@@ -1,0 +1,31 @@
+---
+import Logo from "../components/logo.astro";
+import Shell from "../layouts/shell.astro";
+---
+
+<style>
+  @reference "../styles/global.css";
+
+  .logo-override {
+    .bw-logo-ball {
+      @apply text-4xl;
+    }
+
+    .bw-logo-wine {
+      @apply text-[12rem];
+    }
+  }
+</style>
+
+<Shell title="Page not found">
+  <div class="min-h-full bg-yellow-50 p-16" id="cellar-container">
+    <Logo class="logo-override mx-auto mt-16 w-fit rotate-90 text-rose-950" />
+    <h1 class="mt-8 text-center font-sans text-4xl text-rose-950">
+      Page not found!
+    </h1>
+    <a
+      class="mt-6 block text-center font-sans text-2xl text-rose-950 underline hover:text-rose-600"
+      href="/">Return home</a
+    >
+  </div>
+</Shell>

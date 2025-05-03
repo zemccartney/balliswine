@@ -1,11 +1,14 @@
 ---
-export enum Sizes {
-  SMALL = "small",
-  NORMAL = "normal",
-}
+// TODO File bug? unable to export w/ as const, get "Expected ";" but found "const""
+const Sizes = {
+  NORMAL: "normal",
+  SMALL: "small",
+} as const;
+
 interface Props {
   class?: string;
-  size?: Sizes;
+  // https://stackoverflow.com/a/60148768
+  size?: (typeof Sizes)[keyof typeof Sizes];
 }
 
 const { class: className, size = Sizes.NORMAL, ...rest } = Astro.props;
@@ -22,7 +25,12 @@ if (size === Sizes.SMALL) {
 ---
 
 {/* TODO Re-evaluate items-end, not sure necessary */}
-<div class:list={["font-emoji flex flex-col items-end", className]} {...rest}>
+<div
+  class:list={["font-emoji flex flex-col items-end", className]}
+  {...rest}
+  aria-label="Ball is Wine logo (wine glass emoji with a smaller basketball emoji hovering above, like the wine glass is a basket)"
+  role="img"
+>
   <div
     class={`bw-logo-ball font-bold ${ballFontSize} relative ${rightOffset} -top-2`}
   >

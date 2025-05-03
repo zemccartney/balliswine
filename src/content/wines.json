@@ -1,0 +1,44 @@
+[
+  {
+    "hue": "#a50036",
+    "id": "la-vinhota",
+    "maker": "domaine-balansa",
+    "name": "La Vinhota"
+  },
+  {
+    "hue": "#750023",
+    "id": "vin-de-frantz",
+    "maker": "marie-thibault-frantz-saumon",
+    "name": "Vin de Frantz"
+  },
+  {
+    "hue": "#430822",
+    "id": "pur-breton",
+    "maker": "olivier-cousin-domaine-cousin-leduc",
+    "name": "Pur Breton"
+  },
+  {
+    "hue": "#430822",
+    "id": "bel-soula",
+    "maker": "domaine-balansa",
+    "name": "Bel Soula"
+  },
+  {
+    "hue": "#430822",
+    "id": "el-marciano",
+    "maker": "alfredo-maestro",
+    "name": "El Marciano"
+  },
+  {
+    "hue": "#95002a",
+    "id": "avanti-popolo",
+    "maker": "le-temps-des-cerises",
+    "name": "Avanti Popolo"
+  },
+  {
+    "hue": "#430822",
+    "id": "alosa",
+    "maker": "cellar-comalats",
+    "name": "Alosa"
+  }
+]
