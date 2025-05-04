@@ -27,11 +27,11 @@ const Element = element;
       @apply my-[1.25em];
     }
 
-    > *:first-child {
+    > *:first-child:not(:only-child) {
       @apply mt-0;
     }
 
-    > *:last-child {
+    > *:last-child:not(:only-child) {
       @apply mb-0;
     }
 

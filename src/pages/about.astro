@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 
-import Logo from "../components/logo.astro";
+import Subnav from "../components/subnav.astro";
 import Boris from "../images/boris.jpg";
 import Shell from "../layouts/shell.astro";
 import Typography from "../layouts/typography.astro";
@@ -11,21 +11,16 @@ import Typography from "../layouts/typography.astro";
   description="Details on the what and why of Ball is Wine"
   title="About the project"
 >
-  <div class="min-h-full bg-yellow-50">
-    <div
-      class="mx-auto flex flex-col items-center gap-12 p-16 md:container md:gap-20"
-    >
-      <a class="mb-4 text-rose-900 hover:text-rose-300 md:mb-8" href="/">
-        <Logo size="small" />
-      </a>
+  <div class="min-h-full bg-yellow-50 p-16">
+    <Subnav />
+    <main class="mt-12 space-y-12 md:mt-20 md:space-y-20">
       <h1 class="flex flex-col gap-6 text-center text-rose-900">
         <span class="font-sans text-2xl md:text-4xl">What is</span>
         <span class="font-title text-4xl md:text-8xl">Ball is Wine?</span>
       </h1>
-      <figure>
+      <figure class="mx-auto w-fit">
         <Image
           alt="Boris Diaw, glass of wine raised, enjoying himself immensely"
-          class="mx-auto"
           src={Boris}
           width="480"
         />
@@ -83,6 +78,6 @@ import Typography from "../layouts/typography.astro";
           >. Thanks for stopping by!
         </p>
       </Typography>
-    </div>
+    </main>
   </div>
 </Shell>

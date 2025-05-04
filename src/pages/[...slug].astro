@@ -2,7 +2,7 @@
 import { getCollection, getEntries, render } from "astro:content";
 
 import Tabs from "../components/detail/tabs.astro";
-import Logo from "../components/logo.astro";
+import Subnav from "../components/subnav.astro";
 import Shell from "../layouts/shell.astro";
 import Typography from "../layouts/typography.astro";
 import * as Utils from "../utils";
@@ -17,7 +17,7 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { Content } = await render(entry);
+const { Content: Intro } = await render(entry);
 
 const [ballPost, winePost] = await getEntries([
   entry.data.ballContent,
@@ -34,29 +34,25 @@ const description = `Post for the games on ${dateFmt}${wine ? `, with a bottle o
 ---
 
 <Shell description={description} title={dateFmt}>
-  <div class="min-h-full bg-rose-950">
-    <div class="flex flex-col gap-12 p-16 md:gap-20">
-      <a class="mb-8 self-center text-yellow-100 hover:text-rose-300" href="/">
-        <Logo size="small" />
-      </a>
-      <main>
-        <article class="space-y-8">
-          <h1
-            class="text-center font-mono text-4xl text-yellow-100 sm:text-6xl md:text-8xl"
-          >
-            <time datetime={entry.id}>{dateFmt}</time>
-          </h1>
-          <section class="-mx-16 bg-yellow-50 p-8">
-            <Typography class="text-rose-950">
-              <Content />
-            </Typography>
-          </section>
-          <Tabs>
-            <BallContent slot="ball" />
-            <WineContent slot="wine" />
-          </Tabs>
-        </article>
-      </main>
-    </div>
+  <div class="min-h-full bg-rose-950 p-16">
+    <Subnav pageVariant="dark" />
+    <main class="mt-12 md:mt-20">
+      <article class="space-y-8">
+        <h1
+          class="text-center font-mono text-4xl text-yellow-100 sm:text-6xl md:text-8xl"
+        >
+          <time datetime={entry.id}>{dateFmt}</time>
+        </h1>
+        <section class="-mx-16 bg-yellow-50 p-8">
+          <Typography class="text-rose-950">
+            <Intro />
+          </Typography>
+        </section>
+        <Tabs>
+          <BallContent slot="ball" />
+          <WineContent slot="wine" />
+        </Tabs>
+      </article>
+    </main>
   </div>
 </Shell>
