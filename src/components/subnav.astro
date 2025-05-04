@@ -1,18 +1,22 @@
 ---
+import type { ClassValue } from "clsx";
+
 interface Props {
+  class?: ClassValue;
   pageVariant?: "dark" | "light";
 }
 
 import Logo from "./logo.astro";
 
-const { pageVariant = "light" } = Astro.props;
+const { class: className, pageVariant = "light" } = Astro.props;
 const textColorClass =
   pageVariant === "dark" ? "text-yellow-100" : "text-rose-900";
-const hoverColorClass = "hover:text-rose-300";
+const hoverColorClass =
+  pageVariant === "dark" ? "hover:text-rose-300" : "hover:text-rose-600";
 const activeColorClass =
   pageVariant === "dark"
-    ? "[&.active]text-rose-300 [&.active]pointer-events-none"
-    : "[&.active]text-rose-500 [&.active]pointer-events-none";
+    ? "[&.active]:text-rose-300 [&.active]:pointer-events-none"
+    : "[&.active]:text-rose-600 [&.active]:pointer-events-none";
 ---
 
 <script>
@@ -25,7 +29,7 @@ const activeColorClass =
   navLink?.classList.add("active");
 </script>
 
-<nav class="mx-auto w-fit">
+<nav class:list={["mx-auto w-fit", className]}>
   <a
     class:list={["mx-auto mb-8 block w-fit", textColorClass, hoverColorClass]}
     href="/"

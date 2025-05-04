@@ -41,7 +41,7 @@ days.sort((a, b) => b.id.localeCompare(a.id));
         {
           days.map((entry) => (
             <a
-              class="block text-center font-sans text-4xl font-semibold text-rose-900 hover:text-rose-600 hover:underline md:text-6xl"
+              class="block text-center font-sans text-4xl font-semibold text-balance text-rose-900 hover:text-rose-600 hover:underline md:text-6xl"
               href={`/${entry.id}`}
             >
               {Utils.formatYYYYMMDD(entry.id)}
