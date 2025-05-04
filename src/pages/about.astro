@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 
-import Logo, { Sizes } from "../components/logo.astro";
+import Logo from "../components/logo.astro";
 import Boris from "../images/boris.jpg";
 import Shell from "../layouts/shell.astro";
 import Typography from "../layouts/typography.astro";
@@ -16,7 +16,7 @@ import Typography from "../layouts/typography.astro";
       class="mx-auto flex flex-col items-center gap-12 p-16 md:container md:gap-20"
     >
       <a class="mb-4 text-rose-900 hover:text-rose-300 md:mb-8" href="/">
-        <Logo size={Sizes.SMALL} />
+        <Logo size="small" />
       </a>
       <h1 class="flex flex-col gap-6 text-center text-rose-900">
         <span class="font-sans text-2xl md:text-4xl">What is</span>
@@ -33,7 +33,7 @@ import Typography from "../layouts/typography.astro";
           class:list={[
             "mt-2",
             "max-w-[480px]", // synced to image size
-            "font-sans text-base italic text-rose-950",
+            "font-sans text-base text-rose-950 italic",
           ]}
         >
           Sourced from the <a

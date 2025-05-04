@@ -3,19 +3,20 @@ import { getCollection } from "astro:content";
 
 import Logo from "../components/logo.astro";
 import Shell from "../layouts/shell.astro";
+import * as Utils from "../utils";
 
 // slugs are iso dates (yyyy-mm-dd), which are lexicographically sortable
 const days = await getCollection("days");
-days.sort((a, b) => b.slug.localeCompare(a.slug));
+days.sort((a, b) => b.id.localeCompare(a.id));
 ---
 
 <Shell>
   <div class="min-h-full bg-yellow-50">
-    <div class="mx-auto flex flex-col gap-16 p-16 lg:container md:gap-24">
+    <div class="mx-auto flex flex-col gap-16 p-16 md:gap-24 lg:container">
       <header class="self-center md:self-start">
         <div class="space-y-14 bg-amber-400 p-16">
           <h1
-            class="relative -left-12 top-4 -rotate-45 text-center font-title text-4xl font-bold uppercase tracking-[.25em]"
+            class="font-title relative top-4 -left-12 -rotate-45 text-center text-4xl font-bold tracking-[.25em] uppercase"
           >
             Ball is<br />Wine
           </h1>
@@ -23,7 +24,7 @@ days.sort((a, b) => b.slug.localeCompare(a.slug));
           <Logo />
         </div>
         <a
-          class="mt-6 block text-center font-title text-2xl underline decoration-wavy underline-offset-2 hover:text-rose-600 md:text-start"
+          class="font-title mt-6 block text-center text-2xl underline decoration-wavy underline-offset-2 hover:text-rose-600 md:text-start"
           href="/about">What is this?</a
         >
       </header>
@@ -33,9 +34,9 @@ days.sort((a, b) => b.slug.localeCompare(a.slug));
           days.map((entry) => (
             <a
               class="text-center font-sans text-4xl font-semibold text-rose-900 hover:text-rose-600 hover:underline md:text-6xl"
-              href={`/${entry.slug}`}
+              href={`/${entry.id}`}
             >
-              {entry.data.date}
+              {Utils.formatYYYYMMDD(entry.id)}
             </a>
           ))
         }

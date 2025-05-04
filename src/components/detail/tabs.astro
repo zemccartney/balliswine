@@ -41,6 +41,8 @@ const EMOJI = {
 </script>
 
 <style>
+  @reference "../../styles/global.css";
+
   #panel-list {
     display: none;
   }
@@ -85,7 +87,7 @@ const EMOJI = {
               aria-controls={`${tabName}-tab`}
               aria-selected="false"
               class={Clsx([
-                "space-y-4 leading-[initial] text-yellow-100 transition-[font-size,padding] duration-500 ease-out hover:text-rose-300", // leading-initial to override line height built in to text
+                "cursor-pointer space-y-4 leading-[initial] text-yellow-100 transition-[font-size,padding] duration-500 ease-out hover:text-rose-300", // leading-initial to override line height built in to text
                 "p-4 text-4xl md:p-16 lg:text-8xl",
               ])}
               id={`${tabName}-tab`}
@@ -93,7 +95,7 @@ const EMOJI = {
               type="button"
             >
               <div class="font-emoji">{EMOJI[tabName]}</div>
-              <div class="font-title uppercase tracking-widest">{`${tabName.charAt(0).toUpperCase()}${tabName.slice(1)}`}</div>
+              <div class="font-title tracking-widest uppercase">{`${tabName.charAt(0).toUpperCase()}${tabName.slice(1)}`}</div>
             </button>
             {i < arr.length - 1 && (
               <div

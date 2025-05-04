@@ -1,21 +1,23 @@
 ---
-import { getCollection, getEntries } from "astro:content";
+import { getCollection, getEntries, render } from "astro:content";
 
 import Tabs from "../components/detail/tabs.astro";
-import Logo, { Sizes } from "../components/logo.astro";
+import Logo from "../components/logo.astro";
 import Shell from "../layouts/shell.astro";
 import Typography from "../layouts/typography.astro";
+import * as Utils from "../utils";
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection("days");
+
   return blogEntries.map((entry) => ({
-    params: { slug: entry.slug },
+    params: { slug: entry.id },
     props: { entry },
   }));
 }
 
 const { entry } = Astro.props;
-const { Content } = await entry.render();
+const { Content } = await render(entry);
 
 const [ballPost, winePost] = await getEntries([
   entry.data.ballContent,
@@ -23,26 +25,26 @@ const [ballPost, winePost] = await getEntries([
 ]);
 
 const [{ Content: BallContent }, { Content: WineContent }] = await Promise.all(
-  [ballPost, winePost].map((ent) => ent.render()),
+  [ballPost, winePost].map((ent) => render(ent)),
 );
 
 const { wine } = winePost.data;
-// TODO use formatter to build human-readable date instead of storing as property in content
-const description = `Post for the games on ${entry.data.date}${wine ? `, with a bottle of ${wine}` : ""}`;
+const dateFmt = Utils.formatYYYYMMDD(entry.id);
+const description = `Post for the games on ${dateFmt}${wine ? `, with a bottle of ${wine}` : ""}`;
 ---
 
-<Shell description={description} title={entry.data.date}>
+<Shell description={description} title={dateFmt}>
   <div class="min-h-full bg-rose-950">
     <div class="flex flex-col gap-12 p-16 md:gap-20">
       <a class="mb-8 self-center text-yellow-100 hover:text-rose-300" href="/">
-        <Logo size={Sizes.SMALL} />
+        <Logo size="small" />
       </a>
       <main>
         <article class="space-y-8">
           <h1
             class="text-center font-mono text-4xl text-yellow-100 sm:text-6xl md:text-8xl"
           >
-            <time datetime={entry.slug}>{entry.data.date}</time>
+            <time datetime={entry.id}>{dateFmt}</time>
           </h1>
           <section class="-mx-16 bg-yellow-50 p-8">
             <Typography class="text-rose-950">

@@ -1,19 +1,22 @@
+import { glob } from "astro/loaders";
 import { defineCollection, reference, z } from "astro:content";
 
 const daysCollection = defineCollection({
+  loader: glob({ base: "./src/content/days", pattern: "**/[^_]*.{md,mdx}" }),
   schema: z.object({
     ballContent: reference("thoughts"),
-    date: z.string(), // Uninterested in futzing with date formatting right now, might revisit
     wineContent: reference("thoughts"),
   }),
-  type: "content",
 });
 
 const thoughtsCollection = defineCollection({
+  loader: glob({
+    base: "./src/content/thoughts",
+    pattern: "**/[^_]*.{md,mdx}",
+  }),
   schema: z.object({
     wine: z.string().optional(),
   }),
-  type: "content",
 });
 
 export const collections = {
