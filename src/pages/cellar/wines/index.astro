@@ -1,0 +1,195 @@
+---
+import WineListItem from "../../../components/cellar/wine-list-item.astro";
+import Subnav from "../../../components/subnav.astro";
+import Shell from "../../../layouts/shell.astro";
+
+// Hardcoded wine data for prototype
+// Group by wine name and count vintages
+const wineData = [
+  {
+    id: "alosa",
+    name: "Alosa",
+    producer: "Cellar Comalats",
+    vintageCount: 1,
+    vintages: [
+      {
+        dateTried: "2025-04-09",
+        grapeVariety: "Garnatxa Negra",
+        vintage: "2023",
+      },
+    ],
+  },
+  {
+    id: "avanti-popolo",
+    name: "Avanti Popolo",
+    producer: "Cantina Furlani",
+    vintageCount: 1,
+    vintages: [
+      {
+        dateTried: "2025-03-08",
+        grapeVariety: "Teroldego",
+        vintage: "2023",
+      },
+    ],
+  },
+  {
+    id: "el-marciano",
+    name: "El Marciano",
+    producer: "Alfredo Maestro",
+    vintageCount: 1,
+    vintages: [
+      {
+        dateTried: "2025-02-21",
+        grapeVariety: "Grenache",
+        vintage: "2022",
+      },
+    ],
+  },
+  {
+    id: "bel-soula",
+    name: "Bel Soula",
+    producer: "Domaine Sulauze",
+    vintageCount: 1,
+    vintages: [
+      {
+        dateTried: "2025-01-17",
+        grapeVariety: "Vermentino, Ugni Blanc",
+        vintage: "2022",
+      },
+    ],
+  },
+  {
+    id: "pur-breton",
+    name: "Pur Breton",
+    producer: "Domaine Bobinet",
+    vintageCount: 1,
+    vintages: [
+      {
+        dateTried: "2024-12-14",
+        grapeVariety: "Cabernet Franc",
+        vintage: "2022",
+      },
+    ],
+  },
+  {
+    id: "vin-de-frantz",
+    name: "Vin de Frantz",
+    producer: "Frantz Saumon",
+    vintageCount: 1,
+    vintages: [
+      {
+        dateTried: "2024-11-15",
+        grapeVariety: "Gamay, Grolleau, Pineau d'Aunis",
+        vintage: "2023",
+      },
+    ],
+  },
+  {
+    id: "vinhota",
+    name: "Vinhota",
+    producer: "Quinta da Boavista",
+    vintageCount: 1,
+    vintages: [
+      {
+        dateTried: "2024-10-22",
+        grapeVariety: "Loureiro",
+        vintage: "2022",
+      },
+    ],
+  },
+];
+
+// Sort wines by most recent vintage tried
+wineData.sort((a, b) => {
+  // Find the latest date for each wine
+  let aLatestDate = "";
+  for (const vintage of a.vintages) {
+    if (vintage.dateTried > aLatestDate) {
+      aLatestDate = vintage.dateTried;
+    }
+  }
+
+  let bLatestDate = "";
+  for (const vintage of b.vintages) {
+    if (vintage.dateTried > bLatestDate) {
+      bLatestDate = vintage.dateTried;
+    }
+  }
+
+  return bLatestDate.localeCompare(aLatestDate);
+});
+---
+
+<Shell
+  description="Explore wines tried throughout the Ball is Wine blog"
+  title="Wines in the Cellar"
+>
+  <div class="min-h-full bg-stone-600">
+    <Subnav class="h-64 w-full bg-yellow-50 p-16" />
+    <main class="mx-auto p-8 md:container md:p-16">
+      <!-- Breadcrumb navigation -->
+      <nav class="font-title mb-8 flex items-center text-lg text-amber-200">
+        <a class="hover:text-rose-300" href="/cellar"> The Cellar </a>
+        <span class="mx-2">›</span>
+      </nav>
+
+      <div class="mb-12 md:mb-16">
+        <h1 class="font-title text-center text-5xl text-amber-200 md:text-7xl">
+          Wines
+        </h1>
+      </div>
+
+      <div class="mx-auto max-w-6xl">
+        <!-- Wine grid with lattice-like dividers that extend past edges -->
+        <div class="relative bg-stone-800/30 p-4 shadow-lg">
+          <!-- Grid container -->
+          <div class="grid grid-cols-1 gap-0 sm:grid-cols-2 lg:grid-cols-3">
+            {
+              wineData.map((wine) => (
+                <div class="relative">
+                  <WineListItem
+                    id={wine.id}
+                    name={wine.name}
+                    producer={wine.producer}
+                    vintageCount={wine.vintageCount}
+                  />
+                </div>
+              ))
+            }
+          </div>
+
+          {/* Horizontal lattice lines */}
+          <div class="absolute inset-x-0 top-0 h-full">
+            {
+              Array.from({ length: Math.ceil(wineData.length / 3) }).map(
+                (_, i) =>
+                  i > 0 && (
+                    <div
+                      class="absolute -left-4 w-[calc(100%+2rem)] border-t-2 border-amber-800/40"
+                      style={`top: ${(i / Math.ceil(wineData.length / 3)) * 100}%`}
+                    />
+                  ),
+              )
+            }
+          </div>
+
+          {/* Vertical lattice lines */}
+          <div class="absolute inset-y-0 left-0 w-full">
+            {
+              Array.from({ length: 4 }).map(
+                (_, i) =>
+                  i > 0 &&
+                  i < 3 && (
+                    <div
+                      class="absolute -top-4 hidden h-[calc(100%+2rem)] border-l-2 border-amber-800/40 sm:block"
+                      style={`left: ${(i / 3) * 100}%`}
+                    />
+                  ),
+              )
+            }
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</Shell>

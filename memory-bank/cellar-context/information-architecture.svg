@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="900" height="500" fill="#f8f8f8"/>
+  
+  <!-- Title -->
+  <text x="450" y="40" font-family="Arial, sans-serif" font-size="24" text-anchor="middle" font-weight="bold">Information Architecture Diagram</text>
+  
+  <!-- Wine Explorer Box -->
+  <rect x="350" y="80" width="200" height="60" fill="#ffffff" stroke="#5e2ca5" stroke-width="2" rx="4" ry="4"/>
+  <text x="450" y="115" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" font-weight="bold">Wine Explorer</text>
+  <text x="450" y="135" font-family="Arial, sans-serif" font-size="12" text-anchor="middle">List of all vintages tried</text>
+  
+  <!-- Wine Detail Box -->
+  <rect x="350" y="220" width="200" height="60" fill="#ffffff" stroke="#5e2ca5" stroke-width="2" rx="4" ry="4"/>
+  <text x="450" y="255" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" font-weight="bold">Wine Detail</text>
+  <text x="450" y="275" font-family="Arial, sans-serif" font-size="12" text-anchor="middle">Details for a specific wine</text>
+  
+  <!-- Producer List Box -->
+  <rect x="100" y="220" width="200" height="60" fill="#ffffff" stroke="#5e2ca5" stroke-width="2" rx="4" ry="4"/>
+  <text x="200" y="255" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" font-weight="bold">Producer List</text>
+  <text x="200" y="275" font-family="Arial, sans-serif" font-size="12" text-anchor="middle">Text-based list of producers</text>
+  
+  <!-- Producer Map Box -->
+  <rect x="600" y="220" width="200" height="60" fill="#ffffff" stroke="#5e2ca5" stroke-width="2" rx="4" ry="4"/>
+  <text x="700" y="255" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" font-weight="bold">Producer Map</text>
+  <text x="700" y="275" font-family="Arial, sans-serif" font-size="12" text-anchor="middle">Geographic view of producers</text>
+  
+  <!-- Producer Detail Box -->
+  <rect x="350" y="360" width="200" height="60" fill="#ffffff" stroke="#5e2ca5" stroke-width="2" rx="4" ry="4"/>
+  <text x="450" y="395" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" font-weight="bold">Producer Detail</text>
+  <text x="450" y="415" font-family="Arial, sans-serif" font-size="12" text-anchor="middle">Details and wines for a producer</text>
+  
+  <!-- Arrows -->
+  <!-- Wine Explorer to Wine Detail -->
+  <line x1="450" y1="140" x2="450" y2="220" stroke="#333333" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="460" y="180" font-family="Arial, sans-serif" font-size="12">Click wine</text>
+  
+  <!-- Wine Detail to Wine Explorer -->
+  <line x1="430" y1="220" x2="430" y2="140" stroke="#333333" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrow)"/>
+  <text x="370" y="180" font-family="Arial, sans-serif" font-size="12">Back to Explorer</text>
+  
+  <!-- Producer List to Producer Detail -->
+  <line x1="200" y1="280" x2="350" y2="380" stroke="#333333" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="240" y="340" font-family="Arial, sans-serif" font-size="12">Click producer</text>
+  
+  <!-- Producer Map to Producer Detail -->
+  <line x1="700" y1="280" x2="550" y2="380" stroke="#333333" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="650" y="340" font-family="Arial, sans-serif" font-size="12">Click pin</text>
+  
+  <!-- Producer Detail to Producer List/Map -->
+  <line x1="420" y1="360" x2="240" y2="280" stroke="#333333" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrow)"/>
+  <text x="290" y="310" font-family="Arial, sans-serif" font-size="12">Back to producers</text>
+  
+  <!-- Producer Detail to Wine Detail -->
+  <line x1="480" y1="360" x2="480" y2="280" stroke="#333333" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="490" y="320" font-family="Arial, sans-serif" font-size="12">Click wine</text>
+  
+  <!-- Producer List to Producer Map -->
+  <line x1="300" y1="250" x2="600" y2="250" stroke="#333333" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="450" y="240" font-family="Arial, sans-serif" font-size="12">Tab navigation</text>
+  
+  <!-- Producer Map to Producer List -->
+  <line x1="600" y1="230" x2="300" y2="230" stroke="#333333" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="450" y="215" font-family="Arial, sans-serif" font-size="12">Tab navigation</text>
+  
+  <!-- Arrow Marker -->
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#333333"/>
+    </marker>
+  </defs>
+</svg>

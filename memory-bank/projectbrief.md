@@ -1,0 +1,1 @@
+This is a creative writing project. Once a month, I'll get a bottle of wine and watch a slate of basketball games and write about them, the ball and the wine. I love watching basketball, I watch a good bit of the NBA and WNBA. I know very little about wine, but it seemed as good a writing angle as any

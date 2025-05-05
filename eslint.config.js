@@ -82,6 +82,11 @@ export default tseslint.config(
       "unicorn/prefer-module": ["off"],
     },
   },
-  ...eslintMarkdown.configs.recommended,
+  {
+    // TODO This is gross, but was getting the error: "Key "language": Could not find "gfm" in plugin "markdown"", didn't feel like digging into it
+    // Maybe something with the tseslint helper?
+    ...eslintMarkdown.configs.recommended[0],
+    language: "markdown/gfm",
+  },
   eslintConfigPrettier,
 );

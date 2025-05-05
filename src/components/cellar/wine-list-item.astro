@@ -1,0 +1,27 @@
+---
+interface Props {
+  id: string;
+  name: string;
+  producer: string;
+  vintageCount: number;
+}
+
+const { id, name, producer, vintageCount } = Astro.props;
+---
+
+<a
+  class="group block h-full w-full p-6 transition-colors duration-200 hover:bg-amber-100/10"
+  href={`/cellar/wines/${id}`}
+>
+  <div class="flex h-full flex-col gap-2">
+    <h3
+      class="font-title text-xl text-rose-300 transition-colors duration-200 group-hover:text-rose-200 md:text-2xl"
+    >
+      {name}
+    </h3>
+    <p class="text-base text-amber-200 md:text-lg">
+      {producer} • {vintageCount}
+      {vintageCount === 1 ? "vintage" : "vintages"} tried
+    </p>
+  </div>
+</a>

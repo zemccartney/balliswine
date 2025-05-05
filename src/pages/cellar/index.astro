@@ -1,13 +1,13 @@
 ---
-import Subnav from "../components/subnav.astro";
-import Shell from "../layouts/shell.astro";
+import Subnav from "../../components/subnav.astro";
+import Shell from "../../layouts/shell.astro";
 ---
 
 <Shell
   description="A catalog of wines tried throughout the blog"
   title="The Cellar"
 >
-  <div class="min-h-full bg-stone-600">
+  <div class="min-h-full bg-stone-800">
     <Subnav class="h-64 w-full bg-yellow-50 p-16" />
     <main class="mx-auto p-16 md:container">
       <h1 class="font-title text-center text-6xl text-amber-200 md:text-8xl">
@@ -23,15 +23,15 @@ import Shell from "../layouts/shell.astro";
         class="mt-12 flex flex-col items-center justify-center gap-12 md:mt-20 md:flex-row"
       >
         <a
-          class="font-title text-5xl tracking-wider text-red-100 underline hover:text-rose-300"
+          class="font-title text-5xl tracking-wider text-rose-300 underline hover:text-rose-200"
           href="/cellar/wines"
         >
           By wine
         </a>
         <div class="hidden text-6xl text-amber-200 md:block">/</div>
         <a
-          class="font-title text-5xl tracking-wider text-red-100 underline hover:text-rose-300"
-          href="cellar/prodcuers"
+          class="font-title text-5xl tracking-wider text-rose-300 underline hover:text-rose-200"
+          href="cellar/producers"
         >
           By producer
         </a>
