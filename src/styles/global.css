@@ -5,4 +5,7 @@
   --font-sans: "Geist Sans", sans-serif;
   --font-title: "Pacifico", "cursive";
   --font-emoji: "Noto Emoji Variable", sans-serif;
+  /* From https://modernfontstacks.com/ */
+  --font-old-style:
+    "Iowan Old Style", "Palatino Linotype", "URW Palladio L", P052, serif;
 }
