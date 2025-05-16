@@ -1,6 +1,5 @@
 ---
-import Subnav from "../../../components/subnav.astro";
-import Shell from "../../../layouts/shell.astro";
+import CellarShell from "../../../layouts/cellar-shell.astro";
 import Typography from "../../../layouts/typography.astro";
 import wineData from "../stub";
 
@@ -21,20 +20,29 @@ wine.vintages.sort((a, b) => b.vintage.localeCompare(a.vintage));
 const hasMultipleVintages = wine.vintages.length > 1;
 ---
 
-<Shell
+<CellarShell
   description={`Details about ${wine.name} wine from ${wine.producer}`}
   title={`${wine.name} - Wine Detail - The Cellar`}
 >
-  <div class="min-h-full bg-stone-600">
-    <Subnav class="h-64 w-full bg-yellow-50 p-16" pageVariant="light" />
-    <main class="mx-auto p-8 md:container md:p-16">
-      <!-- Breadcrumb navigation -->
-      <nav class="font-title mb-8 flex items-center text-lg text-amber-200">
-        <a class="hover:text-rose-300" href="/cellar"> The Cellar </a>
-        <span class="mx-2">›</span>
-        <a class="hover:text-rose-300" href="/cellar/wines"> Wine Explorer </a>
-        <span class="mx-2">›</span>
-        <span class="text-rose-300">{wine.name}</span>
+  <main class="mx-auto p-8 md:container md:p-16">
+    <!-- Breadcrumb navigation -->
+    <div class="mx-auto max-w-2/3">
+      <nav class="font-title mx-auto mb-8 flex items-center">
+        <a
+          class="text-lg text-orange-600 underline decoration-wavy underline-offset-2 hover:text-orange-300"
+          href="/cellar"
+        >
+          The Cellar
+        </a>
+        <span class="mx-2 text-zinc-300">&gt;</span>
+        <a
+          class="text-lg text-orange-600 underline decoration-wavy underline-offset-2 hover:text-orange-300"
+          href="/cellar/wines"
+        >
+          Wines
+        </a>
+        <span class="mx-2 text-zinc-300">&gt;</span>
+        <span class="text-lg text-zinc-300">{wine.name}</span>
       </nav>
 
       <div class="mb-12 md:mb-16">
@@ -82,14 +90,26 @@ const hasMultipleVintages = wine.vintages.length > 1;
                       <strong>Grape Varieties:</strong>{" "}
                       {wine.vintages[0].grapeVariety}
                     </p>
-                    <p class="mt-4">
-                      This is a placeholder for the Wine Detail page. In a
-                      future implementation, this page will display detailed
-                      information about the selected wine vintage, including:
+                    <p>
+                      <strong>Date Tried:</strong>{" "}
+                      {new Date(wine.vintages[0].dateTried).toLocaleDateString(
+                        "en-US",
+                        {
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric",
+                        },
+                      )}
                     </p>
-                    <ul>
+                    <div class="mt-4">
+                      <h3 class="text-xl font-bold">Tasting Notes</h3>
+                      <p class="mt-2 italic">{wine.vintages[0].tastingNotes}</p>
+                    </div>
+                    <p class="mt-6 text-sm text-gray-500">
+                      Future enhancements to this page will include:
+                    </p>
+                    <ul class="text-sm text-gray-500">
                       <li>Bottle image</li>
-                      <li>Tasting notes</li>
                       <li>Detailed producer information</li>
                       <li>Region information</li>
                       <li>Food pairing suggestions</li>
@@ -101,6 +121,6 @@ const hasMultipleVintages = wine.vintages.length > 1;
           }
         </Typography>
       </div>
-    </main>
-  </div>
-</Shell>
+    </div>
+  </main>
+</CellarShell>
