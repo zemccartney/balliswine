@@ -2,102 +2,18 @@
 import Subnav from "../../../components/subnav.astro";
 import Shell from "../../../layouts/shell.astro";
 import Typography from "../../../layouts/typography.astro";
+import wineData from "../stub";
 
-// Get the wine ID from the URL
-const { id } = Astro.params;
-
-// In a future implementation, this would fetch the actual wine data
-// For now, we'll use hardcoded data for the prototype
-const wineId = id || "unknown";
-
-// Hardcoded wine data for prototype
-// This would be replaced with actual data fetching in a real implementation
-const wineData = {
-  alosa: {
-    name: "Alosa",
-    producer: "Cellar Comalats",
-    vintages: [
-      {
-        dateTried: "2025-04-09",
-        grapeVariety: "Garnatxa Negra",
-        vintage: "2023",
-      },
-    ],
-  },
-  "avanti-popolo": {
-    name: "Avanti Popolo",
-    producer: "Cantina Furlani",
-    vintages: [
-      {
-        dateTried: "2025-03-08",
-        grapeVariety: "Teroldego",
-        vintage: "2023",
-      },
-    ],
-  },
-  "bel-soula": {
-    name: "Bel Soula",
-    producer: "Domaine Sulauze",
-    vintages: [
-      {
-        dateTried: "2025-01-17",
-        grapeVariety: "Vermentino, Ugni Blanc",
-        vintage: "2022",
-      },
-    ],
-  },
-  "el-marciano": {
-    name: "El Marciano",
-    producer: "Alfredo Maestro",
-    vintages: [
-      {
-        dateTried: "2025-02-21",
-        grapeVariety: "Grenache",
-        vintage: "2022",
-      },
-    ],
-  },
-  "pur-breton": {
-    name: "Pur Breton",
-    producer: "Domaine Bobinet",
-    vintages: [
-      {
-        dateTried: "2024-12-14",
-        grapeVariety: "Cabernet Franc",
-        vintage: "2022",
-      },
-    ],
-  },
-  "vin-de-frantz": {
-    name: "Vin de Frantz",
-    producer: "Frantz Saumon",
-    vintages: [
-      {
-        dateTried: "2024-11-15",
-        grapeVariety: "Gamay, Grolleau, Pineau d'Aunis",
-        vintage: "2023",
-      },
-    ],
-  },
-  vinhota: {
-    name: "Vinhota",
-    producer: "Quinta da Boavista",
-    vintages: [
-      {
-        dateTried: "2024-10-22",
-        grapeVariety: "Loureiro",
-        vintage: "2022",
-      },
-    ],
-  },
+export const getStaticPaths = () => {
+  return wineData.map((wine) => {
+    return {
+      params: { id: wine.id },
+      props: { wine },
+    };
+  });
 };
 
-// Get the wine data for the current ID
-const wine = wineData[wineId as keyof typeof wineData] || {
-  name: wineId,
-  producer: "Unknown Producer",
-  vintages: [],
-};
+const { wine } = Astro.props;
 
 // Sort vintages by year (newest first)
 wine.vintages.sort((a, b) => b.vintage.localeCompare(a.vintage));

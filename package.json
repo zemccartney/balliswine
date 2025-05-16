@@ -5,6 +5,7 @@
   "scripts": {
     "astro": "astro",
     "build": "astro check && astro build",
+    "cf:wip": "git commit -m \"[CF-Pages-Skip] WIP\" && git push",
     "check": "astro check && npm run fmt:check && npm run lint",
     "deps": "ncu -i --format group",
     "dev": "concurrently \"astro dev\" \"npm run typewatch\"",

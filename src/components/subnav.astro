@@ -27,6 +27,12 @@ const activeColorClass =
   }
   const navLink = document.querySelector(`nav a[href="${currentPath}"]`);
   navLink?.classList.add("active");
+
+  // Replaced by cellar subpage breadcrumb nav
+  const cellarNavLink = document.querySelector('nav a[href="/cellar"]');
+  if (currentPath.startsWith("/cellar") && currentPath !== "/cellar") {
+    cellarNavLink?.classList.add("hidden");
+  }
 </script>
 
 <nav class:list={["mx-auto w-fit", className]}>

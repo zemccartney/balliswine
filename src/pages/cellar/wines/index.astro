@@ -1,50 +1,6 @@
 ---
 import CellarShell from "../../../layouts/cellar-shell.astro";
-
-const wineData = [
-  {
-    hue: "bg-rose-900",
-    id: "alosa",
-    name: "Alosa",
-    producer: "Cellar Comalats",
-  },
-  {
-    hue: "bg-rose-900",
-    id: "avanti-popolo",
-    name: "Avanti Popolo",
-    producer: "Cantina Furlani",
-  },
-  {
-    hue: "bg-rose-900",
-    id: "el-marciano",
-    name: "El Marciano",
-    producer: "Alfredo Maestro",
-  },
-  {
-    hue: "bg-rose-700",
-    id: "bel-soula",
-    name: "Bel Soula",
-    producer: "Domaine Sulauze",
-  },
-  {
-    hue: "bg-yellow-200",
-    id: "pur-breton",
-    name: "Pur Breton",
-    producer: "Domaine Bobinet",
-  },
-  {
-    hue: "bg-rose-300",
-    id: "vin-de-frantz",
-    name: "Vin de Frantz",
-    producer: "Frantz Saumon",
-  },
-  {
-    hue: "bg-rose-900",
-    id: "vinhota",
-    name: "Vinhota",
-    producer: "Quinta da Boavista",
-  },
-];
+import wineData from "../stub.ts";
 
 // Sort wines by most recent vintage tried
 wineData.sort((a, b) => a.name.localeCompare(b.name));
@@ -52,19 +8,13 @@ wineData.sort((a, b) => a.name.localeCompare(b.name));
 const fillSm = 2 - (wineData.length % 2);
 const fillLg = 3 - (wineData.length % 3);
 const fillXl = 4 - (wineData.length % 4);
-
-/*
-TODO
-- fix wine colors
-- cork image / pattern
-- settle on font colors
-- actually understand filter usage
-- remove cellar link from header when on a cellar subpage (with breadcrumb nav)
-- improve wood pattern on frame?
-
-
-*/
 ---
+
+<style>
+  .cork {
+    background-image: url(./filter.svg);
+  }
+</style>
 
 <CellarShell
   description="Explore wines tried throughout the Ball is Wine blog"
@@ -74,7 +24,7 @@ TODO
     <div class="mx-auto max-w-2/3">
       <nav class="font-title mx-auto mb-8 flex items-center">
         <a
-          class="text-lg text-rose-600 underline decoration-wavy underline-offset-2 hover:text-rose-300"
+          class="text-lg text-orange-600 underline decoration-wavy underline-offset-2 hover:text-orange-300"
           href="/cellar"
         >
           The Cellar
@@ -95,10 +45,10 @@ TODO
       {
         wineData.map((wine) => (
           <div class="relative bg-amber-950/40 backdrop-brightness-10">
-            <div class="absolute top-1/10 left-1/10 z-10 w-4/5 border-2 border-emerald-700 bg-neutral-100 shadow-lg shadow-neutral-900">
+            <div class="absolute top-1/10 left-1/10 z-10 w-4/5 border-2 border-emerald-600 bg-neutral-100 shadow-lg shadow-neutral-900">
               <div class="backdrop-sepia">
                 {" "}
-                <h3 class="font-old-style text-center text-xl text-rose-950 underline backdrop-sepia hover:text-rose-600 md:text-2xl">
+                <h3 class="font-old-style text-center text-xl text-rose-950 underline hover:text-rose-600 md:text-2xl">
                   <a href={`/cellar/wines/${wine.id}`}>{wine.name}</a>
                 </h3>
                 <p class="mt-4 text-center text-base text-slate-800 italic md:text-lg">
@@ -108,11 +58,11 @@ TODO
             </div>
             <div
               class:list={[
-                "mx-auto h-[250px] w-[250px] rounded-full bg-neutral-50",
+                "mx-auto h-[250px] w-[250px] rounded-full",
                 wine.hue,
               ]}
             >
-              <div class="relative top-[75px] mx-auto h-[100px] w-[100px] rounded-full border-10 border-slate-500/10 bg-amber-100" />
+              <div class="cork relative top-[85px] mx-auto h-[90px] w-[90px] rounded-full outline-8 outline-slate-200/65" />
             </div>
           </div>
         ))

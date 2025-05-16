@@ -7,14 +7,14 @@ import Shell from "../layouts/shell.astro";
 import Typography from "../layouts/typography.astro";
 import * as Utils from "../utils";
 
-export async function getStaticPaths() {
+export const getStaticPaths = async () => {
   const blogEntries = await getCollection("days");
 
   return blogEntries.map((entry) => ({
     params: { slug: entry.id },
     props: { entry },
   }));
-}
+};
 
 const { entry } = Astro.props;
 const { Content: Intro } = await render(entry);
