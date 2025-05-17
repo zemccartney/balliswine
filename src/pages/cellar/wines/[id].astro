@@ -1,4 +1,7 @@
 ---
+import { Image } from "astro:assets";
+
+import TestImage from "../../../content/thoughts/2024-10-22/vinhota-2022.png";
 import CellarShell from "../../../layouts/cellar-shell.astro";
 import Typography from "../../../layouts/typography.astro";
 import wineData from "../stub";
@@ -24,7 +27,7 @@ wine.vintages.sort((a, b) => b.vintage.localeCompare(a.vintage));
 >
   <main class="mx-auto p-8 md:container md:p-16">
     <!-- Breadcrumb navigation -->
-    <div class="mx-auto max-w-2/3">
+    <header class="mx-auto max-w-1/2">
       <nav class="font-title mx-auto mb-8 flex items-center">
         <a
           class="text-lg text-orange-600 underline decoration-wavy underline-offset-2 hover:text-orange-300"
@@ -41,72 +44,42 @@ wine.vintages.sort((a, b) => b.vintage.localeCompare(a.vintage));
         </a>
         <span class="mx-2 text-zinc-300">&gt;</span>
       </nav>
-    </div>
 
-    <h1
-      class="font-title mb-12 text-center text-5xl text-zinc-300 md:mb-16 md:text-7xl"
+      <h1 class="font-title text-center text-5xl text-zinc-300 md:text-7xl">
+        {wine.name}
+      </h1>
+      <p
+        class="mt-4 text-center font-sans text-lg text-zinc-300 italic md:text-xl"
+      >
+        {wine.producer}
+      </p>
+    </header>
+
+    <Typography
+      class="-mx-8 mt-12 w-fit border-2 border-emerald-600 bg-yellow-50 p-8 text-rose-950 sm:mx-auto"
+      element="article"
     >
-      {wine.name}
-    </h1>
-    <p
-      class="mt-4 text-center font-sans text-lg text-zinc-300 italic md:text-xl"
-    >
-      {wine.producer} • {wine.vintages.length}
-      {wine.vintages.length === 1 ? "vintage" : "vintages"} tried
-    </p>
-
-    <div class="mx-auto max-w-3xl rounded-lg bg-yellow-50 p-8 shadow-lg">
-      <Typography>
-        {
-          wine.vintages.length === 0 ? (
-            <p class="text-center italic">No vintage information available.</p>
-          ) : (
-            <>
-              {wine.vintages.length > 1 && (
-                <div class="mb-8">
-                  <h2 class="text-center text-2xl font-bold">
-                    Available Vintages
-                  </h2>
-                  <div class="mt-4 flex flex-wrap justify-center gap-4">
-                    {wine.vintages.map((vintage) => (
-                      <button class="font-title rounded-full bg-purple-900 px-6 py-2 text-xl text-amber-200 hover:bg-purple-800">
-                        {vintage.vintage}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              <div>
-                <h2 class="text-center text-2xl font-bold">
-                  {wine.vintages[0].vintage} Vintage
-                </h2>
-                <div class="mt-6">
-                  <p>
-                    <strong>Grape Varieties:</strong> {wine.vintages[0].cepage}
-                  </p>
-                  <p>
-                    <strong>Date Tried:</strong> {wine.vintages[0].dateTried}
-                  </p>
-                  <div class="mt-4">
-                    <h3 class="text-xl font-bold">Tasting Notes</h3>
-                    <p class="mt-2 italic">{wine.vintages[0].tastingNotes}</p>
-                  </div>
-                  <p class="mt-6 text-sm text-gray-500">
-                    Future enhancements to this page will include:
-                  </p>
-                  <ul class="text-sm text-gray-500">
-                    <li>Bottle image</li>
-                    <li>Detailed producer information</li>
-                    <li>Region information</li>
-                    <li>Food pairing suggestions</li>
-                  </ul>
-                </div>
-              </div>
-            </>
-          )
-        }
-      </Typography>
-    </div>
+      <div
+        class="mb-6 flex flex-col items-center justify-center md:flex-row md:gap-8"
+      >
+        <Image
+          alt="example image"
+          class="border-4 border-zinc-800 ring-4 ring-zinc-800/60"
+          height="350"
+          src={TestImage}
+        />
+        <div class="mx-auto flex w-fit max-w-[75%] flex-col md:max-w-[50%]">
+          <h2 class="font-mono no-underline!">
+            {wine.vintages[0].vintage}
+          </h2>
+          <p>{wine.vintages[0].cepage}</p>
+        </div>
+      </div>
+      <p class="font-mono text-lg italic">
+        <span class="font-bold">Tried on</span>
+        {wine.vintages[0].dateTried}
+      </p>
+      <p>{wine.vintages[0].tastingNotes}</p>
+    </Typography>
   </main>
 </CellarShell>

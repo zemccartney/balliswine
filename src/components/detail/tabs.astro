@@ -116,14 +116,14 @@ const EMOJI = {
   <section class="-mx-16 my-8 -mb-24 bg-yellow-50 p-8 py-16" id="panel-list">
     {/* Can't loop, astro errored on dynamic slot name */}
     <div aria-labelledby={`${TABS.BALL}-tab`} hidden role="tabpanel">
-      <Typography class="text-rose-950">
+      <Typography class="mx-auto text-rose-950">
         <slot name="ball">
           <p class="text-center">Thoughts and feels coming after the games!</p>
         </slot>
       </Typography>
     </div>
     <div aria-labelledby={`${TABS.WINE}-tab`} hidden role="tabpanel">
-      <Typography class="text-rose-950">
+      <Typography class="mx-auto text-rose-950">
         <slot name="wine">
           <p class="text-center">Thoughts and feels coming after the games!</p>
         </slot>

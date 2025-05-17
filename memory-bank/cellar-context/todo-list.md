@@ -35,17 +35,19 @@
 
 **Goal:** Create Producer List and Map views with hardcoded data and basic map functionality.
 
-- [ ] Set up tabbed navigation structure
-- [ ] Build Producer List view with hardcoded entries
-- [ ] Create basic page structure for Map view
-- [ ] Integrate Leaflet.js library
-- [ ] Implement basic map with hardcoded pins
-- [ ] Create producer hover card component
-- [ ] Add clustering functionality for pins
+- [ ] Revise stub to extract separate producer data; reference producers by id in wine data
+- [ ] setup new page, following cellar page styles and ui conventions w/ breadcrumb nav, for producers list, linked
+      from producers link on cellar home
+- [ ] Set up tabbed navigation structure; follow accessibility roles seen in tabs component under src/components/detail;
+      UI should be, approximately, subtle underline with tabs above, tabs as unrounded buttons, same styles as card style seen on wine
+      list and detail; change background and text color on hover; 2 tab panels, empty for now
+- [ ] Fill in first tab panel, producers list, grid of cards with producer names, links to producer detail views; loop over producer data
+      from stub to create items
+- [ ] second panel, map view; add map via Leaflet.js; add dummy coords data to each producer; add markers to map using said dummy data
+- [ ] Add clustering functionality for pins: if many in tight group, consolidate into single pin while zoomed out; if pins in only a given region
+      of map, auto-zoom instead of showing lots of space w/o pins
+- [ ] pin interactivity: on click, reveals modal with name of producer, link to detail; hide modal via click x button or clicking outside
 - [ ] Implement map controls (zoom, pan)
-- [ ] Build tab switching between list and map
-- [ ] Add responsive styling for both views
-- [ ] Create placeholder links to Producer Detail page
 
 **Checkpoint:** Functional Producer views with working tabs, interactive map, and responsive design.
 

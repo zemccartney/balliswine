@@ -12,7 +12,7 @@ const fillXl = 4 - (wineData.length % 4);
 
 <style>
   .cork {
-    background-image: url(./filter.svg);
+    background-image: url(./_filter.svg);
   }
 </style>
 
@@ -21,7 +21,7 @@ const fillXl = 4 - (wineData.length % 4);
   title="Wines in the Cellar"
 >
   <main class="mx-auto p-8 md:container md:p-16">
-    <div class="mx-auto max-w-2/3">
+    <header class="mx-auto max-w-1/2">
       <nav class="font-title mx-auto mb-8 flex items-center">
         <a
           class="text-lg text-orange-600 underline decoration-wavy underline-offset-2 hover:text-orange-300"
@@ -33,28 +33,25 @@ const fillXl = 4 - (wineData.length % 4);
       </nav>
 
       <h1
-        class="font-title mb-12 text-center text-5xl text-zinc-300 md:mb-16 md:text-7xl"
+        class="font-title text-center text-5xl text-zinc-300 md:mb-16 md:text-7xl"
       >
         Wines
       </h1>
-    </div>
+    </header>
 
     <div
-      class="mx-auto grid w-fit grid-cols-1 gap-5 border-20 border-amber-700 border-y-amber-800/65 bg-amber-700 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+      class="mx-auto mt-12 grid w-fit grid-cols-1 gap-5 border-20 border-amber-700 border-y-amber-800/65 bg-amber-700 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
     >
       {
         wineData.map((wine) => (
           <div class="relative bg-amber-950/40 backdrop-brightness-10">
-            <div class="absolute top-1/10 left-1/10 z-10 w-4/5 border-2 border-emerald-600 bg-neutral-100 shadow-lg shadow-neutral-900">
-              <div class="backdrop-sepia">
-                {" "}
-                <h3 class="font-old-style text-center text-xl text-rose-950 underline hover:text-rose-600 md:text-2xl">
-                  <a href={`/cellar/wines/${wine.id}`}>{wine.name}</a>
-                </h3>
-                <p class="mt-4 text-center text-base text-slate-800 italic md:text-lg">
-                  {wine.producer}
-                </p>
-              </div>
+            <div class="absolute top-1/10 left-1/10 z-10 w-4/5 border-2 border-emerald-600 bg-yellow-50 shadow-lg shadow-neutral-900">
+              <h3 class="font-old-style text-center text-xl text-rose-950 underline hover:text-rose-600 md:text-2xl">
+                <a href={`/cellar/wines/${wine.id}`}>{wine.name}</a>
+              </h3>
+              <p class="mt-4 text-center text-base text-slate-800 italic md:text-lg">
+                {wine.producer}
+              </p>
             </div>
             <div
               class:list={[
