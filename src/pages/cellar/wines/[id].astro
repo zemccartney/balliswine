@@ -4,7 +4,7 @@ import { Image } from "astro:assets";
 import TestImage from "../../../content/thoughts/2024-10-22/vinhota-2022.png";
 import CellarShell from "../../../layouts/cellar-shell.astro";
 import Typography from "../../../layouts/typography.astro";
-import wineData from "../stub";
+import wineData, { getProducerById } from "../stub";
 
 export const getStaticPaths = () => {
   return wineData.map((wine) => {
@@ -19,10 +19,13 @@ const { wine } = Astro.props;
 
 // Sort vintages by year (newest first)
 wine.vintages.sort((a, b) => b.vintage.localeCompare(a.vintage));
+
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+const producer = getProducerById(wine.producerId)!;
 ---
 
 <CellarShell
-  description={`Details about ${wine.name} wine from ${wine.producer}`}
+  description={`Details about ${wine.name} wine from ${producer.name}`}
   title={`${wine.name} - Wine Detail - The Cellar`}
 >
   <main class="mx-auto p-8 md:container md:p-16">
@@ -51,7 +54,7 @@ wine.vintages.sort((a, b) => b.vintage.localeCompare(a.vintage));
       <p
         class="mt-4 text-center font-sans text-lg text-zinc-300 italic md:text-xl"
       >
-        {wine.producer}
+        {producer.name}
       </p>
     </header>
 

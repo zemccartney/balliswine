@@ -1,0 +1,168 @@
+---
+import CellarShell from "../../../layouts/cellar-shell.astro";
+import Typography from "../../../layouts/typography.astro";
+import { getProducerById, getWinesByProducerId, producers } from "../stub";
+
+export const getStaticPaths = () => {
+  return producers.map((producer) => {
+    return {
+      params: { id: producer.id },
+      props: { producerId: producer.id },
+    };
+  });
+};
+
+const { producerId } = Astro.props;
+const producer = getProducerById(producerId);
+const wines = getWinesByProducerId(producerId);
+
+if (!producer) {
+  return Astro.redirect("/cellar/producers");
+}
+---
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const mapElement = document.querySelector("#producer-map");
+    if (!mapElement) return;
+
+    // Get producer data
+    const coordinates = JSON.parse(mapElement.dataset.coordinates || "[]");
+    const producerName = mapElement.dataset.name || "";
+    const producerLocation = mapElement.dataset.location || "";
+
+    if (coordinates.length !== 2) return;
+
+    // @ts-expect-error Leaflet is loaded via CDN and available as a global
+    const L = globalThis.L;
+
+    // Create map
+    const map = L.map("producer-map").setView(coordinates, 8);
+
+    // Add tile layer
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(map);
+
+    // Add marker
+    L.marker(coordinates)
+      .addTo(map)
+      .bindPopup(`<strong>${producerName}</strong><br>${producerLocation}`);
+  });
+</script>
+
+<style>
+  @reference "../../../styles/global.css";
+
+  #producer-map {
+    height: 300px;
+    width: 100%;
+    border-radius: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .wine-card {
+    @apply border-2 border-emerald-600 bg-yellow-50 p-4 shadow-lg shadow-neutral-900;
+  }
+
+  .vintage-tag {
+    @apply mr-2 inline-block rounded-full bg-amber-700 px-2 py-1 text-xs text-white;
+  }
+</style>
+
+<!-- Load Leaflet CSS and JS -->
+<link
+  crossorigin=""
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+  rel="stylesheet"
+/>
+<script
+  crossorigin=""
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+  is:inline
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<CellarShell
+  description={`Details about ${producer.name}, a wine producer featured in the Ball is Wine blog`}
+  title={`${producer.name} - Producer Detail - The Cellar`}
+>
+  <main class="mx-auto p-8 md:container md:p-16">
+    <!-- Breadcrumb navigation -->
+    <header class="mx-auto max-w-1/2">
+      <nav class="font-title mx-auto mb-8 flex items-center">
+        <a
+          class="text-lg text-orange-600 underline decoration-wavy underline-offset-2 hover:text-orange-300"
+          href="/cellar"
+        >
+          The Cellar
+        </a>
+        <span class="mx-2 text-zinc-300">&gt;</span>
+        <a
+          class="text-lg text-orange-600 underline decoration-wavy underline-offset-2 hover:text-orange-300"
+          href="/cellar/producers"
+        >
+          Producers
+        </a>
+        <span class="mx-2 text-zinc-300">&gt;</span>
+      </nav>
+
+      <h1 class="font-title text-center text-5xl text-zinc-300 md:text-7xl">
+        {producer.name}
+      </h1>
+      <p
+        class="mt-4 text-center font-sans text-lg text-zinc-300 italic md:text-xl"
+      >
+        {producer.location}
+      </p>
+    </header>
+
+    <div
+      class="mt-12 grid grid-cols-2 gap-8 border-2 border-emerald-600 bg-yellow-50 p-4 shadow-lg shadow-neutral-900 md:grid-cols-2"
+    >
+      <div>
+        <h2 class="font-title text-2xl text-rose-950">Location</h2>
+        <div
+          data-coordinates={JSON.stringify(producer.coordinates)}
+          data-location={producer.location}
+          data-name={producer.name}
+          id="producer-map"
+        >
+        </div>
+      </div>
+
+      <div>
+        <Typography
+          class="border-2 border-emerald-600 bg-yellow-50 p-4 text-rose-950 shadow-lg shadow-neutral-900"
+          element="section"
+        >
+          <h2 class="font-title text-2xl">Wines</h2>
+          {
+            wines.length > 0 ? (
+              <ul class="mt-4 space-y-4">
+                {wines.map((wine) => (
+                  <li class="wine-card">
+                    <h3 class="font-old-style text-xl text-rose-950 underline hover:text-rose-600">
+                      <a href={`/cellar/wines/${wine.id}`}>{wine.name}</a>
+                    </h3>
+                    <div class="mt-2">
+                      <p class="text-sm text-slate-600">Vintages tried:</p>
+                      <div class="mt-1">
+                        {wine.vintages.map((vintage) => (
+                          <span class="vintage-tag">{vintage.vintage}</span>
+                        ))}
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p class="mt-4 italic">No wines found for this producer.</p>
+            )
+          }
+        </Typography>
+      </div>
+    </div>
+  </main>
+</CellarShell>

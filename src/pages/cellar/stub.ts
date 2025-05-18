@@ -1,9 +1,63 @@
-export default [
+// Producer data
+export const producers = [
+  {
+    coordinates: [41.5912, 1.6767], // Dummy coordinates for Catalonia
+    id: "cellar-comalats",
+    location: "Catalonia, Spain",
+    name: "Cellar Comalats",
+    wineCount: 1,
+  },
+  {
+    coordinates: [46.0748, 11.1217], // Dummy coordinates for Trentino
+    id: "cantina-furlani",
+    location: "Trentino, Italy",
+    name: "Cantina Furlani",
+    wineCount: 1,
+  },
+  {
+    coordinates: [41.3851, -4.2934], // Dummy coordinates for Castilla y León
+    id: "alfredo-maestro",
+    location: "Castilla y León, Spain",
+    name: "Alfredo Maestro",
+    wineCount: 1,
+  },
+  {
+    coordinates: [43.5283, 5.4474], // Dummy coordinates for Provence
+    id: "domaine-sulauze",
+    location: "Provence, France",
+    name: "Domaine Sulauze",
+    wineCount: 1,
+  },
+  {
+    coordinates: [47.2601, 0.0762], // Dummy coordinates for Loire Valley
+    id: "domaine-bobinet",
+    location: "Loire Valley, France",
+    name: "Domaine Bobinet",
+    wineCount: 1,
+  },
+  {
+    coordinates: [47.4136, 0.9841], // Dummy coordinates for Loire Valley (different point)
+    id: "frantz-saumon",
+    location: "Loire Valley, France",
+    name: "Frantz Saumon",
+    wineCount: 1,
+  },
+  {
+    coordinates: [41.1579, -7.7811], // Dummy coordinates for Douro Valley
+    id: "quinta-da-boavista",
+    location: "Douro Valley, Portugal",
+    name: "Quinta da Boavista",
+    wineCount: 1,
+  },
+];
+
+// Wine data
+const wines = [
   {
     hue: "bg-rose-900",
     id: "alosa",
     name: "Alosa",
-    producer: "Cellar Comalats",
+    producerId: "cellar-comalats",
     vintages: [
       {
         cepage: "Garnatxa Negra",
@@ -18,7 +72,7 @@ export default [
     hue: "bg-rose-900",
     id: "avanti-popolo",
     name: "Avanti Popolo",
-    producer: "Cantina Furlani",
+    producerId: "cantina-furlani",
     vintages: [
       {
         cepage:
@@ -34,7 +88,7 @@ export default [
     hue: "bg-rose-900",
     id: "el-marciano",
     name: "El Marciano",
-    producer: "Alfredo Maestro",
+    producerId: "alfredo-maestro",
     vintages: [
       {
         cepage: "Garnacha",
@@ -49,7 +103,7 @@ export default [
     hue: "bg-rose-700",
     id: "bel-soula",
     name: "Bel Soula",
-    producer: "Domaine Sulauze",
+    producerId: "domaine-sulauze",
     vintages: [
       {
         cepage: "Grenache, Syrah",
@@ -71,7 +125,7 @@ export default [
     hue: "bg-yellow-200",
     id: "pur-breton",
     name: "Pur Breton",
-    producer: "Domaine Bobinet",
+    producerId: "domaine-bobinet",
     vintages: [
       {
         cepage: "Cabernet Franc",
@@ -86,7 +140,7 @@ export default [
     hue: "bg-rose-300",
     id: "vin-de-frantz",
     name: "Vin de Frantz",
-    producer: "Frantz Saumon",
+    producerId: "frantz-saumon",
     vintages: [
       {
         cepage: "Chenin Blanc",
@@ -108,7 +162,7 @@ export default [
     hue: "bg-rose-900",
     id: "vinhota",
     name: "Vinhota",
-    producer: "Quinta da Boavista",
+    producerId: "quinta-da-boavista",
     vintages: [
       {
         cepage: "Touriga Nacional, Tinta Roriz",
@@ -127,3 +181,16 @@ export default [
     ],
   },
 ];
+
+// Helper function to get producer name by ID
+export const getProducerById = (id: string) => {
+  return producers.find((producer) => producer.id === id);
+};
+
+// Helper function to get wines by producer ID
+export const getWinesByProducerId = (id: string) => {
+  return wines.filter((wine) => wine.producerId === id);
+};
+
+// Default export for backward compatibility
+export default wines;

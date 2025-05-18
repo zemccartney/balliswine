@@ -1,0 +1,295 @@
+---
+import CellarShell from "../../../layouts/cellar-shell.astro";
+import Typography from "../../../layouts/typography.astro";
+import { producers } from "../stub";
+
+// Sort producers alphabetically by name
+producers.sort((a, b) => a.name.localeCompare(b.name));
+
+// Define tab constants
+const TABS = {
+  LIST: "list",
+  MAP: "map",
+} as const;
+
+const EMOJI = {
+  [TABS.LIST]: "📋",
+  [TABS.MAP]: "🗺️",
+};
+---
+
+<script>
+  // Tab switching functionality
+  const tabsContainer = document.querySelector("#tabs-container");
+
+  if (tabsContainer) {
+    const tabs = tabsContainer.querySelectorAll('[role="tab"]');
+
+    for (const tab of tabs) {
+      tab.addEventListener("click", () => {
+        const tabPanels = tabsContainer.querySelectorAll('[role="tabpanel"]');
+        for (const panel of tabPanels) {
+          if (panel.getAttribute("aria-labelledby") === tab.id) {
+            panel.removeAttribute("hidden");
+          } else {
+            panel.setAttribute("hidden", "true");
+          }
+        }
+
+        tab.setAttribute("aria-selected", "true");
+        for (const otherTab of [...tabs].filter((t) => t.id !== tab.id)) {
+          otherTab.setAttribute("aria-selected", "false");
+        }
+      });
+    }
+  }
+
+  // Leaflet map initialization
+  document.addEventListener("DOMContentLoaded", () => {
+    const mapPanel = document.querySelector("#map-panel");
+
+    if (!mapPanel) return;
+
+    // Only initialize map when map panel is visible
+    const observer = new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        if (
+          mutation.type === "attributes" &&
+          mutation.attributeName === "hidden" &&
+          !mapPanel.hasAttribute("hidden") &&
+          !mapPanel.querySelector(".leaflet-container")
+        ) {
+          initMap();
+        }
+      }
+    });
+
+    observer.observe(mapPanel, { attributes: true });
+
+    // Initialize map if map panel is visible on load
+    if (!mapPanel.hasAttribute("hidden")) {
+      initMap();
+    }
+
+    function initMap() {
+      // Get producer data from the data attribute
+      const dataElement = document.querySelector("#producers-data");
+      if (!dataElement || !dataElement.textContent) return;
+
+      const producersData = JSON.parse(dataElement.textContent);
+
+      // Declare L to avoid TypeScript errors
+      // @ts-expect-error Leaflet is loaded via CDN and available as a global
+      const L = globalThis.L;
+
+      // Create map
+      const map = L.map("map").setView([46, 2], 4);
+
+      // Add tile layer
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }).addTo(map);
+
+      // Create marker cluster group
+      const markers = L.markerClusterGroup();
+
+      // Add markers for each producer
+      for (const producer of producersData) {
+        const marker = L.marker(producer.coordinates).bindPopup(
+          `<strong>${producer.name}</strong><br>${producer.location}<br><a href="/cellar/producers/${producer.id}">View details</a>`,
+        );
+        markers.addLayer(marker);
+      }
+
+      // Add markers to map
+      map.addLayer(markers);
+
+      // Fit bounds to markers
+      if (producersData.length > 0) {
+        const bounds = markers.getBounds();
+        map.fitBounds(bounds);
+      }
+    }
+  });
+</script>
+
+<style>
+  @reference "../../../styles/global.css";
+
+  /* Tab styling */
+  button[role="tab"][aria-selected="true"] {
+    @apply text-rose-300;
+  }
+
+  #tabs-container:has(button[role="tab"][aria-selected="true"]) {
+    [role="tablist"] {
+      @apply gap-4 sm:gap-8;
+    }
+
+    [role="tab"] {
+      @apply p-4 text-4xl md:p-12 lg:text-6xl;
+    }
+
+    #vert-divider {
+      @apply h-40 md:h-64;
+    }
+  }
+
+  /* Map styling */
+  #map {
+    height: 500px;
+    width: 100%;
+    border-radius: 0.5rem;
+    margin-top: 2rem;
+  }
+
+  /* Producer card styling */
+  .producer-card {
+    @apply relative bg-amber-950/40 backdrop-brightness-10;
+  }
+
+  .producer-card-content {
+    @apply absolute top-1/10 left-1/10 z-10 w-4/5;
+  }
+
+  .producer-card-bg {
+    @apply mx-auto h-[250px] w-[250px] rounded-full bg-amber-800;
+  }
+</style>
+
+<!-- Load Leaflet CSS and JS -->
+<link
+  crossorigin=""
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+  rel="stylesheet"
+/>
+<link
+  href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"
+  rel="stylesheet"
+/>
+<link
+  href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"
+  rel="stylesheet"
+/>
+<script
+  crossorigin=""
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+  is:inline
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script
+  is:inline
+  src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"
+></script>
+
+<CellarShell
+  description="Explore producers of the wines drunk along the blogging way"
+  title="Producers in the Cellar"
+>
+  <main class="mx-auto p-8 md:container md:p-16">
+    <header class="mx-auto max-w-1/2">
+      <nav class="font-title mx-auto mb-8 flex items-center">
+        <a
+          class="text-lg text-orange-600 underline decoration-wavy underline-offset-2 hover:text-orange-300"
+          href="/cellar"
+        >
+          The Cellar
+        </a>
+        <span class="mx-2 text-zinc-300">&gt;</span>
+      </nav>
+
+      <h1
+        class="font-title text-center text-5xl text-zinc-300 md:mb-16 md:text-7xl"
+      >
+        Producers
+      </h1>
+    </header>
+
+    <!-- Tabs Container -->
+    <div class="mt-8" id="tabs-container">
+      <div
+        aria-label="producer view options"
+        class="flex flex-row justify-center gap-4 transition-[gap] duration-500 ease-out sm:gap-4"
+        role="tablist"
+      >
+        {
+          Object.values(TABS).map((tabName, i, arr) => (
+            <>
+              <button
+                aria-controls={
+                  tabName === TABS.LIST ? "list-panel" : "map-panel"
+                }
+                aria-selected={tabName === TABS.LIST ? "true" : "false"}
+                class="cursor-pointer space-y-4 p-4 text-4xl leading-[initial] text-yellow-100 transition-[font-size,padding] duration-500 ease-out hover:text-rose-300 md:p-16 lg:text-8xl"
+                id={`${tabName}-tab`}
+                role="tab"
+                type="button"
+              >
+                <div class="font-emoji">{EMOJI[tabName]}</div>
+                <div class="font-title tracking-widest uppercase">
+                  {tabName.charAt(0).toUpperCase() + tabName.slice(1)}
+                </div>
+              </button>
+              {i < arr.length - 1 && (
+                <div
+                  class="h-64 min-w-1 self-center bg-yellow-100 transition-[height] duration-500 ease-out md:h-80"
+                  id="vert-divider"
+                />
+              )}
+            </>
+          ))
+        }
+      </div>
+
+      <!-- Tab Panels -->
+      <section class="-mx-16 my-8 p-8 py-16" id="panel-list">
+        <!-- List View Panel -->
+        <div
+          aria-labelledby={`${TABS.LIST}-tab`}
+          id="list-panel"
+          role="tabpanel"
+        >
+          <div
+            class="mx-auto mt-12 grid grid-cols-2 gap-5 lg:grid-cols-3 xl:grid-cols-4"
+          >
+            {
+              producers.map((producer) => (
+                <div class="border-2 border-emerald-600 bg-yellow-50 p-2 shadow-lg shadow-neutral-900 md:p-4 lg:p-8">
+                  <h3 class="font-old-style text-center text-xl text-rose-950 underline hover:text-rose-600 md:text-2xl">
+                    <a href={`/cellar/producers/${producer.id}`}>
+                      {producer.name}
+                    </a>
+                  </h3>
+                  <p class="mt-4 text-center text-base text-slate-800 italic md:text-lg">
+                    {producer.location}
+                  </p>
+                  <p class="mt-2 text-center text-sm text-slate-600 md:text-base">
+                    {producer.wineCount}{" "}
+                    {producer.wineCount === 1 ? "wine" : "wines"} tried
+                  </p>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+
+        <!-- Map View Panel -->
+        <div
+          aria-labelledby={`${TABS.MAP}-tab`}
+          hidden
+          id="map-panel"
+          role="tabpanel"
+        >
+          <Typography class="mx-auto text-rose-950">
+            <p class="mb-4 text-center">
+              Explore wine producers on the map. Click on a marker to see
+              details.
+            </p>
+            <div id="map"></div>
+          </Typography>
+        </div>
+      </section>
+    </div>
+  </main>
+</CellarShell>

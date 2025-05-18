@@ -1,6 +1,6 @@
 ---
 import CellarShell from "../../../layouts/cellar-shell.astro";
-import wineData from "../stub.ts";
+import wineData, { getProducerById } from "../stub.ts";
 
 // Sort wines by most recent vintage tried
 wineData.sort((a, b) => a.name.localeCompare(b.name));
@@ -49,8 +49,8 @@ const fillXl = 4 - (wineData.length % 4);
               <h3 class="font-old-style text-center text-xl text-rose-950 underline hover:text-rose-600 md:text-2xl">
                 <a href={`/cellar/wines/${wine.id}`}>{wine.name}</a>
               </h3>
-              <p class="mt-4 text-center text-base text-slate-800 italic md:text-lg">
-                {wine.producer}
+              <p class="mt-1 mb-4 text-center text-base text-slate-800 italic md:text-lg">
+                {getProducerById(wine.producerId)?.name}
               </p>
             </div>
             <div
