@@ -1,4 +1,5 @@
 ---
+import Card from "../../../components/card.astro";
 import CellarShell from "../../../layouts/cellar-shell.astro";
 import wineData, { getProducerById } from "../stub.ts";
 
@@ -45,14 +46,18 @@ const fillXl = 4 - (wineData.length % 4);
       {
         wineData.map((wine) => (
           <div class="relative bg-amber-950/40 backdrop-brightness-10">
-            <div class="absolute top-1/10 left-1/10 z-10 w-4/5 border-2 border-emerald-600 bg-yellow-50 shadow-lg shadow-neutral-900">
-              <h3 class="font-old-style text-center text-xl text-rose-950 underline hover:text-rose-600 md:text-2xl">
-                <a href={`/cellar/wines/${wine.id}`}>{wine.name}</a>
+            <Card
+              as="a"
+              class="absolute top-1/10 left-1/10 z-10 w-4/5"
+              href={`/cellar/wines/${wine.id}`}
+            >
+              <h3 class="font-old-style text-center text-xl text-rose-950 underline md:text-2xl">
+                {wine.name}
               </h3>
               <p class="mt-1 mb-4 text-center text-base text-slate-800 italic md:text-lg">
                 {getProducerById(wine.producerId)?.name}
               </p>
-            </div>
+            </Card>
             <div
               class:list={[
                 "mx-auto h-[250px] w-[250px] rounded-full",

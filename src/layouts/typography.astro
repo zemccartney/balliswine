@@ -1,15 +1,12 @@
 ---
-import type { HTMLTag } from "astro/types";
+import type { HTMLTag, Polymorphic } from "astro/types";
 import type { ClassValue } from "clsx";
 
-interface Props {
-  class?: ClassValue;
-  element?: HTMLTag;
-}
+type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag; class?: ClassValue }>;
 
-const { class: classVal, element = "div" } = Astro.props;
+const { as = "div", class: className, ...rest } = Astro.props;
 
-const Element = element;
+const Tag = as;
 ---
 
 <style>
@@ -124,6 +121,6 @@ const Element = element;
   }
 </style>
 
-<Element class:list={["TypoBox", classVal]}>
+<Tag class:list={["TypoBox", className]} {...rest}>
   <slot />
-</Element>
+</Tag>

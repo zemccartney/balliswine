@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 
+import Card from "../../../components/card.astro";
 import TestImage from "../../../content/thoughts/2024-10-22/vinhota-2022.png";
 import CellarShell from "../../../layouts/cellar-shell.astro";
 import Typography from "../../../layouts/typography.astro";
@@ -58,31 +59,30 @@ const producer = getProducerById(wine.producerId)!;
       </p>
     </header>
 
-    <Typography
-      class="-mx-8 mt-12 w-fit border-2 border-emerald-600 bg-yellow-50 p-8 text-rose-950 sm:mx-auto"
-      element="article"
-    >
-      <div
-        class="mb-6 flex flex-col items-center justify-center md:flex-row md:gap-8"
-      >
-        <Image
-          alt="example image"
-          class="border-4 border-zinc-800 ring-4 ring-zinc-800/60"
-          height="350"
-          src={TestImage}
-        />
-        <div class="mx-auto flex w-fit max-w-[75%] flex-col md:max-w-[50%]">
-          <h2 class="font-mono no-underline!">
-            {wine.vintages[0].vintage}
-          </h2>
-          <p>{wine.vintages[0].cepage}</p>
+    <Card class="-mx-8 mt-12 w-fit p-8 sm:mx-auto">
+      <Typography as="article" class="text-rose-950">
+        <div
+          class="mb-6 flex flex-col items-center justify-center md:flex-row md:gap-8"
+        >
+          <Image
+            alt="example image"
+            class="border-4 border-zinc-800 ring-4 ring-zinc-800/60"
+            height="350"
+            src={TestImage}
+          />
+          <div class="mx-auto flex w-fit max-w-[75%] flex-col md:max-w-[50%]">
+            <h2 class="font-mono no-underline!">
+              {wine.vintages[0].vintage}
+            </h2>
+            <p>{wine.vintages[0].cepage}</p>
+          </div>
         </div>
-      </div>
-      <p class="font-mono text-lg italic">
-        <span class="font-bold">Tried on</span>
-        {wine.vintages[0].dateTried}
-      </p>
-      <p>{wine.vintages[0].tastingNotes}</p>
-    </Typography>
+        <p class="font-mono text-lg italic">
+          <span class="font-bold">Tried on</span>
+          {wine.vintages[0].dateTried}
+        </p>
+        <p class="text-rose-950">{wine.vintages[0].tastingNotes}</p>
+      </Typography>
+    </Card>
   </main>
 </CellarShell>

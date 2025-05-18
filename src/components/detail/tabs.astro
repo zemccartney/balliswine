@@ -84,7 +84,7 @@ const EMOJI = {
         return (
           <>
             <button
-              aria-controls={`${tabName}-tab`}
+              aria-controls={`${tabName}-panel`}
               aria-selected="false"
               class={Clsx([
                 "cursor-pointer space-y-4 leading-[initial] text-yellow-100 transition-[font-size,padding] duration-500 ease-out hover:text-rose-300", // leading-initial to override line height built in to text
@@ -115,14 +115,24 @@ const EMOJI = {
   </div>
   <section class="-mx-16 my-8 -mb-24 bg-yellow-50 p-8 py-16" id="panel-list">
     {/* Can't loop, astro errored on dynamic slot name */}
-    <div aria-labelledby={`${TABS.BALL}-tab`} hidden role="tabpanel">
+    <div
+      aria-labelledby={`${TABS.BALL}-tab`}
+      hidden
+      id={`${TABS.BALL}-panel`}
+      role="tabpanel"
+    >
       <Typography class="mx-auto text-rose-950">
         <slot name="ball">
           <p class="text-center">Thoughts and feels coming after the games!</p>
         </slot>
       </Typography>
     </div>
-    <div aria-labelledby={`${TABS.WINE}-tab`} hidden role="tabpanel">
+    <div
+      aria-labelledby={`${TABS.WINE}-tab`}
+      hidden
+      id={`${TABS.WINE}-panel`}
+      role="tabpanel"
+    >
       <Typography class="mx-auto text-rose-950">
         <slot name="wine">
           <p class="text-center">Thoughts and feels coming after the games!</p>
