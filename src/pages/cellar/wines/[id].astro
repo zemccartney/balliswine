@@ -71,14 +71,14 @@ const producer = getProducerById(wine.producerId)!;
             src={TestImage}
           />
           <div class="mx-auto flex w-fit max-w-[75%] flex-col md:max-w-[50%]">
-            <h2 class="font-mono no-underline!">
+            <h2 class="font-old-style">
               {wine.vintages[0].vintage}
             </h2>
             <p>{wine.vintages[0].cepage}</p>
           </div>
         </div>
-        <p class="font-mono text-lg italic">
-          <span class="font-bold">Tried on</span>
+        <p class="font-old-style text-lg font-bold italic">
+          Tried on
           {wine.vintages[0].dateTried}
         </p>
         <p class="text-rose-950">{wine.vintages[0].tastingNotes}</p>

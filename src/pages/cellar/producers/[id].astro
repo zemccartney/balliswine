@@ -51,14 +51,6 @@ if (!producer) {
 
 <style>
   @reference "../../../styles/global.css";
-
-  .wine-card {
-    @apply border-2 border-emerald-600 bg-yellow-50 p-4 shadow-lg shadow-neutral-900;
-  }
-
-  .vintage-tag {
-    @apply mr-2 inline-block rounded-full bg-amber-700 px-2 py-1 text-xs text-white;
-  }
 </style>
 
 <CellarShell
@@ -90,69 +82,61 @@ if (!producer) {
       </h1>
     </header>
 
-    <Card class="mt-12 grid grid-cols-2 gap-8 p-8 md:grid-cols-2">
-      <div>
-        <h2 class="font-title text-2xl text-rose-950">{producer.location}</h2>
-        <div
-          class="mt-8 h-[400px]"
-          data-coordinates={JSON.stringify(producer.coordinates)}
-          data-location={producer.location}
-          data-name={producer.name}
-          id="producer-map"
-        >
+    <Card class="mt-12 p-8">
+      <div class="grid grid-cols-1 gap-8 xl:grid-cols-2">
+        <div class="flex flex-col-reverse gap-4 sm:flex-col">
+          <h2 class="font-old-style text-2xl font-bold text-rose-950 italic">
+            {producer.location}
+          </h2>
+          <div
+            class="-mx-16 h-[400px] sm:mx-0"
+            data-coordinates={JSON.stringify(producer.coordinates)}
+            data-location={producer.location}
+            data-name={producer.name}
+            id="producer-map"
+          >
+          </div>
         </div>
-      </div>
 
-      <Typography class="mt-14 text-rose-950">
-        <p>
-          Id enim aute laboris sint officia. Sint proident duis duis magna
-          consequat id laborum enim aliqua occaecat incididunt. Velit culpa
-          cupidatat dolore esse mollit veniam amet ullamco fugiat. Laborum ut
-          esse eu eiusmod sit laborum aute proident deserunt occaecat incididunt
-          ipsum. Excepteur id cupidatat laboris dolore minim do. Sint voluptate
-          sit ut pariatur elit.
-        </p>
-        <p>
-          Excepteur reprehenderit sit cupidatat ad elit id nulla tempor sunt.
-          Culpa laboris proident nulla esse amet. Consequat qui irure ea velit
-          culpa irure nisi esse nostrud fugiat cillum veniam dolore tempor.
-          Magna eu magna ut consectetur in duis laborum pariatur excepteur
-          mollit velit tempor. Ex culpa magna ex laboris velit enim dolor. Velit
-          anim ea sit culpa esse dolor adipisicing enim.
-        </p>
-      </Typography>
-
-      <div>
-        <Typography
-          as="section"
-          class="border-2 border-emerald-600 bg-yellow-50 p-4 text-rose-950 shadow-lg shadow-neutral-900"
-        >
-          <h2 class="font-title text-2xl">Wines</h2>
-          {
-            wines.length > 0 ? (
-              <ul class="mt-4 space-y-4">
-                {wines.map((wine) => (
-                  <li class="wine-card">
-                    <h3 class="font-old-style text-xl text-rose-950 underline hover:text-rose-600">
-                      <a href={`/cellar/wines/${wine.id}`}>{wine.name}</a>
-                    </h3>
-                    <div class="mt-2">
-                      <p class="text-sm text-slate-600">Vintages tried:</p>
-                      <div class="mt-1">
-                        {wine.vintages.map((vintage) => (
-                          <span class="vintage-tag">{vintage.vintage}</span>
-                        ))}
-                      </div>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p class="mt-4 italic">No wines found for this producer.</p>
-            )
-          }
+        <Typography class="mx-auto text-rose-950 xl:mt-10">
+          <p>
+            Id enim aute laboris sint officia. Sint proident duis duis magna
+            consequat id laborum enim aliqua occaecat incididunt. Velit culpa
+            cupidatat dolore esse mollit veniam amet ullamco fugiat. Laborum ut
+            esse eu eiusmod sit laborum aute proident deserunt occaecat
+            incididunt ipsum. Excepteur id cupidatat laboris dolore minim do.
+            Sint voluptate sit ut pariatur elit.
+          </p>
+          <p>
+            Excepteur reprehenderit sit cupidatat ad elit id nulla tempor sunt.
+            Culpa laboris proident nulla esse amet. Consequat qui irure ea velit
+            culpa irure nisi esse nostrud fugiat cillum veniam dolore tempor.
+            Magna eu magna ut consectetur in duis laborum pariatur excepteur
+            mollit velit tempor. Ex culpa magna ex laboris velit enim dolor.
+            Velit anim ea sit culpa esse dolor adipisicing enim.
+          </p>
         </Typography>
       </div>
+
+      <Typography class="mx-auto mt-12 text-rose-950">
+        <h2 class="font-old-style mb-6 text-center text-2xl text-rose-950">
+          Wines Tried
+        </h2>
+        <ul>
+          {
+            wines.map((wine) => (
+              <li class="font-old-style grid grid-cols-1 gap-4 text-2xl sm:grid-cols-2">
+                <a
+                  class="text-center hover:text-rose-600"
+                  href={`/cellar/wines/${wine.id}`}
+                >
+                  {wine.name}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </Typography>
     </Card>
   </main>
 </CellarShell>
