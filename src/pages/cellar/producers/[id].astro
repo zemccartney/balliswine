@@ -1,4 +1,5 @@
 ---
+import Card from "../../../components/card.astro";
 import CellarShell from "../../../layouts/cellar-shell.astro";
 import Typography from "../../../layouts/typography.astro";
 import { getProducerById, getWinesByProducerId, producers } from "../stub";
@@ -33,11 +34,9 @@ if (!producer) {
     const coordinates = JSON.parse(
       mapElement.dataset.coordinates || "[]",
     ) as LatLngExpression; // TODO How to enforce this type upstream?
-    const producerName = mapElement.dataset.name || "";
-    const producerLocation = mapElement.dataset.location || "";
 
     // Create map
-    const map = Leaflet.map("producer-map").setView(coordinates, 8);
+    const map = Leaflet.map("producer-map").setView(coordinates, 7);
 
     // Add tile layer
     Leaflet.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -46,9 +45,7 @@ if (!producer) {
     }).addTo(map);
 
     // Add marker
-    Leaflet.marker(coordinates)
-      .addTo(map)
-      .bindPopup(`<strong>${producerName}</strong><br>${producerLocation}`);
+    Leaflet.marker(coordinates).addTo(map);
   }
 </script>
 
@@ -91,20 +88,13 @@ if (!producer) {
       <h1 class="font-title text-center text-5xl text-zinc-300 md:text-7xl">
         {producer.name}
       </h1>
-      <p
-        class="mt-4 text-center font-sans text-lg text-zinc-300 italic md:text-xl"
-      >
-        {producer.location}
-      </p>
     </header>
 
-    <div
-      class="mt-12 grid grid-cols-2 gap-8 border-2 border-emerald-600 bg-yellow-50 p-4 shadow-lg shadow-neutral-900 md:grid-cols-2"
-    >
+    <Card class="mt-12 grid grid-cols-2 gap-8 p-8 md:grid-cols-2">
       <div>
-        <h2 class="font-title text-2xl text-rose-950">Location</h2>
+        <h2 class="font-title text-2xl text-rose-950">{producer.location}</h2>
         <div
-          class="h-[400px]"
+          class="mt-8 h-[400px]"
           data-coordinates={JSON.stringify(producer.coordinates)}
           data-location={producer.location}
           data-name={producer.name}
@@ -112,6 +102,25 @@ if (!producer) {
         >
         </div>
       </div>
+
+      <Typography class="mt-14 text-rose-950">
+        <p>
+          Id enim aute laboris sint officia. Sint proident duis duis magna
+          consequat id laborum enim aliqua occaecat incididunt. Velit culpa
+          cupidatat dolore esse mollit veniam amet ullamco fugiat. Laborum ut
+          esse eu eiusmod sit laborum aute proident deserunt occaecat incididunt
+          ipsum. Excepteur id cupidatat laboris dolore minim do. Sint voluptate
+          sit ut pariatur elit.
+        </p>
+        <p>
+          Excepteur reprehenderit sit cupidatat ad elit id nulla tempor sunt.
+          Culpa laboris proident nulla esse amet. Consequat qui irure ea velit
+          culpa irure nisi esse nostrud fugiat cillum veniam dolore tempor.
+          Magna eu magna ut consectetur in duis laborum pariatur excepteur
+          mollit velit tempor. Ex culpa magna ex laboris velit enim dolor. Velit
+          anim ea sit culpa esse dolor adipisicing enim.
+        </p>
+      </Typography>
 
       <div>
         <Typography
@@ -144,6 +153,6 @@ if (!producer) {
           }
         </Typography>
       </div>
-    </div>
+    </Card>
   </main>
 </CellarShell>
