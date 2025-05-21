@@ -1,5 +1,7 @@
 ---
 import Card from "../../../components/card.astro";
+import TabPanel from "../../../components/cellar/tab-panel.astro";
+import Tabs from "../../../components/cellar/tabs.astro";
 import CellarShell from "../../../layouts/cellar-shell.astro";
 import Typography from "../../../layouts/typography.astro";
 import { producers } from "../stub";
@@ -7,11 +9,11 @@ import { producers } from "../stub";
 // Sort producers alphabetically by name
 producers.sort((a, b) => a.name.localeCompare(b.name));
 
-// Define tab constants
-const TABS = {
-  LIST: "list",
-  MAP: "map",
-} as const;
+// Define tabs for the component
+const TABS = [
+  { id: "list", label: "List" },
+  { id: "map", label: "Map" },
+];
 ---
 
 <script>
@@ -163,7 +165,7 @@ const TABS = {
     <header class="mx-auto max-w-1/2">
       <nav class="font-title mx-auto mb-8 flex items-center">
         <a
-          class="text-lg text-orange-600 underline decoration-wavy underline-offset-2 hover:text-orange-300"
+          class="text-lg tracking-widest text-orange-600 underline decoration-wavy underline-offset-2 hover:text-orange-300"
           href="/cellar"
         >
           The Cellar
@@ -178,79 +180,45 @@ const TABS = {
       </h1>
     </header>
 
-    <!-- Tabs Container -->
-    <div class="mt-8 w-full" id="tabs-container">
-      <div
-        aria-label="producer view options"
-        class="mx-auto mb-0 flex w-full flex-row justify-center gap-4 border-b-2 border-orange-500 sm:w-4/5 sm:gap-6 md:gap-8"
-        role="tablist"
-      >
-        {
-          Object.values(TABS).map((tabName) => (
-            <button
-              aria-controls={`${tabName}-panel`}
-              aria-selected={tabName === TABS.LIST ? "true" : "false"}
-              class="font-title flex items-center gap-2 rounded-t-4xl bg-zinc-100 px-8 py-4 text-sm tracking-widest text-zinc-900 uppercase sm:px-12 sm:text-lg md:gap-3 md:text-2xl"
-              id={`${tabName}-tab`}
-              role="tab"
-              type="button"
-            >
-              {tabName.charAt(0).toUpperCase() + tabName.slice(1)}
-            </button>
-          ))
-        }
-      </div>
-
-      <!-- Tab Panels -->
-      <section id="panel-list">
-        <!-- List View Panel -->
+    <!-- Tabs Component -->
+    <Tabs class="mt-8 w-full" initialTab="list" tabs={TABS}>
+      <!-- List View Panel -->
+      <TabPanel initiallySelected={true} tabId="list">
         <div
-          aria-labelledby={`${TABS.LIST}-tab`}
-          id={`${TABS.LIST}-panel`}
-          role="tabpanel"
+          class="mx-auto mt-12 grid grid-cols-2 gap-5 lg:grid-cols-3 xl:grid-cols-4"
         >
-          <div
-            class="mx-auto mt-12 grid grid-cols-2 gap-5 lg:grid-cols-3 xl:grid-cols-4"
-          >
-            {
-              producers.map((producer) => (
-                <Card
-                  as="a"
-                  class="p-2 md:p-4 lg:p-8"
-                  href={`/cellar/producers/${producer.id}`}
-                >
-                  <h3 class="font-old-style text-center text-xl text-rose-950 md:text-2xl">
-                    {producer.name}
-                  </h3>
-                  <p class="mt-4 text-center text-base text-slate-800 italic md:text-lg">
-                    {producer.location}
-                  </p>
-                  <p class="mt-2 text-center text-sm text-slate-800 md:text-base">
-                    {producer.wineCount}{" "}
-                    {producer.wineCount === 1 ? "wine" : "wines"} tried
-                  </p>
-                </Card>
-              ))
-            }
-          </div>
+          {
+            producers.map((producer) => (
+              <Card
+                as="a"
+                class="p-2 md:p-4 lg:p-8"
+                href={`/cellar/producers/${producer.id}`}
+              >
+                <h3 class="font-old-style text-center text-xl text-rose-950 md:text-2xl">
+                  {producer.name}
+                </h3>
+                <p class="mt-4 text-center text-base text-slate-800 italic md:text-lg">
+                  {producer.location}
+                </p>
+                <p class="mt-2 text-center text-sm text-slate-800 md:text-base">
+                  {producer.wineCount}{" "}
+                  {producer.wineCount === 1 ? "wine" : "wines"} tried
+                </p>
+              </Card>
+            ))
+          }
         </div>
+      </TabPanel>
 
-        <!-- Map View Panel -->
-        <div
-          aria-labelledby={`${TABS.MAP}-tab`}
-          hidden
-          id={`${TABS.MAP}-panel`}
-          role="tabpanel"
-        >
-          <Typography class="mx-auto text-rose-950">
-            <p class="mb-4 text-center">
-              Explore wine producers on the map. Click on a marker to see
-              details.
-            </p>
-            <div id="map"></div>
-          </Typography>
-        </div>
-      </section>
-    </div>
+      <!-- Map View Panel -->
+      <TabPanel tabId="map">
+        <Typography class="mx-auto text-rose-950">
+          <p class="mb-4 text-center">
+            Explore wine producers on the map. Click on a marker to see details.
+          </p>
+          <div id="map"></div>
+        </Typography>
+      </TabPanel>
+    </Tabs>
   </main>
 </CellarShell>

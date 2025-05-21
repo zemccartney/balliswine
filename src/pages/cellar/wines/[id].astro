@@ -2,6 +2,8 @@
 import { Image } from "astro:assets";
 
 import Card from "../../../components/card.astro";
+import TabPanel from "../../../components/cellar/tab-panel.astro";
+import Tabs from "../../../components/cellar/tabs.astro";
 import TestImage from "../../../content/thoughts/2024-10-22/vinhota-2022.png";
 import CellarShell from "../../../layouts/cellar-shell.astro";
 import Typography from "../../../layouts/typography.astro";
@@ -23,6 +25,13 @@ wine.vintages.sort((a, b) => b.vintage.localeCompare(a.vintage));
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const producer = getProducerById(wine.producerId)!;
+
+// Check if there are multiple vintages to display as tabs
+const hasMultipleVintages = wine.vintages.length > 1;
+const vintageTabs = wine.vintages.map((vintage) => ({
+  id: vintage.vintage,
+  label: vintage.vintage,
+}));
 ---
 
 <CellarShell
@@ -34,55 +43,103 @@ const producer = getProducerById(wine.producerId)!;
     <header class="mx-auto max-w-1/2">
       <nav class="font-title mx-auto mb-8 flex items-center">
         <a
-          class="text-lg text-orange-600 underline decoration-wavy underline-offset-2 hover:text-orange-300"
+          class="text-xl tracking-widest text-orange-600 underline decoration-wavy underline-offset-2 hover:text-orange-300"
           href="/cellar"
         >
           The Cellar
         </a>
         <span class="mx-2 text-zinc-300">&gt;</span>
         <a
-          class="text-lg text-orange-600 underline decoration-wavy underline-offset-2 hover:text-orange-300"
+          class="text-xl tracking-widest text-orange-600 underline decoration-wavy underline-offset-2 hover:text-orange-300"
           href="/cellar/wines"
         >
           Wines
         </a>
         <span class="mx-2 text-zinc-300">&gt;</span>
       </nav>
-
-      <h1 class="font-title text-center text-5xl text-zinc-300 md:text-7xl">
-        {wine.name}
-      </h1>
-      <p
-        class="mt-4 text-center font-sans text-lg text-zinc-300 italic md:text-xl"
-      >
-        {producer.name}
-      </p>
     </header>
 
-    <Card class="-mx-8 mt-12 w-fit p-8 sm:mx-auto">
-      <Typography as="article" class="text-rose-950">
-        <div
-          class="mb-6 flex flex-col items-center justify-center md:flex-row md:gap-8"
-        >
-          <Image
-            alt="example image"
-            class="border-4 border-zinc-800 ring-4 ring-zinc-800/60"
-            height="350"
-            src={TestImage}
-          />
-          <div class="mx-auto flex w-fit max-w-[75%] flex-col md:max-w-[50%]">
-            <h2 class="font-old-style">
-              {wine.vintages[0].vintage}
-            </h2>
-            <p>{wine.vintages[0].cepage}</p>
-          </div>
-        </div>
-        <p class="font-old-style text-lg font-bold italic">
-          Tried on
-          {wine.vintages[0].dateTried}
-        </p>
-        <p class="text-rose-950">{wine.vintages[0].tastingNotes}</p>
-      </Typography>
-    </Card>
+    {
+      hasMultipleVintages ? (
+        <>
+          <Tabs
+            class="mt-8 w-full"
+            initialTab={wine.vintages[0].vintage}
+            tabs={vintageTabs}
+          >
+            <Card class="-mx-8 mt-12 w-fit p-8 sm:mx-auto">
+              {wine.vintages.map((vintage, index) => (
+                <TabPanel
+                  initiallySelected={index === 0}
+                  tabId={vintage.vintage}
+                >
+                  <h1 class="font-old-style mb-0 text-center text-5xl text-rose-950">
+                    {wine.name}
+                  </h1>
+
+                  <a
+                    class="font-old-style mt-2 mb-10 block text-center text-xl text-rose-950 underline hover:text-rose-600"
+                    href={`/cellar/producers/${wine.producerId}`}
+                  >
+                    {producer.name}
+                  </a>
+
+                  <Typography as="article" class="mt-8 text-rose-950">
+                    <div class="mb-6 flex flex-col items-center justify-center md:flex-row md:gap-8">
+                      <Image
+                        alt={`${wine.name} ${vintage.vintage} bottle`}
+                        class="border-4 border-zinc-800 ring-4 ring-zinc-800/60"
+                        height="350"
+                        src={TestImage}
+                      />
+                      <div class="mx-auto flex w-fit max-w-[75%] flex-col md:max-w-[50%]">
+                        <h2 class="font-old-style">{vintage.vintage}</h2>
+                        <p>{vintage.cepage}</p>
+                      </div>
+                    </div>
+                    <p class="font-old-style text-lg font-bold italic">
+                      Tried on {vintage.dateTried}
+                    </p>
+                    <p class="text-rose-950">{vintage.tastingNotes}</p>
+                  </Typography>
+                </TabPanel>
+              ))}
+            </Card>
+          </Tabs>
+        </>
+      ) : (
+        <Card class="-mx-8 mt-12 w-fit p-8 sm:mx-auto">
+          <h1 class="font-old-style mb-0 text-center text-5xl text-rose-950">
+            {wine.name}
+          </h1>
+
+          <a
+            class="font-old-style mt-2 mb-10 block text-center text-xl text-rose-950 underline hover:text-rose-600"
+            href={`/cellar/producers/${wine.producerId}`}
+          >
+            {producer.name}
+          </a>
+
+          <Typography as="article" class="text-rose-950">
+            <div class="mb-6 flex flex-col items-center justify-center md:flex-row md:gap-8">
+              <Image
+                alt={`${wine.name} ${wine.vintages[0].vintage} bottle`}
+                class="border-4 border-zinc-800 ring-4 ring-zinc-800/60"
+                height="350"
+                src={TestImage}
+              />
+              <div class="mx-auto flex w-fit max-w-[75%] flex-col md:max-w-[50%]">
+                <h2 class="font-old-style">{wine.vintages[0].vintage}</h2>
+                <p>{wine.vintages[0].cepage}</p>
+              </div>
+            </div>
+            <p class="font-old-style text-lg font-bold italic">
+              Tried on {wine.vintages[0].dateTried}
+            </p>
+            <p class="text-rose-950">{wine.vintages[0].tastingNotes}</p>
+          </Typography>
+        </Card>
+      )
+    }
   </main>
 </CellarShell>

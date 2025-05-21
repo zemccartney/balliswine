@@ -1,0 +1,21 @@
+---
+import type { ClassValue } from "clsx";
+
+export interface Props {
+  class?: ClassValue;
+  initiallySelected?: boolean;
+  tabId: string;
+}
+
+const { class: className = "", initiallySelected = false, tabId } = Astro.props;
+---
+
+<div
+  aria-labelledby={`${tabId}-tab`}
+  class:list={[className]}
+  hidden={!initiallySelected}
+  id={`${tabId}-panel`}
+  role="tabpanel"
+>
+  <slot />
+</div>

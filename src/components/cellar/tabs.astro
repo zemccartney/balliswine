@@ -1,0 +1,91 @@
+---
+import type { ClassValue } from "clsx";
+
+interface Props {
+  class?: ClassValue;
+  initialTab?: string;
+  tabButtonClass?: string;
+  tabs: Tab[];
+  tabsClass?: string;
+}
+
+interface Tab {
+  id: string;
+  label: string;
+}
+
+const {
+  class: className,
+  tabs,
+  initialTab = tabs.length > 0 ? tabs[0].id : "",
+} = Astro.props;
+---
+
+<script>
+  // Tab switching functionality
+  const tabsContainers = document.querySelectorAll(".tabs-container");
+
+  for (const tabsContainer of tabsContainers) {
+    const tabs = tabsContainer.querySelectorAll('[role="tab"]');
+
+    for (const tab of tabs) {
+      tab.addEventListener("click", () => {
+        // Handle panel visibility
+        const tabPanels = tabsContainer.querySelectorAll('[role="tabpanel"]');
+        for (const panel of tabPanels) {
+          if (panel.getAttribute("aria-labelledby") === tab.id) {
+            panel.removeAttribute("hidden");
+          } else {
+            panel.setAttribute("hidden", "true");
+          }
+        }
+
+        // Update tab selection state
+        tab.setAttribute("aria-selected", "true");
+        for (const otherTab of [...tabs].filter((t) => t.id !== tab.id)) {
+          otherTab.setAttribute("aria-selected", "false");
+        }
+      });
+    }
+  }
+</script>
+
+<style>
+  @reference "../../styles/global.css";
+
+  button[role="tab"][aria-selected="true"] {
+    @apply bg-orange-500;
+  }
+
+  button[role="tab"][aria-selected="false"] {
+    @apply cursor-pointer hover:bg-zinc-600 hover:font-bold hover:text-orange-500 hover:outline-2 hover:outline-orange-500;
+  }
+</style>
+
+<!-- Tabs Container -->
+<div class:list={["tabs-container", className]}>
+  <div
+    class="mx-auto mb-0 flex w-full flex-row justify-center gap-4 border-b-2 border-orange-500 sm:w-4/5 sm:gap-6 md:gap-8"
+    role="tablist"
+  >
+    {
+      tabs.map((tab) => (
+        <button
+          aria-controls={`${tab.id}-panel`}
+          aria-selected={tab.id === initialTab ? "true" : "false"}
+          class="font-title flex items-center gap-2 rounded-t-4xl bg-zinc-100 px-8 py-4 text-sm tracking-widest text-zinc-900 uppercase sm:px-12 sm:text-lg md:gap-3 md:text-2xl"
+          id={`${tab.id}-tab`}
+          role="tab"
+          type="button"
+        >
+          {tab.label}
+        </button>
+      ))
+    }
+  </div>
+
+  <!-- Tab Panels -->
+  <section class="panel-container">
+    <slot />
+  </section>
+</div>
