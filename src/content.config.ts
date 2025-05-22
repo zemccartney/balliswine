@@ -1,6 +1,14 @@
 import { file, glob } from "astro/loaders";
 import { defineCollection, reference, z } from "astro:content";
 
+/*
+TODO
+- need to source hue values, figure out passage to bottle display
+- figure out parsing post intro and body
+- figure out how to dynamically load images
+- deal w/ lack of producer descriptions
+*/
+
 const producers = defineCollection({
   loader: glob({
     base: "./src/content/producers",
@@ -12,13 +20,6 @@ const producers = defineCollection({
     name: z.string(),
   }),
 });
-
-/*
-TODO
-- need to source hue values, figure out passage to bottle display
-- figure out parsing post intro and body
-- figure out how to dynamically load images
-*/
 
 const wines = defineCollection({
   loader: file("src/content/wines.json"),

@@ -87,6 +87,9 @@ export default tseslint.config(
     // Maybe something with the tseslint helper?
     ...eslintMarkdown.configs.recommended[0],
     language: "markdown/gfm",
+    languageOptions: {
+      frontmatter: "yaml",
+    },
   },
   eslintConfigPrettier,
 );
