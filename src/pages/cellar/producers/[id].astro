@@ -1,22 +1,28 @@
 ---
+import { getCollection, render } from "astro:content";
+
 import Card from "../../../components/card.astro";
 import CellarShell from "../../../layouts/cellar-shell.astro";
 import Typography from "../../../layouts/typography.astro";
-import { getProducerById, getWinesByProducerId, producers } from "../stub";
 
-export const getStaticPaths = () => {
+export const getStaticPaths = async () => {
+  const producers = await getCollection("producers");
   return producers.map((producer) => {
     return {
       params: { id: producer.id },
-      props: { producerId: producer.id },
+      props: { producer },
     };
   });
 };
 
-const { producerId } = Astro.props;
-const producer = getProducerById(producerId);
-const wines = getWinesByProducerId(producerId);
+const { producer } = Astro.props;
+const wines = await getCollection("wines", ({ data }) => {
+  return data.producer.id === producer.id;
+});
 
+const { Content: ProducerDescription } = await render(producer);
+
+// TODO Proper 404 page
 if (!producer) {
   return Astro.redirect("/cellar/producers");
 }
@@ -54,8 +60,8 @@ if (!producer) {
 </style>
 
 <CellarShell
-  description={`Details about ${producer.name}, a wine producer featured in the Ball is Wine blog`}
-  title={`${producer.name} - Producer Detail - The Cellar`}
+  description={`Details about the winemaker, ${producer.data.name}`}
+  title={`${producer.data.name} - The Cellar`}
 >
   <main class="mx-auto p-8 md:container md:p-16">
     <!-- Breadcrumb navigation -->
@@ -78,42 +84,25 @@ if (!producer) {
       </nav>
     </header>
 
-    <Card class="-mx-8 mt-12 w-fit p-8 sm:mx-auto">
+    <Card class="-mx-8 mt-12 p-8 sm:mx-auto lg:max-w-2/3">
       <h1 class="font-old-style mb-10 text-center text-5xl text-rose-950">
-        {producer.name}
+        {producer.data.name}
       </h1>
       <div class="grid grid-cols-1 gap-8 xl:grid-cols-2">
         <div class="flex flex-col-reverse gap-4 sm:flex-col">
           <h2 class="font-old-style text-2xl font-bold text-rose-950 italic">
-            {producer.location}
+            {producer.data.location}
           </h2>
           <div
             class="-mx-8 h-[400px] sm:mx-0"
-            data-coordinates={JSON.stringify(producer.coordinates)}
-            data-location={producer.location}
-            data-name={producer.name}
+            data-coordinates={JSON.stringify(producer.data.coordinates)}
             id="producer-map"
           >
           </div>
         </div>
 
         <Typography class="mx-auto text-rose-950 xl:mt-10">
-          <p>
-            Id enim aute laboris sint officia. Sint proident duis duis magna
-            consequat id laborum enim aliqua occaecat incididunt. Velit culpa
-            cupidatat dolore esse mollit veniam amet ullamco fugiat. Laborum ut
-            esse eu eiusmod sit laborum aute proident deserunt occaecat
-            incididunt ipsum. Excepteur id cupidatat laboris dolore minim do.
-            Sint voluptate sit ut pariatur elit.
-          </p>
-          <p>
-            Excepteur reprehenderit sit cupidatat ad elit id nulla tempor sunt.
-            Culpa laboris proident nulla esse amet. Consequat qui irure ea velit
-            culpa irure nisi esse nostrud fugiat cillum veniam dolore tempor.
-            Magna eu magna ut consectetur in duis laborum pariatur excepteur
-            mollit velit tempor. Ex culpa magna ex laboris velit enim dolor.
-            Velit anim ea sit culpa esse dolor adipisicing enim.
-          </p>
+          <ProducerDescription />
         </Typography>
       </div>
 
@@ -129,7 +118,7 @@ if (!producer) {
                   class="text-center hover:text-rose-600"
                   href={`/cellar/wines/${wine.id}`}
                 >
-                  {wine.name}
+                  {wine.data.name}
                 </a>
               </li>
             ))

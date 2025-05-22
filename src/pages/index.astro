@@ -6,8 +6,8 @@ import Shell from "../layouts/shell.astro";
 import * as Utils from "../utils";
 
 // slugs are iso dates (yyyy-mm-dd), which are lexicographically sortable
-const days = await getCollection("days");
-days.sort((a, b) => b.id.localeCompare(a.id));
+const posts = await getCollection("posts");
+posts.sort((a, b) => b.id.localeCompare(a.id));
 ---
 
 <Shell>
@@ -39,12 +39,12 @@ days.sort((a, b) => b.id.localeCompare(a.id));
 
       <main class="flex-1 items-center space-y-12 self-center md:space-y-16">
         {
-          days.map((entry) => (
+          posts.map((post) => (
             <a
               class="block text-center font-sans text-4xl font-semibold text-balance text-rose-900 hover:text-rose-600 hover:underline md:text-6xl"
-              href={`/${entry.id}`}
+              href={`/${post.id}`}
             >
-              {Utils.formatYYYYMMDD(entry.id)}
+              {Utils.formatYYYYMMDD(post.id)}
             </a>
           ))
         }

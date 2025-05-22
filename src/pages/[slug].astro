@@ -8,28 +8,19 @@ import Typography from "../layouts/typography.astro";
 import * as Utils from "../utils";
 
 export const getStaticPaths = async () => {
-  const blogEntries = await getCollection("days");
+  const posts = await getCollection("posts");
 
-  return blogEntries.map((entry) => ({
-    params: { slug: entry.id },
-    props: { entry },
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
   }));
 };
 
-const { entry } = Astro.props;
-const { Content: Intro } = await render(entry);
+const { post } = Astro.props;
+const { Content: Intro } = await render(post);
 
-const [ballPost, winePost] = await getEntries([
-  entry.data.ballContent,
-  entry.data.wineContent,
-]);
-
-const [{ Content: BallContent }, { Content: WineContent }] = await Promise.all(
-  [ballPost, winePost].map((ent) => render(ent)),
-);
-
-const { wine } = winePost.data;
-const dateFmt = Utils.formatYYYYMMDD(entry.id);
+const { vintage } = post.data;
+const dateFmt = Utils.formatYYYYMMDD(post.id);
 const description = `Post for the games on ${dateFmt}${wine ? `, with a bottle of ${wine}` : ""}`;
 ---
 
@@ -41,7 +32,7 @@ const description = `Post for the games on ${dateFmt}${wine ? `, with a bottle o
         <h1
           class="text-center font-mono text-4xl text-yellow-100 sm:text-6xl md:text-8xl"
         >
-          <time datetime={entry.id}>{dateFmt}</time>
+          <time datetime={post.id}>{dateFmt}</time>
         </h1>
         <section class="-mx-16 bg-yellow-50 p-8">
           <Typography class="mx-auto text-rose-950">

@@ -1,13 +1,30 @@
 ---
+import { getCollection, getEntries } from "astro:content";
+
 import Card from "../../../components/card.astro";
 import TabPanel from "../../../components/cellar/tab-panel.astro";
 import Tabs from "../../../components/cellar/tabs.astro";
 import CellarShell from "../../../layouts/cellar-shell.astro";
 import Typography from "../../../layouts/typography.astro";
-import { producers } from "../stub";
+
+const collection = await getCollection("producers");
+
+const producers = await getEntries(collection);
 
 // Sort producers alphabetically by name
-producers.sort((a, b) => a.name.localeCompare(b.name));
+producers.sort((a, b) => a.data.name.localeCompare(b.data.name));
+
+const wineCountByProducer = Object.fromEntries(
+  producers.map((producer) => [producer.id, 0]),
+);
+
+for (const producer of producers) {
+  const wines = await getCollection("wines", ({ data }) => {
+    return data.producer.id === producer.id;
+  });
+
+  wineCountByProducer[producer.id] = wines.length;
+}
 
 // Define tabs for the component
 const TABS = [
@@ -195,14 +212,15 @@ const TABS = [
                 href={`/cellar/producers/${producer.id}`}
               >
                 <h3 class="font-old-style text-center text-xl text-rose-950 md:text-2xl">
-                  {producer.name}
+                  {producer.data.name}
                 </h3>
                 <p class="mt-4 text-center text-base text-slate-800 italic md:text-lg">
-                  {producer.location}
+                  {producer.data.location}
                 </p>
                 <p class="mt-2 text-center text-sm text-slate-800 md:text-base">
-                  {producer.wineCount}{" "}
-                  {producer.wineCount === 1 ? "wine" : "wines"} tried
+                  {wineCountByProducer[producer.id]}{" "}
+                  {wineCountByProducer[producer.id] === 1 ? "wine" : "wines"}{" "}
+                  tried
                 </p>
               </Card>
             ))
