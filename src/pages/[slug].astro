@@ -1,6 +1,7 @@
 ---
-import { getCollection, getEntries, render } from "astro:content";
+import { getCollection, getEntry, render } from "astro:content";
 
+import Card from "../components/card.astro";
 import Tabs from "../components/detail/tabs.astro";
 import Subnav from "../components/subnav.astro";
 import Shell from "../layouts/shell.astro";
@@ -17,11 +18,20 @@ export const getStaticPaths = async () => {
 };
 
 const { post } = Astro.props;
-const { Content: Intro } = await render(post);
+const { Content: Body } = await render(post);
 
-const { vintage } = post.data;
+const { vintage: _vin } = post.data;
+const vintage = await getEntry(_vin);
+const wine = await getEntry(vintage.data.wine);
+
+const introMd = import.meta.glob("/src/content/posts/**/intro.md");
+
+// @ts-expect-error unsure how to type MD import
+const { Content: Intro } =
+  await introMd[`/src/content/posts/${post.id}/intro.md`]();
+
 const dateFmt = Utils.formatYYYYMMDD(post.id);
-const description = `Post for the games on ${dateFmt}${wine ? `, with a bottle of ${wine}` : ""}`;
+const description = `Post for the games on ${dateFmt}${wine ? `, with a bottle of ${wine.data.name}` : ""}`;
 ---
 
 <Shell description={description} title={dateFmt}>
@@ -40,8 +50,8 @@ const description = `Post for the games on ${dateFmt}${wine ? `, with a bottle o
           </Typography>
         </section>
         <Tabs>
-          <BallContent slot="ball" />
-          <WineContent slot="wine" />
+          <Body slot="ball" />
+          <Card slot="wine" />
         </Tabs>
       </article>
     </main>

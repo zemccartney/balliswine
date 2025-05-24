@@ -2,21 +2,6 @@
 vintage: la-vinhota/2022
 ---
 
-<section id="intro">
-
-## Who's Playing?
-
-- Knicks @ Celtics
-- Timberwolves @ Lakers
-
-## Why Tonight?
-
-Easy: Opening Night!
-
-</section>
-
-<section id="body">
-
 I don't have many thoughts about the games. I had every intention of being semi-journalistic about all this, watching the games closely and taking notes, but when I finally settled into my chair and clicked on the tv and saw my Cs (I am a Celtics fan. To my credit, I did grow up in Massachusetts and now live in Maine) get their rings and raise a banner, saw the Inside the NBA crew gather again for their farewell season, took the first few sips of wine... I hope to improve my work here, but it'll have to wait.
 
 My partner teased me when I called opening night a holiday. I still find the sport magical, the ceremony of it all, not without dissonance, from the economic and political realities of the sport, but it's a comfort, staring into the oncoming winter, having a stupid pleasure to lean on. Late October seems to be the seasonal tipping point, when I feel the weight of the cold, looking ahead into the march of November and December and January and February and March, how now feels so long, the liminality of early fall rolling out like a carpet leading nowhere with a clear view. The start of the NBA season is steeling ourselves against the cold ahead, the league reappearing to guide us back inside.
@@ -32,5 +17,3 @@ The Lakers, being the Lakers, (I don't expect any grace here, but I swear I don'
 Lebron, who I last saw play in the Olympics. In maybe the two most incredible games of basketball I've ever watched (the semis and finals). The Serbia game….I've watched the highlights so many times. I don't know what to say, what I imagine they mean by a religious experience. I know that sounds overwrought and dumb, but seeing KD and Steph and Lebron igniting the team, showing how they've made me and so many others come to love this sport over the last 20 years, with the undertone that they will, in all likelihood, not play in LA in 2028. No better monument to the staggering presence of those 3. Super heros, truly.
 
 And so fall arrives, with not so much distance from those memories, and fresh off the WNBA playoffs, of feeling sick for the Lynx, watching them and the Liberty clobber each other across five wild games, and this season feels strange. Less like the usual fresh start, but a muted continuation. A layover, almost. But we're close. Just a bit more time, one last, short leg, and we're settled in, cozying into watching hoops just for hoops, a break from worrying about stakes and legacies, growing and already monumental alike, until the first thaws of spring come. A season for slowing down and good wine. Here's hoping.
-
-</section>

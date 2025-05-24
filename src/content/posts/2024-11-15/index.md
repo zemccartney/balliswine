@@ -2,43 +2,6 @@
 vintage: vin-de-frantz/2023
 ---
 
-<section id="intro">
-
-## Who's playing?
-
-- Heat @ Pacers
-- 76ers @ Magic
-- Pistons @ Raptors
-- Wizards @ Hawks
-- Bulls @ Cavaliers
-- Nets @ Knicks
-- Lakers @ Spurs
-- Clippers @ Rockets
-- Nuggets @ Pelicans
-- Suns @ Thunder
-- Grizzlies @ Warriors
-- Timberwolves @ Kings
-
-## Why Tonight?
-
-I do not care about the NBA Cup, no matter how many times Michael Imperioli says I should. <span class="font-emoji">😆</span> sorry, about this, I'm a hater
-
-Rockets-Clippers tops the bill for me: I adore the Rockets, frankenstein that they are. They have too many players, I don't always understand what they're trying to do with their rotations, but the talent is undeniable. Jalen Green, Alperen Sengun, Tari Eason, Amen Thompson, Jabari Smith Jr., woof. They're going to be absolute hell to deal with in 2 years. For LA's part, I've really enjoyed the Normal Powell experience so far, he's been lights out. And it's been fascinating watching Harden evolve his game as he's aged; I know there's a lot of noise around him, but he is such a purely skilled offensive player. With how the Clippers have competed on defense, this could be a disgusting game, with the Clippers looking to avenge wednesday night, no less. Really looking forward to it.
-
-Beyond that, a lot to watch for, but top of mind:
-
-- Heat / Pacers is very much a styles-make-fights game; love Jimmy and Bam, as much as they've given me heartburn in the playoffs. As did the Pacers last year; the Cs swept them, but not without showing the Celtics can struggle with speed (like when the Pacers upended them last week). Early season inconsistencies, but I bet this team rounds into a scary form later in the year
-- Lebron and Wemby on the court together, I can't help it. Oh yea, AD's there, too. And Steph Castle, wow does he look like he's going to be really good
-- Battle of NY! The Knicks and the Nets have been odd ducks so far. Lots of hand-wringing about KAT's defense, Bridges' jumper, Thibs' rotations (always); but still so early, just looking for progression, them figuring things out. For the Nets, I could say more, but it's Cam Thomas, come on. Letting it fly, very fun.
-- Pistons-Raptors: Grady Dick's been slinging it lately; record aside, Raps have not been a fun matchup for anyone. Detroit hasn't either. Jaden Ivy has been a revelation, love Cade and Duren. You're seeing the pieces start to click, very cool
-- Atlanta-Washington: chaos! Dyson Daniels already stole the ball from you 10 times. Bilal Coulibaly looks great. This game could easily be a mess, but excited to see those two keep rolling.
-- Revenge game for the Kings on their home floor. I think the Kings are still figuring it out with Demar, which is to be expected. Big change to their offense. But I love this team. I hopped right onto the bandwagon a couple years back with the light-the-beam run. Results are sometimes down, but the entertainment factor never is. Anthony Edwards is also as good a shooter as Steph now, so that's cool, I guess
-- And of course: how far do the Bulls push the Cavs this time? Cleveland has been inevitable. And Chicago has acquitted themselves far better than I think anyone expected. Should be a fun one.
-
-</section>
-
-<section id="body">
-
 I don't have many thoughts about the games. I had every intention of being semi-journalistic about all this, watching the games closely and taking notes, but when I finally settled into my chair and clicked on the tv and saw my Cs (I am a Celtics fan. To my credit, I did grow up in Massachusetts and now live in Maine) get their rings and raise a banner, saw the Inside the NBA crew gather again for their farewell season, took the first few sips of wine... I hope to improve my work here, but it'll have to wait.
 
 My partner teased me when I called opening night a holiday. I still find the sport magical, the ceremony of it all, not without dissonance, from the economic and political realities of the sport, but it's a comfort, staring into the oncoming winter, having a stupid pleasure to lean on. Late October seems to be the seasonal tipping point, when I feel the weight of the cold, looking ahead into the march of November and December and January and February and March, how now feels so long, the liminality of early fall rolling out like a carpet leading nowhere with a clear view. The start of the NBA season is steeling ourselves against the cold ahead, the league reappearing to guide us back inside.
@@ -54,5 +17,3 @@ The Lakers, being the Lakers, (I don't expect any grace here, but I swear I don'
 Lebron, who I last saw play in the Olympics. In maybe the two most incredible games of basketball I've ever watched (the semis and finals). The Serbia game….I've watched the highlights so many times. I don't know what to say, what I imagine they mean by a religious experience. I know that sounds overwrought and dumb, but seeing KD and Steph and Lebron igniting the team, showing how they've made me and so many others come to love this sport over the last 20 years, with the undertone that they will, in all likelihood, not play in LA in 2028. No better monument to the staggering presence of those 3. Super heros, truly.
 
 And so fall arrives, with not so much distance from those memories, and fresh off the WNBA playoffs, of feeling sick for the Lynx, watching them and the Liberty clobber each other across five wild games, and this season feels strange. Less like the usual fresh start, but a muted continuation. A layover, almost. But we're close. Just a bit more time, one last, short leg, and we're settled in, cozying into watching hoops just for hoops, a break from worrying about stakes and legacies, growing and already monumental alike, until the first thaws of spring come. A season for slowing down and good wine. Here's hoping.
-
-</section>

@@ -37,7 +37,7 @@ const vintages = defineCollection({
 const posts = defineCollection({
   loader: glob({
     base: "./src/content/posts",
-    pattern: "**/[^_]*.{md,mdx}",
+    pattern: ["**/[^_]*.{md,mdx}", "!**/intro.md"],
   }),
   schema: z.object({
     vintage: reference("vintages"),

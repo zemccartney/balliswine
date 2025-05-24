@@ -2,31 +2,6 @@
 vintage: "el-marciano/2023"
 ---
 
-<section id="intro">
-
-## Who's playing?
-
-### Unrivaled
-
-- Rose vs. Lunar Owls
-- Mist vs. Vinyl
-
-### NBA
-
-- Bucks @ Wizards
-- Grizzlies @ Magic
-- Knicks @ Cavaliers
-- Heat @ Raptors
-- Pelicans @ Mavericks
-- Pistons @ Spurs
-- Thunder @ Jazz
-- Timberwolves @ Rockets
-- Warriors @ Kings
-
-</section>
-
-<section id="body">
-
 <figure class="quote">
     <blockquote cite="https://www.basketballfeelings.com/p/familiaritys-spectrum">
         This All-Star, maybe more than others or maybe just more that I've paid attention to, I've seen complaints of its undoing. That in the weekend's routine, its corporate habits have finally overstepped or outshined its basketball.
@@ -91,5 +66,3 @@ Precipitous is the mood right now. The NBA world at a turning point: Lebron and 
 There's no imperative to like the league as it is. I'm not arguing that any complaints about the NBA boil down to people taking Shaq or Draymond at their word. Nostalgia's unavoidable: the past is hazy and golden, the present, boring, plodding, still up for debate. But I love the league today and I wish more people would talk about how they do, too. Because no matter the volume of the noise, you can still find those people. There is so much incredible hoops media these days; the folks I quoted above are just a few. People whose work I care about and find comforting in a time when the whole world feels enshittified and the NBA is following suit and is less and less interested in the fan experience. Hence why their words above hit home for me; the throughline that exposure undercuts ceremony and, by extension, nostalgia. Or not just exposure, but that its primary strategy is fomenting conflict, pitting teams, players, eras against each other. It seems predictable that every All Star brings so much noise about the game's downfall, a hearkening back to the past, to older, theoretically more competitive generations. Always vaguely, in retelling. Nostalgia for a time when All Star, as Katie Heindl and Shea Serrano tell it, was a special occasion by virtue of the underexposure of the league. It's a weekend predicated not on usual talking points — legacy, playoff potential, "aura" — , but loving the spectacle of basketball. All ceremony, no stakes. There's shit else to talk about but memories of past ones; appreciating the current and the future sell worse than bashing them, so why not enshrine the past? And if nostalgia depends on not just the passing of time, but the ephemerality and blurriness of memory, edges sanded off so you hold onto only the good (again, Jason Kapono in a Raptors jersey… formative?), and the league grows in part by manufacturing league consumption through the lens of current media's nostalgia for their generations of hoop, it stands to wonder, at the risk of even more melodrama here: will anyone feel anything close to that same nostalgia for the current era of the NBA? Or will this era be so on-demand, so replayable, memories so imprinted with constant league put-downs, that all fans growing up today won't have much to feel nostalgia for, the ceremony of it all, gutted? Is selling your boredom, your grief for special occasions passed, really so much more palatable than paying it forward?
 
 That beach resort closed last year. My folks were down in Naples recently for a wedding and swung by to see what had been made of it. The entire complex — frankly, a garish and excessive property in its own right, as fondly as I remember it — had been torn down, replaced with massive luxury apartment buildings.
-
-</section>

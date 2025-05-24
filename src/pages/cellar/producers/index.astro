@@ -34,37 +34,18 @@ const TABS = [
 ---
 
 <script>
-  // Tab switching functionality
-  const tabsContainer = document.querySelector("#tabs-container");
+  import type { CollectionEntry } from "astro:content";
 
-  if (tabsContainer) {
-    const tabs = tabsContainer.querySelectorAll('[role="tab"]');
+  import Leaflet from "leaflet";
+  import "leaflet.markercluster";
+  import "leaflet/dist/leaflet.css";
+  import "leaflet.markercluster/dist/MarkerCluster.css";
+  import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 
-    for (const tab of tabs) {
-      tab.addEventListener("click", () => {
-        const tabPanels = tabsContainer.querySelectorAll('[role="tabpanel"]');
-        for (const panel of tabPanels) {
-          if (panel.getAttribute("aria-labelledby") === tab.id) {
-            panel.removeAttribute("hidden");
-          } else {
-            panel.setAttribute("hidden", "true");
-          }
-        }
+  const mapPanel = document.querySelector("#map-panel");
+  const mapElement = document.querySelector("#map");
 
-        tab.setAttribute("aria-selected", "true");
-        for (const otherTab of [...tabs].filter((t) => t.id !== tab.id)) {
-          otherTab.setAttribute("aria-selected", "false");
-        }
-      });
-    }
-  }
-
-  // Leaflet map initialization
-  document.addEventListener("DOMContentLoaded", () => {
-    const mapPanel = document.querySelector("#map-panel");
-
-    if (!mapPanel) return;
-
+  if (mapPanel && mapElement && mapElement instanceof HTMLElement) {
     // Only initialize map when map panel is visible
     const observer = new MutationObserver((mutations) => {
       for (const mutation of mutations) {
@@ -74,59 +55,45 @@ const TABS = [
           !mapPanel.hasAttribute("hidden") &&
           !mapPanel.querySelector(".leaflet-container")
         ) {
-          initMap();
+          const producers = JSON.parse(
+            mapElement.dataset.producers || "",
+          ) as CollectionEntry<"producers">[];
+
+          // Create map
+          const map = Leaflet.map("map").setView([46, 2], 4);
+
+          Leaflet.tileLayer(
+            "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            {
+              attribution:
+                '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            },
+          ).addTo(map);
+
+          if (producers.length > 0) {
+            const markers = Leaflet.markerClusterGroup();
+
+            for (const producer of producers) {
+              const marker = Leaflet.marker(
+                producer.data.coordinates,
+              ).bindPopup(
+                `<strong>${producer.data.name}</strong><br>${producer.data.location}<br><a href="/cellar/producers/${producer.id}">View details</a>`,
+              );
+              markers.addLayer(marker);
+            }
+
+            // Add markers to map
+            map.addLayer(markers);
+
+            const bounds = markers.getBounds();
+            map.fitBounds(bounds);
+          }
         }
       }
+
+      observer.observe(mapPanel, { attributes: true });
     });
-
-    observer.observe(mapPanel, { attributes: true });
-
-    // Initialize map if map panel is visible on load
-    if (!mapPanel.hasAttribute("hidden")) {
-      initMap();
-    }
-
-    function initMap() {
-      // Get producer data from the data attribute
-      const dataElement = document.querySelector("#producers-data");
-      if (!dataElement || !dataElement.textContent) return;
-
-      const producersData = JSON.parse(dataElement.textContent);
-
-      // Declare L to avoid TypeScript errors
-      // @ts-expect-error Leaflet is loaded via CDN and available as a global
-      const L = globalThis.L;
-
-      // Create map
-      const map = L.map("map").setView([46, 2], 4);
-
-      // Add tile layer
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      }).addTo(map);
-
-      // Create marker cluster group
-      const markers = L.markerClusterGroup();
-
-      // Add markers for each producer
-      for (const producer of producersData) {
-        const marker = L.marker(producer.coordinates).bindPopup(
-          `<strong>${producer.name}</strong><br>${producer.location}<br><a href="/cellar/producers/${producer.id}">View details</a>`,
-        );
-        markers.addLayer(marker);
-      }
-
-      // Add markers to map
-      map.addLayer(markers);
-
-      // Fit bounds to markers
-      if (producersData.length > 0) {
-        const bounds = markers.getBounds();
-        map.fitBounds(bounds);
-      }
-    }
-  });
+  }
 </script>
 
 <style>
@@ -148,31 +115,6 @@ const TABS = [
     margin-top: 2rem;
   }
 </style>
-
-<!-- Load Leaflet CSS and JS -->
-<link
-  crossorigin=""
-  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-  rel="stylesheet"
-/>
-<link
-  href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"
-  rel="stylesheet"
-/>
-<link
-  href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"
-  rel="stylesheet"
-/>
-<script
-  crossorigin=""
-  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-  is:inline
-  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script
-  is:inline
-  src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"
-></script>
 
 <CellarShell
   description="Explore producers of the wines drunk along the blogging way"
@@ -234,7 +176,7 @@ const TABS = [
           <p class="mb-4 text-center">
             Explore wine producers on the map. Click on a marker to see details.
           </p>
-          <div id="map"></div>
+          <div data-producers={JSON.stringify(producers)} id="map"></div>
         </Typography>
       </TabPanel>
     </Tabs>
