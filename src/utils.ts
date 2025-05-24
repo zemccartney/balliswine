@@ -1,3 +1,5 @@
+import type { CollectionEntry } from "astro:content";
+
 const formatter = new Intl.DateTimeFormat("en-US", {
   day: "numeric",
   month: "long",
@@ -20,3 +22,14 @@ export const formatYYYYMMDD = (yyyymmdd: string) => {
 
   return `${month.value} ${day.value}, ${year.value}`;
 };
+
+const vintageImages = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/content/vintages/**/*.{jpeg,jpg,png}",
+);
+
+export const vintageImage = (vintage: CollectionEntry<"vintages">) => {
+  return vintageImages[`/src/content/vintages/${vintage.id}.png`]?.();
+};
+
+export const getVintageYear = (vintage: CollectionEntry<"vintages">) =>
+  vintage.id.split("/")[1];

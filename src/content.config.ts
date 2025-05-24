@@ -1,15 +1,16 @@
 import { file, glob } from "astro/loaders";
 import { defineCollection, reference, z } from "astro:content";
 
-const producers = defineCollection({
+const makers = defineCollection({
   loader: glob({
-    base: "./src/content/producers",
+    base: "./src/content/makers",
     pattern: "**/[^_]*.{md,mdx}",
   }),
   schema: z.object({
     coordinates: z.tuple([z.number(), z.number()]),
     location: z.string(),
     name: z.string(),
+    website: z.string().url().optional(),
   }),
 });
 
@@ -17,8 +18,8 @@ const wines = defineCollection({
   loader: file("src/content/wines.json"),
   schema: z.object({
     hue: z.string(),
+    maker: reference("makers"),
     name: z.string(),
-    producer: reference("producers"),
   }),
 });
 
@@ -45,8 +46,8 @@ const posts = defineCollection({
 });
 
 export const collections = {
+  makers,
   posts,
-  producers,
   vintages,
   wines,
 };

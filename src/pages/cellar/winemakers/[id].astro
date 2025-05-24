@@ -6,25 +6,25 @@ import CellarShell from "../../../layouts/cellar-shell.astro";
 import Typography from "../../../layouts/typography.astro";
 
 export const getStaticPaths = async () => {
-  const producers = await getCollection("producers");
-  return producers.map((producer) => {
+  const makers = await getCollection("makers");
+  return makers.map((maker) => {
     return {
-      params: { id: producer.id },
-      props: { producer },
+      params: { id: maker.id },
+      props: { maker },
     };
   });
 };
 
-const { producer } = Astro.props;
+const { maker } = Astro.props;
 const wines = await getCollection("wines", ({ data }) => {
-  return data.producer.id === producer.id;
+  return data.maker.id === maker.id;
 });
 
-const { Content: ProducerDescription } = await render(producer);
+const { Content: Notes } = await render(maker);
 
 // TODO Proper 404 page
-if (!producer) {
-  return Astro.redirect("/cellar/producers");
+if (!maker) {
+  return Astro.redirect("/cellar/winemakers");
 }
 ---
 
@@ -32,17 +32,17 @@ if (!producer) {
   import Leaflet, { type LatLngExpression } from "leaflet";
   import "leaflet/dist/leaflet.css";
 
-  const mapElement = document.querySelector("#producer-map");
+  const mapElement = document.querySelector("#map");
 
   if (mapElement && mapElement instanceof HTMLElement) {
     // type guard to verify presence of dataset attr
-    // Get producer data
+    // Get maker data
     const coordinates = JSON.parse(
       mapElement.dataset.coordinates || "[]",
     ) as LatLngExpression; // TODO How to enforce this type upstream?
 
     // Create map
-    const map = Leaflet.map("producer-map").setView(coordinates, 7);
+    const map = Leaflet.map("map").setView(coordinates, 7);
 
     // Add tile layer
     Leaflet.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -56,12 +56,16 @@ if (!producer) {
 </script>
 
 <style>
-  @reference "../../../styles/global.css";
+  #map {
+    .leaflet-marker-icon {
+      cursor: default;
+    }
+  }
 </style>
 
 <CellarShell
-  description={`Details about the winemaker, ${producer.data.name}`}
-  title={`${producer.data.name} - The Cellar`}
+  description={`Details about the winemaker, ${maker.data.name}`}
+  title={`${maker.data.name} - The Cellar`}
 >
   <main class="mx-auto p-8 md:container md:p-16">
     <!-- Breadcrumb navigation -->
@@ -76,9 +80,9 @@ if (!producer) {
         <span class="mx-2 text-zinc-300">&gt;</span>
         <a
           class="text-lg tracking-widest text-orange-600 underline decoration-wavy underline-offset-2 hover:text-orange-300"
-          href="/cellar/producers"
+          href="/cellar/winemakers"
         >
-          Producers
+          Winemakers
         </a>
         <span class="mx-2 text-zinc-300">&gt;</span>
       </nav>
@@ -86,24 +90,32 @@ if (!producer) {
 
     <Card class="-mx-8 mt-12 p-8 sm:mx-auto lg:max-w-2/3">
       <h1 class="font-old-style mb-10 text-center text-5xl text-rose-950">
-        {producer.data.name}
+        {maker.data.name}
       </h1>
       <div>
         <div class="flex flex-col-reverse gap-4 sm:flex-col">
           <h2 class="font-old-style text-2xl font-bold text-rose-950 italic">
-            {producer.data.location}
+            {maker.data.location}
           </h2>
           <div
             class="-mx-8 h-[400px] sm:mx-0"
-            data-coordinates={JSON.stringify(producer.data.coordinates)}
-            id="producer-map"
+            data-coordinates={JSON.stringify(maker.data.coordinates)}
+            id="map"
           >
           </div>
         </div>
 
-        <Typography class="mx-auto text-rose-950 xl:mt-10">
-          <ProducerDescription />
-        </Typography>
+        {
+          maker.data.website && (
+            <a
+              class="block text-center text-xl text-rose-600 underline hover:text-rose-300 xl:mt-10"
+              href={maker.data.website}
+              target="_blank"
+            >
+              Check them out
+            </a>
+          )
+        }
       </div>
 
       <Typography class="mx-auto mt-12 text-rose-950">
@@ -124,6 +136,14 @@ if (!producer) {
             ))
           }
         </ul>
+        {
+          maker.rendered?.html && (
+            <>
+              <hr />
+              <Notes />
+            </>
+          )
+        }
       </Typography>
     </Card>
   </main>

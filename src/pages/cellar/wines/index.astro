@@ -58,8 +58,8 @@ const fillXl = 4 - (wines.length % 4);
               </h3>
               <p class="mt-1 mb-4 text-center text-base text-slate-800 italic md:text-lg">
                 {async () => {
-                  const producer = await getEntry(wine.data.producer);
-                  return producer.data.name;
+                  const maker = await getEntry(wine.data.maker);
+                  return maker.data.name;
                 }}
               </p>
             </Card>

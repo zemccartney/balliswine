@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import { getCollection, getEntry, render } from "astro:content";
 
 import Card from "../components/card.astro";
@@ -23,6 +24,9 @@ const { Content: Body } = await render(post);
 const { vintage: _vin } = post.data;
 const vintage = await getEntry(_vin);
 const wine = await getEntry(vintage.data.wine);
+const maker = await getEntry(wine.data.maker);
+
+const { Content: TastingNotes } = await render(vintage);
 
 const introMd = import.meta.glob("/src/content/posts/**/intro.md");
 
@@ -51,7 +55,45 @@ const description = `Post for the games on ${dateFmt}${wine ? `, with a bottle o
         </section>
         <Tabs>
           <Body slot="ball" />
-          <Card slot="wine" />
+          <Card class="-mx-8 mt-12 w-fit p-8 sm:mx-auto" slot="wine">
+            <h1 class="font-old-style mb-0 text-center text-5xl text-rose-950">
+              {wine.data.name}
+            </h1>
+
+            <a
+              class="font-old-style mt-2 mb-10 block text-center text-xl text-rose-950 underline hover:text-rose-600"
+              href={`/cellar/winemakers/${wine.data.maker.id}`}
+            >
+              {maker.data.name}
+            </a>
+
+            <Typography as="article" class="text-rose-950">
+              <div
+                class="mb-6 flex flex-col items-center justify-center md:flex-row md:gap-8"
+              >
+                <Image
+                  alt={`${wine.data.name} ${Utils.getVintageYear(vintage)} bottle`}
+                  class="border-4 border-zinc-800 ring-4 ring-zinc-800/60"
+                  src={Utils.vintageImage(vintage)}
+                  width="300"
+                />
+                <div
+                  class="mx-auto flex w-fit max-w-[75%] flex-col md:max-w-[50%]"
+                >
+                  <h2 class="font-old-style">
+                    {Utils.getVintageYear(vintage)}
+                  </h2>
+                  <p>{vintage.data.cepage}</p>
+                </div>
+              </div>
+              <p class="font-old-style text-lg font-bold italic">
+                Tried on {vintage.data.dateTried}
+              </p>
+              <p class="text-rose-950">
+                <TastingNotes />
+              </p>
+            </Typography>
+          </Card>
         </Tabs>
       </article>
     </main>
