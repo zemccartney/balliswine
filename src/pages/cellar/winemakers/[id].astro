@@ -34,24 +34,25 @@ if (!maker) {
 
   const mapElement = document.querySelector("#map");
 
+  // type guard to verify presence of dataset attr
   if (mapElement && mapElement instanceof HTMLElement) {
-    // type guard to verify presence of dataset attr
-    // Get maker data
     const coordinates = JSON.parse(
       mapElement.dataset.coordinates || "[]",
     ) as LatLngExpression; // TODO How to enforce this type upstream?
 
-    // Create map
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const winemakerName = mapElement.dataset.winemakerName!;
+
     const map = Leaflet.map("map").setView(coordinates, 7);
 
-    // Add tile layer
     Leaflet.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:
         '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     }).addTo(map);
 
-    // Add marker
-    Leaflet.marker(coordinates).addTo(map);
+    Leaflet.marker(coordinates, {
+      alt: `${winemakerName}'${winemakerName.endsWith("s") ? "" : "s"} location map marker`,
+    }).addTo(map);
   }
 </script>
 
@@ -100,6 +101,7 @@ if (!maker) {
           <div
             class="-mx-8 h-[400px] sm:mx-0"
             data-coordinates={JSON.stringify(maker.data.coordinates)}
+            data-winemaker-name={maker.data.name}
             id="map"
           >
           </div>
@@ -108,7 +110,7 @@ if (!maker) {
         {
           maker.data.website && (
             <a
-              class="block text-center text-xl text-rose-600 underline hover:text-rose-300 xl:mt-10"
+              class="block text-center text-xl text-rose-950 underline hover:text-rose-600 xl:mt-10"
               href={maker.data.website}
               target="_blank"
             >

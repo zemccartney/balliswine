@@ -1,7 +1,7 @@
 ---
-coordinates: [47.346649, -0.658908]
-location: Anjou, France
-name: Olivier Cousin Domaine Cousin-Leduc
+coordinates: [47.2417715, -0.4427891]
+location: Martigné-Briand, Anjou, Loire Valley, France
+name: Domaine Cousin-Leduc
 ---
 
-[Find their wines](https://www.wine-searcher.com/find/olivier+cousin+dom+leducq+pur+breton+anjou+loire+france/2021)
+Learn more about the winemaker himself, Olivier Cousin, from this <a href="https://www.jennyandfrancois.com/wines-2/france/olivier-cousin/" target="_blank">write-up</a>.

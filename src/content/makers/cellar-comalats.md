@@ -1,7 +1,6 @@
 ---
-coordinates: [41.575611, 1.124972]
-location: Catalonia, Spain
+coordinates: [41.57584509310009, 1.2390228690087774]
+location: L'Ametlla de Segarra, Lleida, Spain
 name: Cellar Comalats
+website: https://www.comalats.cat/
 ---
-
-[Check out their wines](https://www.superglou.com/comalats)

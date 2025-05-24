@@ -28,9 +28,8 @@ const vintages = await getCollection("vintages", ({ data }) => {
   return data.wine.id === wine.id;
 });
 
-const [postTried] = await getCollection("posts", async ({ data }) => {
-  const vintage = await getEntry(data.vintage);
-  return vintage.data.wine.id === wine.id;
+const [postTried] = await getCollection("posts", ({ data }) => {
+  return data.vintage.id.startsWith(wine.id);
 });
 
 const maker = await getEntry(wine.data.maker);

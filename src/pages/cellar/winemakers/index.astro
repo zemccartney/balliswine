@@ -39,7 +39,6 @@ const TABS = [
   import "leaflet.markercluster";
   import "leaflet/dist/leaflet.css";
   import "leaflet.markercluster/dist/MarkerCluster.css";
-  import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 
   const mapPanel = document.querySelector("#map-panel");
   const mapElement = document.querySelector("#map");
@@ -57,7 +56,6 @@ const TABS = [
             mapElement.dataset.winemakers || "",
           ) as CollectionEntry<"makers">[];
 
-          // Create map
           const map = Leaflet.map("map");
 
           Leaflet.tileLayer(
@@ -83,9 +81,9 @@ const TABS = [
             });
 
             for (const winemaker of winemakers) {
-              const marker = Leaflet.marker(
-                winemaker.data.coordinates,
-              ).bindPopup(
+              const marker = Leaflet.marker(winemaker.data.coordinates, {
+                alt: `${winemaker.data.name}'${winemaker.data.name.endsWith("s") ? "" : "s"} location map marker`,
+              }).bindPopup(
                 `
                   <p><strong>${winemaker.data.name}</strong></p>
                   <p>${winemaker.data.location}<p>

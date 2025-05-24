@@ -1,7 +1,6 @@
 ---
-coordinates: [41.185550, -4.196115]
-location: Sierra de Gredos, Spain
+coordinates: [41.60249758421343, -4.114537004717924]
+location: Peñafiel, Valladolid, Spain
 name: Alfredo Maestro
+website: https://alfredomaestro.com/
 ---
-
-[Check out their wines](https://alfredomaestro.com/producto/el-marciano/)
