@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Ball is Wine is a creative writing project combining wine tasting with basketball watching. Each month, the author watches basketball games, drinks a bottle of wine, and writes about both experiences. The blog is organized chronologically with entries containing two parts: basketball reflections and wine tasting notes.
 
-The project is currently expanding to include a "cellar" feature to better catalog wines by producer and type.
+The project includes a completed "cellar" feature that catalogs wines by producer with geographic visualization, detailed vintage information, and cross-linking with blog posts.
 
 ## Tech Stack
 
@@ -17,14 +17,25 @@ The project is currently expanding to include a "cellar" feature to better catal
 
 ## Project Structure
 
-- `/src/content/days/`: Contains chronological entry metadata files (YYYY-MM-DD.md)
-- `/src/content/thoughts/`: Contains actual content with subdirectories by date:
-  - `ball.md`: Basketball reflections
-  - `wine.mdx`: Wine tasting notes with imported image
-- `/src/pages/`: Route definitions (including dynamic routes)
-- `/src/components/`: Reusable UI components
-- `/src/layouts/`: Page layout templates
-- `/memory-bank/`: Contains project documentation and specs
+### Blog Content
+
+- `/src/content/posts/`: Chronological blog entries with date-based subdirectories:
+  - `index.md`: Entry metadata
+  - `intro.md`: Entry introduction
+- `/src/content/thoughts/`: Legacy content structure (being phased out)
+
+### Cellar Content
+
+- `/src/content/makers/`: Wine producer profiles with location data
+- `/src/content/vintages/`: Specific wine vintages with tasting notes and images
+- `/src/content/wines.json`: Central wine catalog linking producers to wines
+
+### Application Structure
+
+- `/src/pages/`: Route definitions including cellar navigation
+- `/src/components/`: Reusable UI components including tabbed interfaces
+- `/src/layouts/`: Page layout templates (shell.astro, cellar-shell.astro)
+- `/src/styles/`: Global styling and component-specific CSS
 
 ## Common Commands
 
@@ -64,46 +75,59 @@ Content is organized in a specific way:
 
 ## Cellar Features
 
-The cellar section (currently in development) provides a structured catalog of wines with:
+The cellar section provides a comprehensive wine catalog with:
 
-- Wine explorer page with chronological list of wines tried
-- Wine detail pages with vintage information and tasting notes
-- Producer list with geographic visualization
-- Producer detail pages with all wines from that producer
+### Navigation Structure
 
-### New Data Domain
+- `/cellar/` - Landing page with wine/winemaker navigation
+- `/cellar/wines/` - Visual wine explorer with bottle grid and filtering
+- `/cellar/wines/[id]` - Individual wine pages with vintage tabs
+- `/cellar/winemakers/` - Producer list with interactive map view
+- `/cellar/winemakers/[id]` - Producer detail pages
 
-```mermaid
-erDiagram
-    Producer ||--o{ Wine : "produces"
-    Wine ||--o{ Vintage : "has"
-    Vintage ||--o{ Post : "featured in"
+### Key Features
 
-    Producer {
-        string name
-        string description
-        string location
-        point coordinates
-    }
+- **Visual wine catalog** - Color-coded bottle representations
+- **Geographic visualization** - Interactive Leaflet map with producer clustering
+- **Tabbed interfaces** - Multiple vintages and list/map toggle views
+- **Cross-linking** - Blog posts link to wine details and vice versa
+- **Responsive design** - Adaptive grid layouts
 
-    Wine {
-        string name
-        string type
-        string variety
-        string description
-    }
+### Data Schema
 
-    Vintage {
-        int year
-        string notes
-    }
+```typescript
+// Makers Collection (/src/content/makers/)
+interface Maker {
+  coordinates: [number, number]; // [latitude, longitude]
+  location: string;
+  name: string;
+  website?: string;
+}
 
-    Post {
-        date slug
-        text intro
-        text content
-    }
+// Wines Collection (/src/content/wines.json)
+interface Wine {
+  hue: string; // Color for UI visualization
+  id: string; // Wine identifier
+  maker: string; // Reference to maker ID
+  name: string;
+}
+
+// Vintages Collection (/src/content/vintages/)
+interface Vintage {
+  cepage: string; // Grape varieties
+  dateTried: string; // Format: MM/DD/YYYY
+  wine: string; // Reference to wine ID
+}
+
+// Posts Collection (/src/content/posts/)
+interface Post {
+  vintage?: string; // Reference to vintage ID
+}
 ```
+
+### Data Relationships
+
+`Maker (1) → Wine (many) → Vintage (many) → Post (1:1)`
 
 ## Styling Guidelines
 
