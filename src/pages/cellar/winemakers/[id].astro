@@ -1,0 +1,162 @@
+---
+import { getCollection, render } from "astro:content";
+
+import Card from "../../../components/card.astro";
+import CellarShell from "../../../layouts/cellar-shell.astro";
+import Typography from "../../../layouts/typography.astro";
+
+export const getStaticPaths = async () => {
+  const makers = await getCollection("makers");
+  return makers.map((maker) => {
+    return {
+      params: { id: maker.id },
+      props: { maker },
+    };
+  });
+};
+
+const { maker } = Astro.props;
+const wines = await getCollection("wines", ({ data }) => {
+  return data.maker.id === maker.id;
+});
+
+const { Content: Notes } = await render(maker);
+
+// TODO Proper 404 page
+if (!maker) {
+  return Astro.redirect("/cellar/winemakers");
+}
+---
+
+<script>
+  import Leaflet, { type LatLngExpression } from "leaflet";
+  import markerIconRetinaUrl from "leaflet/dist/images/marker-icon-2x.png";
+  import markerIconUrl from "leaflet/dist/images/marker-icon.png";
+  import markerShadowUrl from "leaflet/dist/images/marker-shadow.png";
+  import "leaflet/dist/leaflet.css";
+
+  // https://cescobaz.com/2023/06/14/setup-leaflet-with-svelte-and-vite/
+  Leaflet.Icon.Default.prototype.options.iconUrl = markerIconUrl.src;
+  Leaflet.Icon.Default.prototype.options.iconRetinaUrl =
+    markerIconRetinaUrl.src;
+  Leaflet.Icon.Default.prototype.options.shadowUrl = markerShadowUrl.src;
+  Leaflet.Icon.Default.imagePath = ""; // necessary to avoid Leaflet adds some prefix to image path.
+
+  const mapElement = document.querySelector("#map");
+
+  // type guard to verify presence of dataset attr
+  if (mapElement && mapElement instanceof HTMLElement) {
+    const coordinates = JSON.parse(
+      mapElement.dataset.coordinates || "[]",
+    ) as LatLngExpression; // TODO How to enforce this type upstream?
+
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const winemakerName = mapElement.dataset.winemakerName!;
+
+    const map = Leaflet.map("map").setView(coordinates, 7);
+
+    Leaflet.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution:
+        '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    }).addTo(map);
+
+    Leaflet.marker(coordinates, {
+      alt: `${winemakerName}'${winemakerName.endsWith("s") ? "" : "s"} location map marker`,
+    }).addTo(map);
+  }
+</script>
+
+<style>
+  #map {
+    .leaflet-marker-icon {
+      cursor: default;
+    }
+  }
+</style>
+
+<CellarShell
+  description={`Details about the winemaker, ${maker.data.name}`}
+  title={`${maker.data.name}`}
+>
+  <main class="mx-auto p-8 md:container md:p-16">
+    <!-- Breadcrumb navigation -->
+    <header class="mx-auto sm:max-w-1/2">
+      <nav class="font-title mb-8 flex justify-center">
+        <a
+          class="text-lg tracking-widest text-orange-600 underline decoration-wavy underline-offset-2 hover:text-orange-300"
+          href="/cellar"
+        >
+          The Cellar
+        </a>
+        <span class="mx-2 text-zinc-300">&gt;</span>
+        <a
+          class="text-lg tracking-widest text-orange-600 underline decoration-wavy underline-offset-2 hover:text-orange-300"
+          href="/cellar/winemakers"
+        >
+          Winemakers
+        </a>
+        <span class="mx-2 text-zinc-300">&gt;</span>
+      </nav>
+    </header>
+
+    <Card class="-mx-8 mt-12 p-8 sm:mx-auto lg:max-w-2/3">
+      <h1 class="font-old-style mb-10 text-center text-5xl text-rose-950">
+        {maker.data.name}
+      </h1>
+      <div>
+        <div class="flex flex-col-reverse gap-4 sm:flex-col">
+          <h2 class="font-old-style text-2xl font-bold text-rose-950 italic">
+            {maker.data.location}
+          </h2>
+          <div
+            class="-mx-8 h-[400px] sm:mx-0"
+            data-coordinates={JSON.stringify(maker.data.coordinates)}
+            data-winemaker-name={maker.data.name}
+            id="map"
+          >
+          </div>
+        </div>
+
+        {
+          maker.data.website && (
+            <a
+              class="block text-center text-xl text-rose-950 underline hover:text-rose-600 xl:mt-10"
+              href={maker.data.website}
+              target="_blank"
+            >
+              Check them out
+            </a>
+          )
+        }
+      </div>
+
+      <Typography class="mx-auto mt-12 text-rose-950">
+        <h2 class="font-old-style mb-6 text-center text-2xl text-rose-950">
+          Wines Tried
+        </h2>
+        <ul>
+          {
+            wines.map((wine) => (
+              <li class="font-old-style grid grid-cols-1 gap-4 text-2xl sm:grid-cols-2">
+                <a
+                  class="text-center hover:text-rose-600"
+                  href={`/cellar/wines/${wine.id}`}
+                >
+                  {wine.data.name}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        {
+          maker.rendered?.html && (
+            <>
+              <hr />
+              <Notes />
+            </>
+          )
+        }
+      </Typography>
+    </Card>
+  </main>
+</CellarShell>

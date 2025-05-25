@@ -1,0 +1,34 @@
+---
+import type { HTMLTag, Polymorphic } from "astro/types";
+import type { ClassValue } from "clsx";
+
+type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag; class?: ClassValue }>;
+
+const { as = "div", class: className, ...rest } = Astro.props;
+
+const Tag = as;
+---
+
+<style>
+  @reference "../styles/global.css";
+
+  a.CellarCard {
+    &:hover {
+      * {
+        @apply text-rose-600;
+      }
+    }
+  }
+</style>
+
+<Tag
+  class:list={[
+    "CellarCard",
+    "block border-2 border-emerald-600 bg-yellow-50 shadow-lg shadow-neutral-900",
+    Tag === "a" && "cursor-pointer hover:bg-zinc-900",
+    className,
+  ]}
+  {...rest}
+>
+  <slot />
+</Tag>

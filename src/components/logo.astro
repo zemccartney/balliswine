@@ -1,0 +1,40 @@
+---
+// TODO File bug? unable to export w/ as const, get "Expected ";" but found "const""
+const Sizes = {
+  NORMAL: "normal",
+  SMALL: "small",
+} as const;
+
+interface Props {
+  class?: string;
+  // https://stackoverflow.com/a/60148768
+  size?: (typeof Sizes)[keyof typeof Sizes];
+}
+
+const { class: className, size = Sizes.NORMAL, ...rest } = Astro.props;
+
+let ballFontSize = "text-2xl";
+let wineFontSize = "text-8xl";
+let rightOffset = "right-16";
+
+if (size === Sizes.SMALL) {
+  ballFontSize = "text-base";
+  wineFontSize = "text-6xl";
+  rightOffset = "right-10";
+}
+---
+
+{/* TODO Re-evaluate items-end, not sure necessary */}
+<div
+  class:list={["font-emoji flex flex-col items-end", className]}
+  {...rest}
+  aria-label="Ball is Wine logo (wine glass emoji with a smaller basketball emoji hovering above, like the wine glass is a basket)"
+  role="img"
+>
+  <div
+    class={`bw-logo-ball font-bold ${ballFontSize} relative ${rightOffset} -top-2`}
+  >
+    🏀
+  </div>
+  <div class={`bw-logo-wine ${wineFontSize}`}>🍷</div>
+</div>

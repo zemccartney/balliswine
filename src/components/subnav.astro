@@ -1,0 +1,65 @@
+---
+import type { ClassValue } from "clsx";
+
+interface Props {
+  class?: ClassValue;
+  pageVariant?: "dark" | "light";
+}
+
+import Logo from "./logo.astro";
+
+const { class: className, pageVariant = "light" } = Astro.props;
+const textColorClass =
+  pageVariant === "dark" ? "text-yellow-100" : "text-rose-900";
+const hoverColorClass =
+  pageVariant === "dark" ? "hover:text-rose-300" : "hover:text-rose-600";
+const activeColorClass =
+  pageVariant === "dark"
+    ? "[&.active]:text-rose-300 [&.active]:pointer-events-none"
+    : "[&.active]:text-rose-600 [&.active]:pointer-events-none";
+---
+
+<script>
+  let currentPath = globalThis.location.pathname;
+  if (currentPath.endsWith("/")) {
+    // Normalize away trailing slash (Cloudflare 308s directory paths to trailing slash equiv e.g. /archive --> /archive/ )
+    currentPath = currentPath.slice(0, -1);
+  }
+  const navLink = document.querySelector(`nav a[href="${currentPath}"]`);
+  navLink?.classList.add("active");
+
+  // Replaced by cellar subpage breadcrumb nav
+  const cellarNavLink = document.querySelector('nav a[href="/cellar"]');
+  if (currentPath.startsWith("/cellar") && currentPath !== "/cellar") {
+    cellarNavLink?.classList.add("hidden");
+  }
+</script>
+
+<nav class:list={["mx-auto w-fit", className]}>
+  <a
+    class:list={["mx-auto mb-8 block w-fit", textColorClass, hoverColorClass]}
+    href="/"
+  >
+    <Logo size="small" />
+  </a>
+  <div class="flex flex-row justify-center gap-8">
+    <a
+      class:list={[
+        "font-title text-xl underline decoration-wavy underline-offset-2",
+        textColorClass,
+        activeColorClass,
+        hoverColorClass,
+      ]}
+      href="/about">What is this?</a
+    >
+    <a
+      class:list={[
+        "font-title text-xl underline decoration-wavy underline-offset-2",
+        textColorClass,
+        activeColorClass,
+        hoverColorClass,
+      ]}
+      href="/cellar">The Cellar</a
+    >
+  </div>
+</nav>

@@ -1,0 +1,107 @@
+---
+import { getCollection, getEntry } from "astro:content";
+
+import Card from "../../../components/card.astro";
+import CellarShell from "../../../layouts/cellar-shell.astro";
+
+const wines = await getCollection("wines");
+
+wines.sort((a, b) => a.data.name.localeCompare(b.data.name));
+
+const fillSm = 2 - (wines.length % 2);
+const fillLg = 3 - (wines.length % 3);
+const fillXl = 4 - (wines.length % 4);
+---
+
+<style>
+  .cork {
+    background-image: url(./_filter.svg);
+  }
+</style>
+
+<CellarShell
+  description="Explore wines tried throughout the blog"
+  title="Wines"
+>
+  <main class="mx-auto p-8 md:container md:p-16">
+    <header class="mx-auto max-w-1/2">
+      <nav class="font-title mb-8 flex justify-center">
+        <a
+          class="text-lg tracking-widest text-orange-600 underline decoration-wavy underline-offset-2 hover:text-orange-300"
+          href="/cellar"
+        >
+          The Cellar
+        </a>
+        <span class="mx-2 text-zinc-300">&gt;</span>
+      </nav>
+
+      <h1
+        class="font-title text-center text-5xl text-zinc-300 md:mb-16 md:text-7xl"
+      >
+        Wines
+      </h1>
+    </header>
+
+    <div
+      class="mx-auto mt-12 grid w-fit grid-cols-1 gap-5 border-20 border-amber-700 border-y-amber-800/65 bg-amber-700 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+    >
+      {
+        wines.map((wine) => (
+          <div class="relative bg-amber-700/40 backdrop-brightness-10">
+            <Card
+              as="a"
+              class="absolute top-1/10 left-1/10 z-10 w-4/5"
+              href={`/cellar/wines/${wine.id}`}
+            >
+              <h3 class="font-old-style text-center text-xl text-rose-950 underline md:text-2xl">
+                {wine.data.name}
+              </h3>
+              <p class="mt-1 mb-4 text-center text-base text-slate-800 italic md:text-lg">
+                {async () => {
+                  const maker = await getEntry(wine.data.maker);
+                  return maker.data.name;
+                }}
+              </p>
+            </Card>
+            <div
+              class="mx-auto h-[250px] w-[250px] rounded-full"
+              style={`background-color: ${wine.data.hue}`}
+            >
+              <div class="cork relative top-[85px] mx-auto h-[90px] w-[90px] rounded-full outline-8 outline-slate-200/65" />
+            </div>
+          </div>
+        ))
+      }
+      <div
+        class:list={[
+          "hidden h-[250px] w-[250px] bg-amber-700/40 backdrop-brightness-10",
+          {
+            "lg:max-xl:block": fillLg >= 1,
+            "sm:max-lg:block": fillSm === 1,
+            "xl:block": fillXl >= 1,
+          },
+        ]}
+      >
+      </div>
+      <div
+        class:list={[
+          "hidden h-[250px] w-[250px] bg-amber-700/40 backdrop-brightness-10",
+          {
+            "lg:max-xl:block": fillLg >= 2,
+            "xl:block": fillXl >= 2,
+          },
+        ]}
+      >
+      </div>
+      <div
+        class:list={[
+          "hidden h-[250px] w-[250px] bg-amber-700/40 backdrop-brightness-10",
+          {
+            "xl:block": fillXl === 3,
+          },
+        ]}
+      >
+      </div>
+    </div>
+  </main>
+</CellarShell>

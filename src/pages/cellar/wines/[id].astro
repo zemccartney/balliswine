@@ -1,0 +1,210 @@
+---
+import type { AstroComponentFactory } from "astro/runtime/server/index.js";
+
+import { Image } from "astro:assets";
+import { getCollection, render } from "astro:content";
+import { getEntry } from "astro:content";
+
+import Card from "../../../components/card.astro";
+import TabPanel from "../../../components/tab-panel.astro";
+import Tab from "../../../components/tab.astro";
+import Tabs from "../../../components/tabs.astro";
+import "../_tabs.css";
+import CellarShell from "../../../layouts/cellar-shell.astro";
+import Typography from "../../../layouts/typography.astro";
+import * as Utils from "../../../utils";
+
+export const getStaticPaths = async () => {
+  const wines = await getCollection("wines");
+  return wines.map((wine) => {
+    return {
+      params: { id: wine.id },
+      props: { wine },
+    };
+  });
+};
+
+const { wine } = Astro.props;
+
+const vintages = await getCollection("vintages", ({ data }) => {
+  return data.wine.id === wine.id;
+});
+
+const [postTried] = await getCollection("posts", ({ data }) => {
+  return data.vintage.id.startsWith(wine.id);
+});
+
+const maker = await getEntry(wine.data.maker);
+
+const tastingNotesByVintage = Object.fromEntries(
+  vintages.map((vintage) => [vintage.id, undefined]),
+);
+for (const vintage of vintages) {
+  const { Content: tastingNotes } = await render(vintage);
+  // @ts-expect-error Complaining about astro component incompatible w/ undefined
+  tastingNotesByVintage[vintage.id] = tastingNotes;
+}
+
+// Sort vintages by year (newest first)
+vintages.sort((a, b) => b.id.localeCompare(a.id));
+
+// Check if there are multiple vintages to display as tabs
+const hasMultipleVintages = vintages.length > 1;
+const vintageTabs = vintages.map((vintage) => ({
+  id: vintage.id,
+  label: vintage.id,
+}));
+---
+
+<CellarShell
+  description={`Details about ${wine.data.name} wine from ${maker.data.name}`}
+  title={`${wine.data.name}`}
+>
+  <main class="mx-auto p-8 md:container md:p-16">
+    <!-- Breadcrumb navigation -->
+    <header class="mx-auto max-w-4/5 sm:max-w-1/2">
+      <nav class="font-title mb-8 flex justify-center">
+        <a
+          class="text-xl tracking-widest text-orange-600 underline decoration-wavy underline-offset-2 hover:text-orange-300"
+          href="/cellar"
+        >
+          The Cellar
+        </a>
+        <span class="mx-2 text-zinc-300">&gt;</span>
+        <a
+          class="text-xl tracking-widest text-orange-600 underline decoration-wavy underline-offset-2 hover:text-orange-300"
+          href="/cellar/wines"
+        >
+          Wines
+        </a>
+        <span class="mx-2 text-zinc-300">&gt;</span>
+      </nav>
+    </header>
+
+    {
+      hasMultipleVintages ? (
+        <>
+          <Tabs class="mt-8 w-full">
+            <Fragment name="tabs">
+              {vintageTabs.map((tab, i) => (
+                <>
+                  <Tab aria-selected={i === 0} tabId={tab.id}>
+                    {tab.label}
+                  </Tab>
+                </>
+              ))}
+            </Fragment>
+            <Fragment slot="panels">
+              <Card class="-mx-8 mt-12 w-fit p-8 sm:mx-auto">
+                {vintages.map((vintage, index) => (
+                  <TabPanel hidden={index !== 0} tabId={vintage.id}>
+                    <h1 class="font-old-style mb-0 text-center text-5xl text-rose-950">
+                      {wine.data.name}
+                    </h1>
+
+                    <a
+                      class="font-old-style mt-2 mb-10 block text-center text-xl text-rose-950 underline hover:text-rose-600"
+                      href={`/cellar/winemakers/${wine.data.maker.id}`}
+                    >
+                      {maker.data.name}
+                    </a>
+
+                    <Typography as="article" class="mt-8 text-rose-950">
+                      <div class="mb-6 flex flex-col items-center justify-center md:flex-row md:gap-8">
+                        <Image
+                          alt={`${wine.data.name} ${Utils.getVintageYear(vintage)} bottle`}
+                          class="border-4 border-zinc-800 ring-4 ring-zinc-800/60"
+                          src={Utils.vintageImage(vintage)}
+                          width="300"
+                        />
+                        <div class="mx-auto flex w-fit max-w-[75%] flex-col md:max-w-[50%]">
+                          <h2 class="font-old-style">
+                            {Utils.getVintageYear(vintage)}
+                          </h2>
+                          <p>{vintage.data.cepage}</p>
+                        </div>
+                      </div>
+                      {postTried ? (
+                        <a
+                          class="font-old-style block text-lg font-bold italic"
+                          href={`/${postTried.id}`}
+                        >
+                          Tried on {vintage.data.dateTried}
+                        </a>
+                      ) : (
+                        <p class="font-old-style text-lg font-bold italic">
+                          Tried on {vintage.data.dateTried}
+                        </p>
+                      )}
+
+                      <p class="text-rose-950">
+                        {() => {
+                          const TastingNotes = tastingNotesByVintage[
+                            vintage.id
+                          ] as unknown as AstroComponentFactory;
+
+                          return <TastingNotes />;
+                        }}
+                      </p>
+                    </Typography>
+                  </TabPanel>
+                ))}
+              </Card>
+            </Fragment>
+          </Tabs>
+        </>
+      ) : (
+        <Card class="-mx-8 mt-12 w-fit p-8 sm:mx-auto">
+          <h1 class="font-old-style mb-0 text-center text-5xl text-rose-950">
+            {wine.data.name}
+          </h1>
+
+          <a
+            class="font-old-style mt-2 mb-10 block text-center text-xl text-rose-950 underline hover:text-rose-600"
+            href={`/cellar/winemakers/${maker.id}`}
+          >
+            {maker.data.name}
+          </a>
+
+          <Typography as="article" class="text-rose-950">
+            <div class="mb-6 flex flex-col items-center justify-center md:flex-row md:gap-8">
+              <Image
+                alt={`${wine.data.name} ${Utils.getVintageYear(vintages[0])} bottle`}
+                class="border-4 border-zinc-800 ring-4 ring-zinc-800/60"
+                src={Utils.vintageImage(vintages[0])}
+                width="300"
+              />
+              <div class="mx-auto flex w-fit max-w-[75%] flex-col md:max-w-[50%]">
+                <h2 class="font-old-style">
+                  {Utils.getVintageYear(vintages[0])}
+                </h2>
+                <p>{vintages[0].data.cepage}</p>
+              </div>
+            </div>
+            {postTried ? (
+              <a
+                class="font-old-style block text-lg font-bold italic"
+                href={`/${postTried.id}`}
+              >
+                Tried on {vintages[0].data.dateTried}
+              </a>
+            ) : (
+              <p class="font-old-style text-lg font-bold italic">
+                Tried on {vintages[0].data.dateTried}
+              </p>
+            )}
+            <p class="text-rose-950">
+              {() => {
+                const TastingNotes = tastingNotesByVintage[
+                  vintages[0].id
+                ] as unknown as AstroComponentFactory;
+
+                return <TastingNotes />;
+              }}
+            </p>
+          </Typography>
+        </Card>
+      )
+    }
+  </main>
+</CellarShell>

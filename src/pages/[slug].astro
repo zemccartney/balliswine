@@ -1,0 +1,182 @@
+---
+import { Image } from "astro:assets";
+import { getCollection, getEntry, render } from "astro:content";
+
+import Card from "../components/card.astro";
+import Subnav from "../components/subnav.astro";
+import TabPanel from "../components/tab-panel.astro";
+import Tab from "../components/tab.astro";
+import Tabs from "../components/tabs.astro";
+import Shell from "../layouts/shell.astro";
+import Typography from "../layouts/typography.astro";
+import * as Utils from "../utils";
+
+export const getStaticPaths = async () => {
+  const posts = await getCollection("posts");
+
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+};
+
+const { post } = Astro.props;
+const { Content: Body } = await render(post);
+
+const { vintage: _vin } = post.data;
+const vintage = await getEntry(_vin);
+const wine = await getEntry(vintage.data.wine);
+const maker = await getEntry(wine.data.maker);
+
+const { Content: TastingNotes } = await render(vintage);
+
+const introMd = import.meta.glob("/src/content/posts/**/intro.md");
+
+// @ts-expect-error unsure how to type MD import
+const { Content: Intro } =
+  await introMd[`/src/content/posts/${post.id}/intro.md`]();
+
+const dateFmt = Utils.formatYYYYMMDD(post.id);
+const description = `Post for the games on ${dateFmt} with a bottle of ${wine.data.name} by ${maker.data.name}`;
+
+const TABS = {
+  BALL: "ball",
+  WINE: "wine",
+} as const;
+
+const EMOJI = {
+  [TABS.BALL]: "🏀",
+  [TABS.WINE]: "🍷",
+};
+---
+
+<style>
+  @reference "../styles/global.css";
+
+  .post-tabs {
+    .panel-container {
+      @apply -mx-16 my-8 -mb-24 hidden bg-yellow-50 p-8 py-16;
+    }
+
+    [role="tablist"] {
+      @apply flex flex-row justify-center gap-4 transition-[gap] duration-500 ease-out sm:gap-4;
+    }
+
+    [role="tab"] {
+      /* leading-initial to override line height built in to text */
+      @apply cursor-pointer space-y-4 p-4 text-4xl leading-[initial] text-yellow-100 transition-[font-size,padding] duration-500 ease-out hover:text-rose-300 md:p-16 lg:text-8xl;
+    }
+
+    .tab-divider {
+      /*
+        min width required to prevent divider from collapsing / disappearing on mobile
+        unclear why, tho, i assume something about flex layout I'm missing, maybe from tailwind?
+      */
+      @apply h-64 min-w-1 self-center bg-yellow-100 transition-[height] duration-500 ease-out md:h-80;
+    }
+
+    &:has(button[role="tab"][aria-selected="true"]) {
+      .panel-container {
+        @apply block;
+      }
+
+      [role="tablist"] {
+        @apply gap-4 sm:gap-8;
+      }
+
+      [role="tab"] {
+        @apply p-4 text-4xl md:p-12 lg:text-6xl;
+      }
+
+      .tab-divider {
+        @apply h-40 md:h-64;
+      }
+    }
+
+    button[role="tab"][aria-selected="true"] {
+      @apply text-rose-300;
+    }
+  }
+</style>
+
+<Shell description={description} title={dateFmt}>
+  <div class="min-h-full bg-rose-950 p-16">
+    <Subnav pageVariant="dark" />
+    <main class="mt-12 md:mt-20">
+      <article class="space-y-8">
+        <h1
+          class="text-center font-mono text-4xl text-yellow-100 sm:text-6xl md:text-8xl"
+        >
+          <time datetime={post.id}>{dateFmt}</time>
+        </h1>
+        <section class="-mx-16 bg-yellow-50 p-8">
+          <Typography class="mx-auto text-rose-950">
+            <Intro />
+          </Typography>
+        </section>
+        <Tabs class="post-tabs">
+          <Fragment slot="tabs">
+            {
+              Object.values(TABS).map((tabId, i, arr) => (
+                <>
+                  <Tab tabId={tabId}>
+                    <div class="font-emoji">{EMOJI[tabId]}</div>
+                    <div class="font-title tracking-widest uppercase">{`${tabId.charAt(0).toUpperCase()}${tabId.slice(1)}`}</div>
+                  </Tab>
+                  {i < arr.length - 1 && <div class="tab-divider" />}
+                </>
+              ))
+            }
+          </Fragment>
+          <Fragment slot="panels">
+            <TabPanel tabId="ball">
+              <Typography class="mx-auto text-rose-950">
+                <Body />
+              </Typography>
+            </TabPanel>
+            <TabPanel tabId="wine">
+              <Card class="-mx-8 -mt-16 w-fit p-8 sm:mx-auto sm:mt-0">
+                <h1
+                  class="font-old-style mb-0 text-center text-5xl text-rose-950"
+                >
+                  {wine.data.name}
+                </h1>
+
+                <a
+                  class="font-old-style mt-2 mb-10 block text-center text-xl text-rose-950 underline hover:text-rose-600"
+                  href={`/cellar/winemakers/${wine.data.maker.id}`}
+                >
+                  {maker.data.name}
+                </a>
+
+                <Typography as="article" class="text-rose-950">
+                  <div
+                    class="mb-6 flex flex-col items-center justify-center md:flex-row md:gap-8"
+                  >
+                    <Image
+                      alt={`${wine.data.name} ${Utils.getVintageYear(vintage)} bottle`}
+                      class="border-4 border-zinc-800 ring-4 ring-zinc-800/60"
+                      src={Utils.vintageImage(vintage)}
+                      width="300"
+                    />
+                    <div
+                      class="mx-auto flex w-fit max-w-[75%] flex-col md:max-w-[50%]"
+                    >
+                      <h2 class="font-old-style">
+                        {Utils.getVintageYear(vintage)}
+                      </h2>
+                      <p>{vintage.data.cepage}</p>
+                    </div>
+                  </div>
+                  <p class="text-rose-950">
+                    <TastingNotes />
+                  </p>
+                </Typography>
+              </Card>
+            </TabPanel>
+          </Fragment>
+        </Tabs>
+      </article>
+    </main>
+  </div>
+</Shell>
