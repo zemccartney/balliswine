@@ -4,6 +4,7 @@ import { getCollection, render } from "astro:content";
 import Card from "../../../components/card.astro";
 import CellarShell from "../../../layouts/cellar-shell.astro";
 import Typography from "../../../layouts/typography.astro";
+import "leaflet/dist/leaflet.css";
 
 export const getStaticPaths = async () => {
   const makers = await getCollection("makers");
@@ -30,7 +31,6 @@ if (!maker) {
 
 <script>
   import Leaflet, { type LatLngExpression } from "leaflet";
-  import "leaflet/dist/leaflet.css";
 
   const mapElement = document.querySelector("#map");
 

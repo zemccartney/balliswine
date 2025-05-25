@@ -5,8 +5,10 @@ import Card from "../../../components/card.astro";
 import TabPanel from "../../../components/tab-panel.astro";
 import Tab from "../../../components/tab.astro";
 import Tabs from "../../../components/tabs.astro";
-import "../_tabs.css";
 import CellarShell from "../../../layouts/cellar-shell.astro";
+import "../_tabs.css";
+import "leaflet/dist/leaflet.css";
+import "leaflet.markercluster/dist/MarkerCluster.css";
 
 const collection = await getCollection("makers");
 
@@ -38,8 +40,6 @@ const TABS = [
 
   import Leaflet from "leaflet";
   import "leaflet.markercluster";
-  import "leaflet/dist/leaflet.css";
-  import "leaflet.markercluster/dist/MarkerCluster.css";
 
   const mapPanel = document.querySelector("#map-panel");
   const mapElement = document.querySelector("#map");
