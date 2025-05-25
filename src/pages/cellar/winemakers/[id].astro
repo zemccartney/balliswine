@@ -4,7 +4,6 @@ import { getCollection, render } from "astro:content";
 import Card from "../../../components/card.astro";
 import CellarShell from "../../../layouts/cellar-shell.astro";
 import Typography from "../../../layouts/typography.astro";
-import "leaflet/dist/leaflet.css";
 
 export const getStaticPaths = async () => {
   const makers = await getCollection("makers");
@@ -31,6 +30,17 @@ if (!maker) {
 
 <script>
   import Leaflet, { type LatLngExpression } from "leaflet";
+  import markerIconRetinaUrl from "leaflet/dist/images/marker-icon-2x.png";
+  import markerIconUrl from "leaflet/dist/images/marker-icon.png";
+  import markerShadowUrl from "leaflet/dist/images/marker-shadow.png";
+  import "leaflet/dist/leaflet.css";
+
+  // https://cescobaz.com/2023/06/14/setup-leaflet-with-svelte-and-vite/
+  Leaflet.Icon.Default.prototype.options.iconUrl = markerIconUrl.src;
+  Leaflet.Icon.Default.prototype.options.iconRetinaUrl =
+    markerIconRetinaUrl.src;
+  Leaflet.Icon.Default.prototype.options.shadowUrl = markerShadowUrl.src;
+  Leaflet.Icon.Default.imagePath = ""; // necessary to avoid Leaflet adds some prefix to image path.
 
   const mapElement = document.querySelector("#map");
 
