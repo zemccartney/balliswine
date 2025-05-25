@@ -45,8 +45,8 @@ const TABS = {
 } as const;
 
 const EMOJI = {
-  [TABS.BALL]: "🏀",
-  [TABS.WINE]: "🍷",
+  [TABS.BALL]: "&#127936;",
+  [TABS.WINE]: "&#127863;",
 };
 ---
 
@@ -120,7 +120,7 @@ const EMOJI = {
               Object.values(TABS).map((tabId, i, arr) => (
                 <>
                   <Tab tabId={tabId}>
-                    <div class="font-emoji">{EMOJI[tabId]}</div>
+                    <div class="font-emoji" set:html={EMOJI[tabId]} />
                     <div class="font-title tracking-widest uppercase">{`${tabId.charAt(0).toUpperCase()}${tabId.slice(1)}`}</div>
                   </Tab>
                   {i < arr.length - 1 && <div class="tab-divider" />}

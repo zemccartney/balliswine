@@ -24,17 +24,17 @@ if (size === Sizes.SMALL) {
 }
 ---
 
-{/* TODO Re-evaluate items-end, not sure necessary */}
 <div
   class:list={["font-emoji flex flex-col items-end", className]}
   {...rest}
   aria-label="Ball is Wine logo (wine glass emoji with a smaller basketball emoji hovering above, like the wine glass is a basket)"
   role="img"
 >
-  <div
-    class={`bw-logo-ball font-bold ${ballFontSize} relative ${rightOffset} -top-2`}
-  >
-    🏀
+  {
+    /* Safari bug: font-bold (font-weight: 700) resulted in basketball disappearing; unclear why, so just removed */
+  }
+  <div class={`bw-logo-ball ${ballFontSize} relative ${rightOffset} -top-2`}>
+    &#127936;
   </div>
-  <div class={`bw-logo-wine ${wineFontSize}`}>🍷</div>
+  <div class={`bw-logo-wine ${wineFontSize}`}>&#127863;</div>
 </div>
