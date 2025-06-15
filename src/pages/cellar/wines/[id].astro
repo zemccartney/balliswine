@@ -30,9 +30,7 @@ const vintages = await getCollection("vintages", ({ data }) => {
   return data.wine.id === wine.id;
 });
 
-const [postTried] = await getCollection("posts", ({ data }) => {
-  return data.vintage.id.startsWith(wine.id);
-});
+const allPosts = await getCollection("posts");
 
 const maker = await getEntry(wine.data.maker);
 
@@ -121,18 +119,21 @@ vintages.sort((a, b) => b.id.localeCompare(a.id));
                           </p>
                         </div>
                       </div>
-                      {postTried ? (
-                        <a
-                          class="font-old-style block text-lg font-bold italic"
-                          href={`/${postTried.id}`}
-                        >
-                          Tried on {vintage.data.dateTried}
-                        </a>
-                      ) : (
-                        <p class="font-old-style text-lg font-bold italic">
-                          Tried on {vintage.data.dateTried}
-                        </p>
-                      )}
+                      {(() => {
+                        const postForVintage = allPosts.find(post => post.data.vintage?.id === vintage.id);
+                        return postForVintage ? (
+                          <a
+                            class="font-old-style block text-lg font-bold italic"
+                            href={`/${postForVintage.id}`}
+                          >
+                            Tried on {vintage.data.dateTried}
+                          </a>
+                        ) : (
+                          <p class="font-old-style text-lg font-bold italic">
+                            Tried on {vintage.data.dateTried}
+                          </p>
+                        );
+                      })()}
 
                       <p class="text-rose-950">
                         {() => {
@@ -182,18 +183,21 @@ vintages.sort((a, b) => b.id.localeCompare(a.id));
                 </p>
               </div>
             </div>
-            {postTried ? (
-              <a
-                class="font-old-style block text-lg font-bold italic"
-                href={`/${postTried.id}`}
-              >
-                Tried on {vintages[0].data.dateTried}
-              </a>
-            ) : (
-              <p class="font-old-style text-lg font-bold italic">
-                Tried on {vintages[0].data.dateTried}
-              </p>
-            )}
+            {(() => {
+              const postForVintage = allPosts.find(post => post.data.vintage?.id === vintages[0].id);
+              return postForVintage ? (
+                <a
+                  class="font-old-style block text-lg font-bold italic"
+                  href={`/${postForVintage.id}`}
+                >
+                  Tried on {vintages[0].data.dateTried}
+                </a>
+              ) : (
+                <p class="font-old-style text-lg font-bold italic">
+                  Tried on {vintages[0].data.dateTried}
+                </p>
+              );
+            })()}
             <p class="text-rose-950">
               {() => {
                 const TastingNotes = tastingNotesByVintage[
