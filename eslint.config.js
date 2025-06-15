@@ -1,7 +1,7 @@
 import { includeIgnoreFile } from "@eslint/compat";
 import eslint from "@eslint/js";
-import eslintJson from "@eslint/json";
-import eslintMarkdown from "@eslint/markdown";
+import eslintPluginJson from "@eslint/json";
+import eslintPluginMarkdown from "@eslint/markdown";
 import eslintConfigPrettier from "eslint-config-prettier";
 import eslintPluginAstro from "eslint-plugin-astro";
 import eslintPackageJson from "eslint-plugin-package-json";
@@ -29,7 +29,7 @@ export default tseslint.config(
     files: ["**/*.json"],
     ignores: ["package.json", "package-lock.json"],
     language: "json/json",
-    ...eslintJson.configs.recommended,
+    ...eslintPluginJson.configs.recommended,
     rules: {
       "json/sort-keys": "error",
     },
@@ -37,7 +37,7 @@ export default tseslint.config(
   {
     files: ["**/*.jsonc", ".vscode/*.json"],
     language: "json/jsonc",
-    ...eslintJson.configs.recommended,
+    ...eslintPluginJson.configs.recommended,
     rules: {
       "json/sort-keys": "error",
     },
@@ -85,7 +85,7 @@ export default tseslint.config(
   {
     // TODO This is gross, but was getting the error: "Key "language": Could not find "gfm" in plugin "markdown"", didn't feel like digging into it
     // Maybe something with the tseslint helper?
-    ...eslintMarkdown.configs.recommended[0],
+    ...eslintPluginMarkdown.configs.recommended[0],
     language: "markdown/gfm",
     languageOptions: {
       frontmatter: "yaml",
