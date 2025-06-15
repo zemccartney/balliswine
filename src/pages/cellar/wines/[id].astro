@@ -95,12 +95,14 @@ vintages.sort((a, b) => b.id.localeCompare(a.id));
                       {wine.data.name}
                     </h1>
 
-                    <a
-                      class="font-old-style mt-2 mb-10 block text-center text-xl text-rose-950 underline hover:text-rose-600"
-                      href={`/cellar/winemakers/${wine.data.maker.id}`}
-                    >
-                      {maker.data.name}
-                    </a>
+                    <div class="mt-2 mb-10 text-center">
+                      <a
+                        class="font-old-style text-xl text-rose-950 underline hover:text-rose-600"
+                        href={`/cellar/winemakers/${wine.data.maker.id}`}
+                      >
+                        {maker.data.name}
+                      </a>
+                    </div>
 
                     <Typography as="article" class="mt-8 text-rose-950">
                       <div class="mb-6 flex flex-col items-center justify-center md:flex-row md:gap-8">
@@ -154,12 +156,14 @@ vintages.sort((a, b) => b.id.localeCompare(a.id));
             {wine.data.name}
           </h1>
 
-          <a
-            class="font-old-style mt-2 mb-10 block text-center text-xl text-rose-950 underline hover:text-rose-600"
-            href={`/cellar/winemakers/${maker.id}`}
-          >
-            {maker.data.name}
-          </a>
+          <div class="mt-2 mb-10 text-center">
+            <a
+              class="font-old-style text-xl text-rose-950 underline hover:text-rose-600"
+              href={`/cellar/winemakers/${maker.id}`}
+            >
+              {maker.data.name}
+            </a>
+          </div>
 
           <Typography as="article" class="text-rose-950">
             <div class="mb-6 flex flex-col items-center justify-center md:flex-row md:gap-8">

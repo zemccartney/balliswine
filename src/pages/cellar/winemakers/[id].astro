@@ -119,13 +119,15 @@ if (!maker) {
 
         {
           maker.data.website && (
-            <a
-              class="block text-center text-xl text-rose-950 underline hover:text-rose-600 xl:mt-10"
-              href={maker.data.website}
-              target="_blank"
-            >
-              Check them out
-            </a>
+            <div class="text-center xl:mt-10">
+              <a
+                class="text-xl text-rose-950 underline hover:text-rose-600"
+                href={maker.data.website}
+                target="_blank"
+              >
+                Check them out
+              </a>
+            </div>
           )
         }
       </div>
@@ -134,12 +136,12 @@ if (!maker) {
         <h2 class="font-old-style mb-6 text-center text-2xl text-rose-950">
           Wines Tried
         </h2>
-        <ul>
+        <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 !list-none">
           {
             wines.map((wine) => (
-              <li class="font-old-style grid grid-cols-1 gap-4 text-2xl sm:grid-cols-2">
+              <li class="font-old-style text-2xl text-center">
                 <a
-                  class="text-center hover:text-rose-600"
+                  class="py-2 hover:text-rose-600"
                   href={`/cellar/wines/${wine.id}`}
                 >
                   {wine.data.name}
