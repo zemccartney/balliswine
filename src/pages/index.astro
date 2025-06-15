@@ -41,7 +41,7 @@ posts.sort((a, b) => b.id.localeCompare(a.id));
         {
           posts.map((post) => (
             <a
-              class="block text-center font-sans text-4xl font-semibold text-balance text-rose-900 hover:text-rose-600 hover:underline md:text-6xl"
+              class="block text-center font-mono text-4xl text-balance text-rose-900 hover:text-rose-600 hover:underline md:text-6xl"
               href={`/${post.id}`}
             >
               {Utils.formatYYYYMMDD(post.id)}
