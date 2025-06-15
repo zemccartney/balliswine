@@ -8,6 +8,10 @@ const wines = await getCollection("wines");
 
 wines.sort((a, b) => a.data.name.localeCompare(b.data.name));
 
+// 8 wines
+// 0 filler on xl (4 across)
+// 1 filler on lg (3 across)
+// 0 filler on sm (2 across)
 const fillSm = 2 - (wines.length % 2);
 const fillLg = 3 - (wines.length % 3);
 const fillXl = 4 - (wines.length % 4);

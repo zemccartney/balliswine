@@ -1,6 +1,6 @@
 [
   {
-    "hue": "#a50036",
+    "hue": "oklch(40% 43% 27deg)",
     "id": "la-vinhota",
     "maker": "domaine-balansa",
     "name": "La Vinhota"
@@ -40,5 +40,23 @@
     "id": "alosa",
     "maker": "cellar-comalats",
     "name": "Alosa"
+  },
+  {
+    "hue": "oklch(40% 41% 31deg)",
+    "id": "bombisch-rose",
+    "maker": "christian-binner",
+    "name": "Bombisch! Rosé"
+  },
+  {
+    "hue": "oklch(55% 42% 45deg)",
+    "id": "pech-de-rozies",
+    "maker": "domaine-balansa",
+    "name": "Pech de Roziès"
+  },
+  {
+    "hue": "oklch(38% 34% 26deg)",
+    "id": "versicolore",
+    "maker": "domaine-balansa",
+    "name": "Versicolore"
   }
 ]

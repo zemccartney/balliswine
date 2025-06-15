@@ -30,11 +30,7 @@ const maker = await getEntry(wine.data.maker);
 
 const { Content: TastingNotes } = await render(vintage);
 
-const introMd = import.meta.glob("/src/content/posts/**/intro.md");
-
-// @ts-expect-error unsure how to type MD import
-const { Content: Intro } =
-  await introMd[`/src/content/posts/${post.id}/intro.md`]();
+const { Content: Intro } = await render(post.data.intro);
 
 const dateFmt = Utils.formatYYYYMMDD(post.id);
 const description = `Post for the games on ${dateFmt} with a bottle of ${wine.data.name} by ${maker.data.name}`;
@@ -165,7 +161,9 @@ const EMOJI = {
                       <h2 class="font-old-style">
                         {Utils.getVintageYear(vintage)}
                       </h2>
-                      <p>{vintage.data.cepage}</p>
+                      <p class="text-center text-balance">
+                        {vintage.data.cepage}
+                      </p>
                     </div>
                   </div>
                   <p class="text-rose-950">

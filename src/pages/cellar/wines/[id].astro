@@ -47,13 +47,6 @@ for (const vintage of vintages) {
 
 // Sort vintages by year (newest first)
 vintages.sort((a, b) => b.id.localeCompare(a.id));
-
-// Check if there are multiple vintages to display as tabs
-const hasMultipleVintages = vintages.length > 1;
-const vintageTabs = vintages.map((vintage) => ({
-  id: vintage.id,
-  label: vintage.id,
-}));
 ---
 
 <CellarShell
@@ -82,14 +75,14 @@ const vintageTabs = vintages.map((vintage) => ({
     </header>
 
     {
-      hasMultipleVintages ? (
+      vintages.length > 1 ? (
         <>
           <Tabs class="mt-8 w-full">
-            <Fragment name="tabs">
-              {vintageTabs.map((tab, i) => (
+            <Fragment slot="tabs">
+              {vintages.map((vintage, i) => (
                 <>
-                  <Tab aria-selected={i === 0} tabId={tab.id}>
-                    {tab.label}
+                  <Tab aria-selected={i === 0} tabId={vintage.id}>
+                    {Utils.getVintageYear(vintage)}
                   </Tab>
                 </>
               ))}
@@ -121,7 +114,9 @@ const vintageTabs = vintages.map((vintage) => ({
                           <h2 class="font-old-style">
                             {Utils.getVintageYear(vintage)}
                           </h2>
-                          <p>{vintage.data.cepage}</p>
+                          <p class="text-center text-balance">
+                            {vintage.data.cepage}
+                          </p>
                         </div>
                       </div>
                       {postTried ? (
@@ -178,7 +173,9 @@ const vintageTabs = vintages.map((vintage) => ({
                 <h2 class="font-old-style">
                   {Utils.getVintageYear(vintages[0])}
                 </h2>
-                <p>{vintages[0].data.cepage}</p>
+                <p class="text-center text-balance">
+                  {vintages[0].data.cepage}
+                </p>
               </div>
             </div>
             {postTried ? (
