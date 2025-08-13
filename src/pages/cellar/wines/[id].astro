@@ -1,17 +1,16 @@
 ---
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 
-import { Image } from "astro:assets";
 import { getCollection, render } from "astro:content";
 import { getEntry } from "astro:content";
 
-import Card from "../../../components/card.astro";
+import Link from "../../../components/link.astro";
 import TabPanel from "../../../components/tab-panel.astro";
 import Tab from "../../../components/tab.astro";
 import Tabs from "../../../components/tabs.astro";
+import VintageCard from "../../../components/vintage-card.astro";
 import "../_tabs.css";
 import CellarShell from "../../../layouts/cellar-shell.astro";
-import Typography from "../../../layouts/typography.astro";
 import * as Utils from "../../../utils";
 
 export const getStaticPaths = async () => {
@@ -86,129 +85,74 @@ vintages.sort((a, b) => b.id.localeCompare(a.id));
               ))}
             </Fragment>
             <Fragment slot="panels">
-              <Card class="-mx-8 mt-12 w-fit p-8 sm:mx-auto">
-                {vintages.map((vintage, index) => (
-                  <TabPanel hidden={index !== 0} tabId={vintage.id}>
-                    <h1 class="font-old-style mb-0 text-center text-5xl text-rose-950">
-                      {wine.data.name}
-                    </h1>
-
-                    <div class="mt-2 mb-10 text-center">
-                      <a
-                        class="font-old-style text-xl text-rose-950 underline hover:text-rose-600"
-                        href={`/cellar/winemakers/${wine.data.maker.id}`}
-                      >
-                        {maker.data.name}
-                      </a>
-                    </div>
-
-                    <Typography as="article" class="mt-8 text-rose-950">
-                      <div class="mb-6 flex flex-col items-center justify-center md:flex-row md:gap-8">
-                        <Image
-                          alt={`${wine.data.name} ${Utils.getVintageYear(vintage)} bottle`}
-                          class="border-4 border-zinc-800 ring-4 ring-zinc-800/60"
-                          src={Utils.vintageImage(vintage)}
-                          width="300"
-                        />
-                        <div class="mx-auto flex w-fit max-w-[75%] flex-col md:max-w-[50%]">
-                          <h2 class="font-old-style">
-                            {Utils.getVintageYear(vintage)}
-                          </h2>
-                          <p class="text-center text-balance">
-                            {vintage.data.cepage}
-                          </p>
-                        </div>
-                      </div>
+              {vintages.map((vintage, index) => (
+                <TabPanel hidden={index !== 0} tabId={vintage.id}>
+                  <VintageCard
+                    class="-mx-8 mt-12 sm:mx-auto"
+                    maker={maker}
+                    vintage={vintage}
+                    wine={wine}
+                  >
+                    <Fragment slot="tried-on">
                       {(() => {
-                        const postForVintage = allPosts.find(post => post.data.vintage?.id === vintage.id);
+                        const postForVintage = allPosts.find(
+                          (post) => post.data.vintage?.id === vintage.id,
+                        );
                         return postForVintage ? (
-                          <a
-                            class="font-old-style block text-lg font-bold italic"
-                            href={`/${postForVintage.id}`}
-                          >
+                          <Link href={`/${postForVintage.id}`}>
                             Tried on {vintage.data.dateTried}
-                          </a>
+                          </Link>
                         ) : (
-                          <p class="font-old-style text-lg font-bold italic">
-                            Tried on {vintage.data.dateTried}
-                          </p>
+                          `Tried on ${vintage.data.dateTried}`
                         );
                       })()}
+                    </Fragment>
+                    <>
+                      {() => {
+                        const TastingNotes = tastingNotesByVintage[
+                          vintage.id
+                        ] as unknown as AstroComponentFactory;
 
-                      <p class="text-rose-950">
-                        {() => {
-                          const TastingNotes = tastingNotesByVintage[
-                            vintage.id
-                          ] as unknown as AstroComponentFactory;
-
-                          return <TastingNotes />;
-                        }}
-                      </p>
-                    </Typography>
-                  </TabPanel>
-                ))}
-              </Card>
+                        return <TastingNotes components={{ a: Link }} />;
+                      }}
+                    </>
+                  </VintageCard>
+                </TabPanel>
+              ))}
             </Fragment>
           </Tabs>
         </>
       ) : (
-        <Card class="-mx-8 mt-12 w-fit p-8 sm:mx-auto">
-          <h1 class="font-old-style mb-0 text-center text-5xl text-rose-950">
-            {wine.data.name}
-          </h1>
-
-          <div class="mt-2 mb-10 text-center">
-            <a
-              class="font-old-style text-xl text-rose-950 underline hover:text-rose-600"
-              href={`/cellar/winemakers/${maker.id}`}
-            >
-              {maker.data.name}
-            </a>
-          </div>
-
-          <Typography as="article" class="text-rose-950">
-            <div class="mb-6 flex flex-col items-center justify-center md:flex-row md:gap-8">
-              <Image
-                alt={`${wine.data.name} ${Utils.getVintageYear(vintages[0])} bottle`}
-                class="border-4 border-zinc-800 ring-4 ring-zinc-800/60"
-                src={Utils.vintageImage(vintages[0])}
-                width="300"
-              />
-              <div class="mx-auto flex w-fit max-w-[75%] flex-col md:max-w-[50%]">
-                <h2 class="font-old-style">
-                  {Utils.getVintageYear(vintages[0])}
-                </h2>
-                <p class="text-center text-balance">
-                  {vintages[0].data.cepage}
-                </p>
-              </div>
-            </div>
+        <VintageCard
+          class="-mx-8 mt-12 sm:mx-auto"
+          maker={maker}
+          vintage={vintages[0]}
+          wine={wine}
+        >
+          <Fragment slot="tried-on">
             {(() => {
-              const postForVintage = allPosts.find(post => post.data.vintage?.id === vintages[0].id);
+              const postForVintage = allPosts.find(
+                (post) => post.data.vintage?.id === vintages[0].id,
+              );
               return postForVintage ? (
-                <a
-                  class="font-old-style block text-lg font-bold italic"
-                  href={`/${postForVintage.id}`}
-                >
+                <Link href={`/${postForVintage.id}`}>
                   Tried on {vintages[0].data.dateTried}
-                </a>
+                </Link>
               ) : (
-                <p class="font-old-style text-lg font-bold italic">
-                  Tried on {vintages[0].data.dateTried}
-                </p>
+                `Tried on ${vintages[0].data.dateTried}`
               );
             })()}
-            <p class="text-rose-950">
-              {() => {
-                const TastingNotes = tastingNotesByVintage[
-                  vintages[0].id
-                ] as unknown as AstroComponentFactory;
+          </Fragment>
+          <>
+            {() => {
+              const TastingNotes = tastingNotesByVintage[
+                vintages[0].id
+              ] as unknown as AstroComponentFactory;
 
-                return <TastingNotes />;
-              }}
-            </p>
-          </Typography>
-        </Card>
+              return <TastingNotes components={{ a: Link }} />;
+            }}
+          </>
+        </VintageCard>
       )
     }
   </main>

@@ -32,4 +32,4 @@ export const vintageImage = (vintage: CollectionEntry<"vintages">) => {
 };
 
 export const getVintageYear = (vintage: CollectionEntry<"vintages">) =>
-  vintage.id.split("/")[1];
+  vintage.id.split("/")[1].toLocaleUpperCase(); // uppercase handles nv (nonvintage) id

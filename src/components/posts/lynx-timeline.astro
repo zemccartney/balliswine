@@ -1,0 +1,156 @@
+---
+import type { ClassValue } from "clsx";
+
+interface Props {
+  class?: ClassValue;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div
+  class:list={[
+    "relative isolate grid grid-cols-20 grid-rows-[repeat(14,48px)]",
+    className,
+  ]}
+>
+  <div class="col-span-full flex justify-center md:col-span-[14]">
+    <p
+      class="z-0 -mb-4 self-end rounded border-4 border-[oklch(0.7346_0.1969_135.51)] bg-yellow-50 p-0.5 px-2 pb-0 text-center text-base text-balance"
+      id="augustus"
+    >
+      Seimone Augustus: '06 - '19
+    </p>
+  </div>
+  <div
+    aria-labelledby="augustus"
+    class="col-span-[14] h-12 bg-[oklch(0.4747_0.1083_257.51)]"
+  >
+  </div>
+
+  <div
+    class="col-span-full flex justify-center md:col-span-[16] md:col-start-5"
+  >
+    <p
+      class="z-0 -mb-4 self-end rounded border-4 border-[oklch(0.7346_0.1969_135.51)] bg-yellow-50 p-0.5 px-2 pb-0 text-center text-base text-balance"
+      id="reeve"
+    >
+      Cheryl Reeve: '10 -
+    </p>
+  </div>
+  <div
+    aria-labelledby="reeve"
+    class="col-span-[16] col-start-5 h-12 bg-[oklch(0.6987_0.0019_247.85)]"
+  >
+  </div>
+
+  <div class="col-span-full flex justify-center md:col-span-9 md:col-start-5">
+    <p
+      class="z-0 -mb-4 self-end rounded border-4 border-[oklch(0.7346_0.1969_135.51)] bg-yellow-50 p-0.5 px-2 pb-0 text-center text-base text-balance"
+      id="brunson"
+    >
+      Rebekkah Brunson: '10 - '18
+    </p>
+  </div>
+  <div
+    aria-labelledby="brunson"
+    class="col-span-9 col-start-5 h-12 bg-[oklch(0.4747_0.1083_257.51)]"
+  >
+  </div>
+
+  <div class="col-span-full flex justify-center md:col-span-9 md:col-start-5">
+    <p
+      class="z-0 -mb-4 self-end rounded border-4 border-[oklch(0.7346_0.1969_135.51)] bg-yellow-50 p-0.5 px-2 pb-0 text-center text-base text-balance"
+      id="whalen"
+    >
+      Lindsay Whalen: '10 - '18
+    </p>
+  </div>
+  <div
+    aria-labelledby="whalen"
+    class="col-span-9 col-start-5 h-12 bg-[oklch(0.4747_0.1083_257.51)]"
+  >
+  </div>
+
+  <div class="col-span-full flex justify-center md:col-span-8 md:col-start-6">
+    <p
+      class="z-0 -mb-4 self-end rounded border-4 border-[oklch(0.7346_0.1969_135.51)] bg-yellow-50 p-0.5 px-2 pb-0 text-center text-base text-balance"
+      id="moore"
+    >
+      Maya Moore: '11 - '18
+    </p>
+  </div>
+  <div
+    aria-labelledby="moore"
+    class="col-span-8 col-start-6 h-12 bg-[oklch(0.4747_0.1083_257.51)]"
+  >
+  </div>
+
+  <div class="col-span-full flex justify-center md:col-span-8 md:col-start-10">
+    <p
+      class="z-0 -mb-4 self-end rounded border-4 border-[oklch(0.7346_0.1969_135.51)] bg-yellow-50 p-0.5 px-2 pb-0 text-center text-base text-balance"
+      id="fowles"
+    >
+      Sylvia Fowles: '15 - '22
+    </p>
+  </div>
+  <div
+    aria-labelledby="fowles"
+    class="col-span-8 col-start-10 h-12 bg-[oklch(0.4747_0.1083_257.51)]"
+  >
+  </div>
+
+  <div
+    class="col-span-full flex justify-center md:col-span-7 md:col-start-[14]"
+    id="collier"
+  >
+    <p
+      class="z-0 -mb-4 self-end rounded border-4 border-[oklch(0.4747_0.1083_257.51)] bg-yellow-50 p-0.5 px-2 pb-0 text-center text-base text-balance"
+      id="collier"
+    >
+      Napheesa Collier: '19 -
+    </p>
+  </div>
+  <div
+    aria-labelledby="collier"
+    class="col-span-7 col-start-[14] h-12 bg-[oklch(0.7346_0.1969_135.51)]"
+  >
+  </div>
+
+  {
+    Array.from({ length: 20 }, (_, x) => (
+      <>
+        {/* display trophies over championship years */}
+        {[5, 7, 9, 11].includes(x) && (
+          <span
+            class="font-emoji absolute -top-6 w-[5%] text-center text-xs text-amber-400 md:-top-9 md:text-base"
+            role="presentation"
+            style={`left: calc(5% * ${x})`}
+          >
+            &#127942;
+          </span>
+        )}
+        {![5, 7, 9, 11].includes(x) && (
+          <span
+            class="absolute -top-8 w-[5%] text-center font-sans text-[10px] md:text-base"
+            role="presentation"
+            style={`left: calc(5% * ${x}`}
+          >
+            {`'${6 + x}`.padStart(2, "0")}
+          </span>
+        )}
+        <div
+          class:list={[
+            "absolute -z-10 h-full w-[5%] border-l-2 border-dashed border-amber-950/10",
+            x === 19 && "border-r-2",
+            // championship years
+            [5, 7, 9, 11].includes(x) && "border-none bg-amber-400",
+            [6, 8, 10, 12].includes(x) && "border-none",
+          ]}
+          role="presentation"
+          style={`left: calc(5% * ${x})`}
+        />
+      </>
+    ))
+  }
+</div>

@@ -2,6 +2,7 @@
 import { getCollection, render } from "astro:content";
 
 import Card from "../../../components/card.astro";
+import Link from "../../../components/link.astro";
 import CellarShell from "../../../layouts/cellar-shell.astro";
 import Typography from "../../../layouts/typography.astro";
 
@@ -123,7 +124,6 @@ if (!maker) {
               <a
                 class="text-xl text-rose-950 underline hover:text-rose-600"
                 href={maker.data.website}
-                target="_blank"
               >
                 Check them out
               </a>
@@ -136,25 +136,20 @@ if (!maker) {
         <h2 class="font-old-style mb-6 text-center text-2xl text-rose-950">
           Wines Tried
         </h2>
-        <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 !list-none">
+        <ul class="grid !list-none grid-cols-1 gap-4 sm:grid-cols-2">
           {
             wines.map((wine) => (
-              <li class="font-old-style text-2xl text-center">
-                <a
-                  class="py-2 hover:text-rose-600"
-                  href={`/cellar/wines/${wine.id}`}
-                >
-                  {wine.data.name}
-                </a>
+              <li class="font-old-style text-center text-2xl">
+                <Link href={`/cellar/wines/${wine.id}`}>{wine.data.name}</Link>
               </li>
             ))
           }
         </ul>
         {
-          maker.rendered?.html && (
+          maker.body && (
             <>
               <hr />
-              <Notes />
+              <Notes components={{ a: Link }} />
             </>
           )
         }

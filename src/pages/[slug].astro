@@ -1,12 +1,12 @@
 ---
-import { Image } from "astro:assets";
 import { getCollection, getEntry, render } from "astro:content";
 
-import Card from "../components/card.astro";
+import Link from "../components/link.astro";
 import Subnav from "../components/subnav.astro";
 import TabPanel from "../components/tab-panel.astro";
 import Tab from "../components/tab.astro";
 import Tabs from "../components/tabs.astro";
+import VintageCard from "../components/vintage-card.astro";
 import Shell from "../layouts/shell.astro";
 import Typography from "../layouts/typography.astro";
 import * as Utils from "../utils";
@@ -30,7 +30,9 @@ const maker = await getEntry(wine.data.maker);
 
 const { Content: TastingNotes } = await render(vintage);
 
-const { Content: Intro } = await render(post.data.intro);
+const { Content: Intro } = await import(
+  `../content/posts/${post.id}/intro.mdx`
+);
 
 const dateFmt = Utils.formatYYYYMMDD(post.id);
 const description = `Post for the games on ${dateFmt} with a bottle of ${wine.data.name} by ${maker.data.name}`;
@@ -107,7 +109,7 @@ const EMOJI = {
         </h1>
         <section class="-mx-16 bg-yellow-50 p-8">
           <Typography class="mx-auto text-rose-950">
-            <Intro />
+            <Intro components={{ a: Link }} />
           </Typography>
         </section>
         <Tabs class="post-tabs">
@@ -127,50 +129,18 @@ const EMOJI = {
           <Fragment slot="panels">
             <TabPanel tabId="ball">
               <Typography class="mx-auto text-rose-950">
-                <Body />
+                <Body components={{ a: Link }} />
               </Typography>
             </TabPanel>
             <TabPanel tabId="wine">
-              <Card class="-mx-8 -mt-16 w-fit p-8 sm:mx-auto sm:mt-0">
-                <h1
-                  class="font-old-style mb-0 text-center text-5xl text-rose-950"
-                >
-                  {wine.data.name}
-                </h1>
-
-                <a
-                  class="font-old-style mt-2 mb-10 block text-center text-xl text-rose-950 underline hover:text-rose-600"
-                  href={`/cellar/winemakers/${wine.data.maker.id}`}
-                >
-                  {maker.data.name}
-                </a>
-
-                <Typography as="article" class="text-rose-950">
-                  <div
-                    class="mb-6 flex flex-col items-center justify-center md:flex-row md:gap-8"
-                  >
-                    <Image
-                      alt={`${wine.data.name} ${Utils.getVintageYear(vintage)} bottle`}
-                      class="border-4 border-zinc-800 ring-4 ring-zinc-800/60"
-                      src={Utils.vintageImage(vintage)}
-                      width="300"
-                    />
-                    <div
-                      class="mx-auto flex w-fit max-w-[75%] flex-col md:max-w-[50%]"
-                    >
-                      <h2 class="font-old-style">
-                        {Utils.getVintageYear(vintage)}
-                      </h2>
-                      <p class="text-center text-balance">
-                        {vintage.data.cepage}
-                      </p>
-                    </div>
-                  </div>
-                  <p class="text-rose-950">
-                    <TastingNotes />
-                  </p>
-                </Typography>
-              </Card>
+              <VintageCard
+                class="-mx-8 -mt-16 sm:mx-auto sm:mt-0"
+                maker={maker}
+                vintage={vintage}
+                wine={wine}
+              >
+                <TastingNotes components={{ a: Link }} />
+              </VintageCard>
             </TabPanel>
           </Fragment>
         </Tabs>

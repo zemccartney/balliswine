@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 
+import Link from "../components/link.astro";
 import Subnav from "../components/subnav.astro";
 import Boris from "../images/boris.jpg";
 import Shell from "../layouts/shell.astro";
@@ -31,15 +32,13 @@ import Typography from "../layouts/typography.astro";
             "font-sans text-base text-rose-950 italic",
           ]}
         >
-          Sourced from the <a
-            class="underline hover:text-rose-300"
-            href="https://www.instagram.com/p/tf7v55DI3A"
-            target="_blank">NBA's premier oenophile himself</a
-          > (with apologies to Pop, of course. <a
+          Sourced from the <Link href="https://www.instagram.com/p/tf7v55DI3A"
+            >NBA's premier oenophile himself</Link
+          > (with apologies to Pop, of course. <Link
             class="underline hover:text-rose-300"
             href="https://www.nbcsports.com/nba/news/boris-diaw-throws-wine-in-gregg-popovichs-face-metaphorically"
-            target="_blank">No worries, Pop!)</a
-          >.
+            >No worries, Pop!)</Link
+          >
         </figcaption>
       </figure>
       <Typography class="mx-auto text-rose-950">
@@ -48,34 +47,26 @@ import Typography from "../layouts/typography.astro";
           wine and watch a slate of basketball games and write about them, the
           ball and the wine. I love watching basketball, I watch a good bit of
           the NBA and WNBA. I know very little about wine, but it seemed as good
-          a writing angle as any, plus the motivation of treating myself once a
-          month to a bottle from the superlative wine store, <a
-            href="https://www.maineandloire.com"
-            target="_blank">Maine and Loire</a
-          >, here in my home town of Portland, ME. And hopefully, like dear
-          Boris, not worrying about gaining too much weight.
+          a writing angle as any, plus the motivation of treating myself to a
+          bottle once a month. And hopefully, like dear Boris, not worrying
+          about gaining too much weight.
         </p>
 
         <p>
           Credit to
-          <a
+          <Link
             href="https://www.maineandloire.com/france-pays-nantais-anjou/p/elejn4ye6ad0ydf8jm1zym88rzmd70"
-            target="_blank"
           >
             La Grange aux Belles 'Brise d'Aunis' Rouge 2023
-          </a> for inspiring the yellow logo block on the home page. Highly recommend!
+          </Link> for inspiring the yellow logo block on the home page. Highly recommend!
         </p>
 
         <h2>Who am I?</h2>
         <p>
           My name is Zack McCartney. As I said, more a fan of basketball than
-          wine-knower. Only credentials are time and interest. Trying to have
-          fun with this. Vaguely more info on <a
-            href="https://grepco.net/about/"
-            target="_blank"
-          >
-            my personal site</a
-          >. Thanks for stopping by!
+          wine-knower. Only credentials are time and interest. Vaguely more info
+          on <Link href="https://grepco.net/about/"> my personal site</Link>.
+          Thanks for stopping by!
         </p>
       </Typography>
     </main>

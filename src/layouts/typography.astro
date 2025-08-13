@@ -12,6 +12,7 @@ const Tag = as;
 <style>
   @reference "../styles/global.css";
 
+  /* useful rule: style only immediate children: let every level of nesting control own spacing */
   .TypoBox {
     /* Base typography */
     @apply font-sans text-xl leading-8;
@@ -20,7 +21,7 @@ const Tag = as;
     @apply max-w-[35em];
 
     /* Default spacing rules, override for specific elements as needed */
-    > *:not(li) {
+    > * {
       @apply my-[1.25em];
     }
 
@@ -38,76 +39,43 @@ const Tag = as;
       cut the inline-start padding so it aligns with content in other "sections"
       Based on display of "Who's Playing" list in first post (2024-10-22)
     */
-    ul:is(h2 + *):not(* + h2) {
+    > ul:is(h2 + *):not(* + h2) {
       @apply ps-0;
     }
 
-    h2 {
-      @apply mt-[2em] mb-[.75em] text-3xl;
-      @apply text-center font-bold italic;
+    > h2 {
+      @apply mt-[2em] mb-[.75em] text-center text-3xl font-bold italic;
     }
 
-    hr {
+    > hr {
       @apply my-12 h-0.5 bg-current;
     }
 
-    hr + * {
+    > hr + * {
       @apply mt-0;
     }
 
     @media (min-width: 768px) {
-      hr {
+      > hr {
         @apply -mx-12;
       }
     }
 
-    ul {
+    > ul {
       @apply list-inside list-disc;
     }
 
     @media (min-width: 768px) {
-      ul {
+      > ul {
         @apply ps-[2em];
       }
     }
 
-    li {
+    > ul > li {
       @apply my-[0.5em];
     }
 
-    a {
-      @apply underline;
-
-      &:hover {
-        @apply text-rose-600;
-      }
-    }
-
-    cite {
-      font-style: normal;
-    }
-
-    figure.quote {
-      blockquote {
-        @apply border-l-4 border-yellow-500 ps-8 text-2xl leading-loose;
-
-        * + * {
-          @apply mt-[.5em];
-        }
-
-        .source-timestamp {
-          @apply ps-6 text-base font-light;
-        }
-      }
-
-      figcaption {
-        @apply mt-6 max-w-[80%] ps-16 text-lg text-balance text-yellow-600;
-
-        a {
-          @apply hover:text-yellow-900;
-        }
-      }
-
+    > .BIW-Quote {
       &:not(:first-child) {
         /* loose spacing when listing quotations one after another (see 2025-02-17) */
         @apply mt-20;

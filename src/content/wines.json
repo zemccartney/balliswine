@@ -58,5 +58,23 @@
     "id": "versicolore",
     "maker": "domaine-balansa",
     "name": "Versicolore"
+  },
+  {
+    "hue": "oklch(0.3384 0.1381 27.5)",
+    "id": "le-telquel",
+    "maker": "pierre-olivier-bonhomme",
+    "name": "Le Telquel"
+  },
+  {
+    "hue": "oklch(0.3196 0.1291 23.51)",
+    "id": "sittelle",
+    "maker": "chat-huant",
+    "name": "Sittelle"
+  },
+  {
+    "hue": "oklch(0.2611 0.1011 24.57)",
+    "id": "une-histoire-de-rouge",
+    "maker": "cyrille-sevin",
+    "name": "Une histoire de Rouge"
   }
 ]

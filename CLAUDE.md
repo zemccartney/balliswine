@@ -1,12 +1,19 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working with
+code in this repository.
 
 ## Project Overview
 
-Ball is Wine is a creative writing project combining wine tasting with basketball watching. Each month, the author watches basketball games, drinks a bottle of wine, and writes about both experiences. The blog is organized chronologically with entries containing two parts: basketball reflections and wine tasting notes.
+Ball is Wine is a creative writing project combining wine tasting with
+basketball watching. Each month, the author watches basketball games, drinks a
+bottle of wine, and writes about both experiences. The blog is organized
+chronologically with entries containing two parts: basketball reflections and
+wine tasting notes.
 
-The project includes a completed "cellar" feature that catalogs wines by producer with geographic visualization, detailed vintage information, and cross-linking with blog posts.
+The project includes a completed "cellar" feature that catalogs wines by
+producer with geographic visualization, detailed vintage information, and
+cross-linking with blog posts.
 
 ## Tech Stack
 
@@ -19,7 +26,8 @@ The project includes a completed "cellar" feature that catalogs wines by produce
 
 ### Blog Content
 
-- `/src/content/posts/`: Chronological blog entries with date-based subdirectories:
+- `/src/content/posts/`: Chronological blog entries with date-based
+  subdirectories:
   - `index.md`: Entry metadata
   - `intro.md`: Entry introduction
 - `/src/content/thoughts/`: Legacy content structure (being phased out)
@@ -68,8 +76,10 @@ npm run cf:wip       # Commit with "[CF-Pages-Skip] WIP" and push
 Content is organized in a specific way:
 
 - Each blog entry has a date-based ID (YYYY-MM-DD)
-- The `/content/days/` directory contains references to corresponding thought content
-- Actual content is stored in `/content/thoughts/{date}/` with separate files for:
+- The `/content/days/` directory contains references to corresponding thought
+  content
+- Actual content is stored in `/content/thoughts/{date}/` with separate files
+  for:
   - `ball.md`: Basketball content
   - `wine.mdx`: Wine content with imported bottle image
 
@@ -88,7 +98,8 @@ The cellar section provides a comprehensive wine catalog with:
 ### Key Features
 
 - **Visual wine catalog** - Color-coded bottle representations
-- **Geographic visualization** - Interactive Leaflet map with producer clustering
+- **Geographic visualization** - Interactive Leaflet map with producer
+  clustering
 - **Tabbed interfaces** - Multiple vintages and list/map toggle views
 - **Cross-linking** - Blog posts link to wine details and vice versa
 - **Responsive design** - Adaptive grid layouts
@@ -131,8 +142,11 @@ interface Post {
 
 ## Styling Guidelines
 
-- Prefer Tailwind v4 directives via class attribute over style tags when styling; style tags are still acceptable when styling requires complex selectors
+- Prefer Tailwind v4 directives via class attribute over style tags when
+  styling; style tags are still acceptable when styling requires complex
+  selectors
 
 ## Code Guidelines
 
-- MUST follow style and linting guidelines per eslint.config.js, tsconfig.json, and .prettierrc
+- MUST follow style and linting guidelines per eslint.config.js, tsconfig.json,
+  and .prettierrc
