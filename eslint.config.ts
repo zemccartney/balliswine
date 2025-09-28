@@ -12,6 +12,7 @@ import * as mdx from "eslint-plugin-mdx";
 import packageJson from "eslint-plugin-package-json";
 import perfectionist from "eslint-plugin-perfectionist";
 import unicorn from "eslint-plugin-unicorn";
+import { defineConfig } from "eslint/config";
 import globals from "globals";
 import Path from "node:path";
 import Url from "node:url";
@@ -22,7 +23,7 @@ const __filename = Url.fileURLToPath(import.meta.url);
 const __dirname = Path.dirname(__filename);
 const gitignorePath = Path.resolve(__dirname, ".gitignore");
 
-export default tseslint.config(
+export default defineConfig([
   includeIgnoreFile(gitignorePath),
   {
     extends: [packageJson.configs.recommended],
@@ -56,6 +57,10 @@ export default tseslint.config(
       perfectionist.configs["recommended-natural"],
     ],
     files: ["**/*.{js,ts,tsx,jsx,astro,mjs}"],
+    rules: {
+      "unicorn/no-keyword-prefix": ["off"],
+      "unicorn/prevent-abbreviations": ["off"],
+    },
   },
   {
     files: ["*.{js,ts,mjs}"],
@@ -63,12 +68,6 @@ export default tseslint.config(
       globals: {
         ...globals.node,
       },
-    },
-  },
-  {
-    rules: {
-      "unicorn/no-keyword-prefix": ["off"],
-      "unicorn/prevent-abbreviations": ["off"],
     },
   },
   ...astro.configs.recommended.filter((conf) => conf.files),
@@ -92,4 +91,4 @@ export default tseslint.config(
     extends: [mdx.flat],
   },
   prettier,
-);
+]);
