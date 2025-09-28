@@ -8,6 +8,5 @@
       }
     }
   ],
-  "//why:": "https://stackoverflow.com/questions/57823429/how-do-you-enforce-line-length-and-other-formatting-rules-in-mdx",
   "proseWrap": "always"
 }
