@@ -5,7 +5,7 @@ interface Props {
   author?: string;
   class?: ClassValue;
   issue: string;
-  link: HTMLAnchorElement["href"];
+  link: string;
   source: string;
 }
 
@@ -15,7 +15,7 @@ const { author, class: className, issue, link, source } = Astro.props;
 <style>
   blockquote {
     > * + * {
-      @apply mt-[.5em];
+      @apply mt-[1.125em];
     }
   }
 </style>
@@ -23,7 +23,7 @@ const { author, class: className, issue, link, source } = Astro.props;
 <figure class:list={["BIW-Quote", className]}>
   <blockquote
     cite={link}
-    class="border-l-4 border-yellow-500 ps-8 text-2xl leading-loose"
+    class="border-l-4 border-yellow-500 ps-8 text-2xl/relaxed"
   >
     <slot />
   </blockquote>

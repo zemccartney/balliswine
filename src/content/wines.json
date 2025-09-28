@@ -76,5 +76,11 @@
     "id": "une-histoire-de-rouge",
     "maker": "cyrille-sevin",
     "name": "Une histoire de Rouge"
+  },
+  {
+    "hue": "oklch(0.3803 0.1489 19.14)",
+    "id": "sangiovese",
+    "maker": "broc-cellars",
+    "name": "Sangiovese"
   }
 ]
