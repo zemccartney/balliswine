@@ -7,15 +7,14 @@
     "build": "astro check && astro build",
     "cf:wip": "git commit -m \"[CF-Pages-Skip] WIP\" && git push",
     "check": "astro check && npm run fmt:check && npm run lint",
-    "deps": "ncu -i --format group",
-    "dev": "concurrently --kill-others --names astro,ts -c red,blue \"astro dev\" \"npm run typewatch\"",
+    "deps": "ncu -i --format group --cooldown 3",
     "fmt": "prettier . --write",
     "fmt:check": "prettier . --check",
     "info": "astro info",
     "lint": "eslint .",
     "lint:debug": "eslint --inspect-config",
     "preview": "astro preview",
-    "start": "astro dev",
+    "start": "concurrently --kill-others --names astro,ts -c red,blue \"astro dev\" \"npm run typewatch\"",
     "typewatch": "astro check --watch --preserveWatchOutput"
   },
   "dependencies": {
@@ -40,7 +39,7 @@
     "@eslint/markdown": "^7.3.0",
     "@types/leaflet": "^1.9.20",
     "@types/leaflet.markercluster": "^1.5.6",
-    "@typescript-eslint/parser": "^8.44.1",
+    "@typescript-eslint/parser": "^8.45.0",
     "concurrently": "^9.2.1",
     "eslint": "^9.36.0",
     "eslint-config-prettier": "^10.1.8",
@@ -50,12 +49,12 @@
     "eslint-plugin-perfectionist": "^4.15.0",
     "eslint-plugin-unicorn": "^61.0.2",
     "globals": "^16.4.0",
-    "npm-check-updates": "^18.3.0",
+    "npm-check-updates": "^19.0.0",
     "prettier": "^3.6.2",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.6.14",
-    "typescript": "^5.9.2",
-    "typescript-eslint": "^8.44.1"
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.45.0"
   },
   "engines": {
     "node": ">=22 <23"
