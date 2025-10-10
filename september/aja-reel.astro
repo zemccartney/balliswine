@@ -1,0 +1,24 @@
+---
+import type { ImageMetadata } from "astro";
+import type { ClassValue } from "clsx";
+
+import { Image } from "astro:assets";
+
+interface Props {
+  class?: ClassValue;
+}
+
+const photos = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/images/aja-reel/*.png",
+);
+
+const { class: className } = Astro.props;
+---
+
+<div class:list={["flex flex-row gap-1", className]}>
+  {
+    Object.values(photos).map((src) => (
+      <Image alt="Image!" class="w-1/5" src={src()} />
+    ))
+  }
+</div>
